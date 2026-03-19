@@ -2,7 +2,7 @@ export const seoDefaults = {
   defaultTitle: 'OnyxDetails | Premium Mobile Car Wash and Detailing in Sabie',
   defaultDescription:
     'Premium mobile car wash and detailing in Sabie, Graskop, White River, and Nelspruit. Book premium vehicle care for your home, farm, or workplace.',
-  ogImage: '/assets/images/placeholders/og-default.svg',
+  ogImage: '/assets/images/placeholders/og-default.jpg',
   keywords: [
     'mobile car wash Sabie',
     'mobile detailing Sabie',
