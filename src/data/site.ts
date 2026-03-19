@@ -7,5 +7,5 @@ export const siteConfig = {
   heroHeadline: 'Premium Mobile Car Wash and Detailing at Your Home, Farm, or Workplace',
   heroCopy:
     'OnyxDetails brings premium mobile vehicle care to your driveway with convenient booking, recurring wash options, and service across Sabie, Graskop, White River, and Nelspruit.',
-  logoPath: '/assets/logos/onyxdetails-logo.png' // Place transparent PNG logo at this path
+  logoPath: '/assets/logos/onyxdetails-logo.svg' // Place transparent PNG logo at this path
 };
