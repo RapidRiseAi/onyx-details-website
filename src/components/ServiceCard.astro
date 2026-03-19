@@ -1,0 +1,13 @@
+---
+import type { Service } from '../data/services';
+interface Props { service: Service }
+const { service } = Astro.props;
+---
+<article class={`service-card card ${service.featured ? 'featured' : ''}`}>
+  <h3>{service.name}</h3>
+  <p class="price">{service.priceLabel}</p>
+  <p>{service.shortDescription}</p>
+  <ul>{service.includedItems.map((item) => <li>{item}</li>)}</ul>
+  <p class="best-for">Best for: {service.bestFor}</p>
+  <button class="btn btn-primary" data-open-booking data-service-id={service.id} data-service-name={service.name}>Book This Service</button>
+</article>
