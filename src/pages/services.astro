@@ -6,10 +6,26 @@ import PromoBanner from '../components/PromoBanner.astro';
 import CTASection from '../components/CTASection.astro';
 import { services } from '../data/services';
 import { pageSeo } from '../data/seo';
+
+const oneTimeServices = services.filter((service) => service.serviceType === 'one-time');
+const monthlyPackages = services.filter((service) => service.serviceType === 'monthly');
 ---
 <MainLayout title={pageSeo.services.title} description={pageSeo.services.description}>
   <PageHero title="Choose the Right Wash or Detailing Package" subtitle="From once-off washes to recurring maintenance plans, OnyxDetails offers premium mobile vehicle care delivered at your home, farm, or workplace." />
-  <section class="section"><div class="container"><ServiceGrid services={services} /></div></section>
+  <section class="section">
+    <div class="container service-groups">
+      <div class="service-group">
+        <h2>One-Time Services</h2>
+        <p class="service-group-intro">Book a once-off clean whenever your vehicle needs a reset.</p>
+        <ServiceGrid services={oneTimeServices} />
+      </div>
+      <div class="service-group">
+        <h2>Monthly Packages</h2>
+        <p class="service-group-intro">Keep your vehicle in top condition with scheduled recurring care.</p>
+        <ServiceGrid services={monthlyPackages} />
+      </div>
+    </div>
+  </section>
   <PromoBanner />
   <section class="section"><div class="container"><h2>Service Notes</h2><div class="faq-grid">{[
   ['Do you come to my home?','Yes. OnyxDetails is a mobile service and comes directly to your location.'],
