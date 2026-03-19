@@ -24,12 +24,26 @@ Premium dark-theme mobile detailing website for **OnyxDetails**.
 
 ## Cloudflare Pages deployment (recommended)
 
-Use **Cloudflare Pages**, not `wrangler deploy`, for this project.
+Use **Cloudflare Pages** for the default deployment flow.
 
 - Framework preset: **Astro**
 - Build command: `bun run build` (or `npm run build`)
 - Build output directory: `dist`
 - **Deploy command: leave empty** (do not use `npx wrangler deploy`)
+
+### If your pipeline uses Wrangler (`wrangler deploy` or `wrangler versions upload`)
+
+This repo includes `wrangler.jsonc` configured for static asset uploads from `dist` and a pre-deploy build command.
+
+- `assets.directory` is set to `./dist`
+- `build.command` is set to `bun run build`
+
+This allows both of these commands to work in CI:
+
+```bash
+npx wrangler deploy
+npx wrangler versions upload
+```
 
 ### Why this matters
 
@@ -76,7 +90,7 @@ Both forms submit JSON payloads to Google Apps Script Web App URLs.
 ## Images and logo
 
 - Place final transparent logo at:
-  - `public/assets/logos/onyxdetails-logo.png`
+  - `public/assets/logos/onyxdetails-logo.svg` (or update `src/data/site.ts` to your preferred file)
 - Swap placeholder images in:
   - `public/assets/images/hero`
   - `public/assets/images/services`

@@ -1,13 +1,21 @@
 ---
 import type { GalleryItem } from '../data/gallery';
-interface Props { items: GalleryItem[] }
-const { items } = Astro.props;
+interface Props {
+  items: GalleryItem[];
+  interactive?: boolean;
+}
+const { items, interactive = false } = Astro.props;
 ---
 <div class="gallery-grid">
-  {items.map((item) => (
+  {(interactive ? items.map((item) => (
     <button class="gallery-item" data-lightbox-src={item.src} data-lightbox-alt={item.alt}>
       <img src={item.src} alt={item.alt} loading="lazy" />
       <span>{item.title}</span>
     </button>
-  ))}
+  )) : items.map((item) => (
+    <article class="gallery-item">
+      <img src={item.src} alt={item.alt} loading="lazy" />
+      <span>{item.title}</span>
+    </article>
+  )))}
 </div>
