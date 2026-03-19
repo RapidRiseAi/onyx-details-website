@@ -8,20 +8,6 @@ if (menuToggle && nav) {
   });
 }
 
-const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
-const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
-filterButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    filterButtons.forEach((b) => b.classList.remove('active'));
-    button.classList.add('active');
-    const filter = button.dataset.filter;
-    galleryItems.forEach((item) => {
-      const category = item.querySelector('img')?.getAttribute('src') ?? '';
-      item.style.display = filter === 'all' || category.includes(`${filter}/`) ? 'block' : 'none';
-    });
-  });
-});
-
 const lightbox = document.querySelector<HTMLElement>('#lightbox');
 const lightboxImage = lightbox?.querySelector<HTMLImageElement>('img');
 document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((item) => {
@@ -34,4 +20,19 @@ document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((item) => 
 });
 lightbox?.querySelector('[data-close-lightbox]')?.addEventListener('click', () => {
   lightbox.hidden = true;
+});
+
+document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+  const carouselTrack = carousel.querySelector<HTMLElement>('[data-carousel-track]');
+  const prevButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]');
+  const nextButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
+  if (!carouselTrack || !prevButton || !nextButton) return;
+
+  const scrollByAmount = () => Math.max(carouselTrack.clientWidth * 0.9, 280);
+  prevButton.addEventListener('click', () => {
+    carouselTrack.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
+  });
+  nextButton.addEventListener('click', () => {
+    carouselTrack.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
+  });
 });
