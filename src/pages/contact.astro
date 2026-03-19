@@ -1,0 +1,13 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import ServiceAreas from '../components/ServiceAreas.astro';
+import { contact } from '../data/contact';
+import { pageSeo } from '../data/seo';
+---
+<MainLayout title={pageSeo.contact.title} description={pageSeo.contact.description}>
+  <PageHero title="Contact OnyxDetails" subtitle="Send an enquiry, ask a question, or request a booking." />
+  <section class="section"><div class="container split"><article class="card"><h2>Contact Details</h2><p><strong>Phone:</strong> <a href={`tel:${contact.phone}`}>{contact.phone}</a></p><p><strong>Email:</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p><p><strong>Hours:</strong> {contact.businessHours}</p><p><strong>Areas:</strong> {contact.serviceAreas.join(', ')}</p><p>{contact.extraTravel}</p><a class="btn btn-ghost" href={contact.whatsapp} target="_blank" rel="noreferrer">Ask on WhatsApp</a></article><ContactForm /></div></section>
+  <ServiceAreas />
+</MainLayout>

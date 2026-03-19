@@ -1,0 +1,4 @@
+---
+const { testimonial } = Astro.props;
+---
+<article class="card testimonial"><p>{'★'.repeat(testimonial.starRating)}</p><blockquote>{testimonial.reviewText}</blockquote><p><strong>{testimonial.clientName}</strong>{testimonial.area ? ` · ${testimonial.area}` : ''}</p></article>
