@@ -1,0 +1,11 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { privacyBlocks, bookingPolicyLines } from '../data/policies';
+import { contact } from '../data/contact';
+import { pageSeo } from '../data/seo';
+---
+<MainLayout title={pageSeo.privacy.title} description={pageSeo.privacy.description}>
+  <PageHero title="Privacy Policy" subtitle="How OnyxDetails collects and uses your information for bookings and enquiries." />
+  <section class="section"><div class="container"><div class="faq-grid">{privacyBlocks.map((block)=><article class="card"><h2>{block.heading}</h2><p>{block.body}</p></article>)}</div><article class="card"><h2>Booking policies</h2><ul>{bookingPolicyLines.map((line)=><li>{line}</li>)}</ul></article><article class="card"><h2>Contact for privacy matters</h2><p>Email: <a href={`mailto:${contact.email}`}>{contact.email}</a></p></article></div></section>
+</MainLayout>
