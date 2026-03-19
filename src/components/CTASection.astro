@@ -1,0 +1,6 @@
+---
+import { contact } from '../data/contact';
+interface Props { title: string; text?: string }
+const { title, text } = Astro.props;
+---
+<section class="cta"><div class="container"><h2>{title}</h2><p>{text}</p><div class="hero-actions"><button class="btn btn-primary" data-open-booking>Book Now</button><a class="btn btn-ghost" href={contact.whatsapp} target="_blank" rel="noreferrer">Ask on WhatsApp</a></div></div></section>
