@@ -1,0 +1,22 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import PromoBanner from '../components/PromoBanner.astro';
+import CTASection from '../components/CTASection.astro';
+import { services } from '../data/services';
+import { pageSeo } from '../data/seo';
+---
+<MainLayout title={pageSeo.services.title} description={pageSeo.services.description}>
+  <PageHero title="Choose the Right Wash or Detailing Package" subtitle="From once-off washes to recurring maintenance plans, OnyxDetails offers premium mobile vehicle care delivered at your home, farm, or workplace." />
+  <section class="section"><div class="container"><ServiceGrid services={services} /></div></section>
+  <PromoBanner />
+  <section class="section"><div class="container"><h2>Service Notes</h2><div class="faq-grid">{[
+  ['Do you come to my home?','Yes. OnyxDetails is a mobile service and comes directly to your location.'],
+  ['Do you service farms?','Yes. Farm and rural properties are supported in main service zones and on-request travel zones.'],
+  ['Are larger vehicles charged at the same rate?','Larger or heavily soiled vehicles may require a custom quote after review.'],
+  ['Is this an instant confirmed booking?','No. This is an enquiry request system. Bookings are confirmed after availability is reviewed.'],
+  ['What areas do you cover?','Sabie, Graskop, White River, and Nelspruit, plus additional towns on request.']
+].map(([q,a]) => <article class="card"><h3>{q}</h3><p>{a}</p></article>)}</div></div></section>
+  <CTASection title="Need help choosing a package?" text="Send a booking request and OnyxDetails will confirm the best slot and service option." />
+</MainLayout>

@@ -1,0 +1,4 @@
+---
+import { contact } from '../data/contact';
+---
+<section class="section"><div class="container"><h2>Service Areas</h2><p>Serving {contact.serviceAreas.join(', ')}, with additional travel available on request. Ideal for homes, farms, and business premises.</p><div class="badges">{contact.serviceAreas.map((area)=><span>{area}</span>)}</div></div></section>
