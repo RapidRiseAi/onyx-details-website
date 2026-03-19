@@ -4,7 +4,6 @@ const modal = document.querySelector<HTMLDialogElement>('#booking-modal');
 const form = document.querySelector<HTMLFormElement>('#booking-form');
 if (modal && form) {
   const status = form.querySelector<HTMLElement>('.form-status');
-  if (modal.open) modal.close();
 
   const open = (serviceId?: string, serviceName?: string) => {
     form.reset();
@@ -18,10 +17,6 @@ if (modal && form) {
     button.addEventListener('click', () => open(button.dataset.serviceId, button.dataset.serviceName));
   });
   modal.querySelector('[data-close-booking]')?.addEventListener('click', () => modal.close());
-  modal.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    if (target === modal) modal.close();
-  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();

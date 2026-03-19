@@ -76,7 +76,7 @@ Both forms submit JSON payloads to Google Apps Script Web App URLs.
 ## Images and logo
 
 - Place final transparent logo at:
-  - `public/assets/logos/onyxdetails-logo.svg` (or update `src/data/site.ts` to your preferred file)
+  - `public/assets/logos/onyxdetails-logo.png`
 - Swap placeholder images in:
   - `public/assets/images/hero`
   - `public/assets/images/services`
