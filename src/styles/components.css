@@ -48,6 +48,7 @@
 .carousel-track::-webkit-scrollbar { height:.55rem; }
 .carousel-track::-webkit-scrollbar-thumb { background:#2a2d33; border-radius:999px; }
 .carousel-slide { display:block; border:none; background:transparent; color:var(--muted); text-align:left; cursor:pointer; scroll-snap-align:start; }
+.carousel-slide.static { cursor:default; }
 .carousel-slide img { width:100%; border-radius:14px; border:1px solid var(--border); }
 .carousel-slide span { display:block; margin-top:.35rem; }
 
