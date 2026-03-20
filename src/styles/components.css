@@ -101,7 +101,7 @@
   background:
     radial-gradient(1200px 320px at 50% -20%, rgba(199, 163, 93, 0.2), transparent 62%),
     linear-gradient(rgba(8, 8, 8, 0.76), rgba(8, 8, 8, 0.9)),
-    url('/assets/images/hero/hero-placeholder.svg') center/cover;
+    url('/assets/images/hero/Home-Page-Hero.png') center/cover;
 }
 
 .eyebrow { letter-spacing:.1em; text-transform:uppercase; color:var(--gold-soft); font-size:.8rem; }
