@@ -29,11 +29,37 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
   const nextButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
   if (!carouselTrack || !prevButton || !nextButton) return;
 
-  const scrollByAmount = () => Math.max(carouselTrack.clientWidth * 0.9, 280);
+  const slides = Array.from(carouselTrack.querySelectorAll<HTMLElement>('.carousel-slide'));
+  if (slides.length === 0) return;
+
+  let currentIndex = 0;
+
+  const visibleSlides = () => {
+    const firstSlide = slides[0];
+    const slideWidth = firstSlide.offsetWidth;
+    if (slideWidth === 0) return 1;
+    return Math.max(1, Math.floor(carouselTrack.clientWidth / slideWidth));
+  };
+
+  const updateCarousel = (behavior: ScrollBehavior = 'smooth') => {
+    const maxIndex = Math.max(0, slides.length - visibleSlides());
+    currentIndex = Math.min(Math.max(0, currentIndex), maxIndex);
+    carouselTrack.scrollTo({ left: slides[currentIndex].offsetLeft, behavior });
+
+    prevButton.disabled = currentIndex === 0;
+    nextButton.disabled = currentIndex >= maxIndex;
+  };
+
   prevButton.addEventListener('click', () => {
-    carouselTrack.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
+    currentIndex -= 1;
+    updateCarousel();
   });
+
   nextButton.addEventListener('click', () => {
-    carouselTrack.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
+    currentIndex += 1;
+    updateCarousel();
   });
+
+  window.addEventListener('resize', () => updateCarousel('auto'));
+  updateCarousel('auto');
 });
