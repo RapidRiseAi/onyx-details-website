@@ -60,7 +60,9 @@ const { items, title, subtitle, interactive = false } = Astro.props;
           const maxIndex = Math.max(0, slides.length - visibleSlides());
           if (currentIndex > maxIndex) currentIndex = 0;
           if (currentIndex < 0) currentIndex = maxIndex;
-          slides[currentIndex].scrollIntoView({ behavior, block: 'nearest', inline: 'start' });
+          const gap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
+          const targetLeft = currentIndex * (slides[0].offsetWidth + gap);
+          carouselTrack.scrollTo({ left: targetLeft, behavior });
         };
 
         prevButton.addEventListener('click', () => {
