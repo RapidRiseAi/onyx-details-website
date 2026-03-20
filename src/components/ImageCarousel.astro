@@ -19,13 +19,13 @@ const { items, title, subtitle, interactive = false } = Astro.props;
     <button class="carousel-control" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
     <div class="carousel-track" data-carousel-track>
       {interactive ? items.map((item) => (
-        <button class="carousel-slide" data-lightbox-src={item.src} data-lightbox-fallback={item.fallbackSrc} data-lightbox-alt={item.alt}>
-          <img src={item.src} alt={item.alt} loading="lazy" data-fallback-src={item.fallbackSrc} onerror="if(this.dataset.fallbackSrc && this.getAttribute('src')!==this.dataset.fallbackSrc){this.src=this.dataset.fallbackSrc;}" />
+        <button class="carousel-slide" data-lightbox-src={item.src} data-lightbox-alt={item.alt}>
+          <img src={item.src} alt={item.alt} loading="lazy" />
           <span>{item.title}</span>
         </button>
       )) : items.map((item) => (
         <article class="carousel-slide static">
-          <img src={item.src} alt={item.alt} loading="lazy" data-fallback-src={item.fallbackSrc} onerror="if(this.dataset.fallbackSrc && this.getAttribute('src')!==this.dataset.fallbackSrc){this.src=this.dataset.fallbackSrc;}" />
+          <img src={item.src} alt={item.alt} loading="lazy" />
           <span>{item.title}</span>
         </article>
       ))}
