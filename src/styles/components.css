@@ -54,7 +54,7 @@
 .logo-link {
   position: absolute;
   left: 50%;
-  top: 100%;
+  top: 130%;
   transform: translate(-50%, -50%);
   z-index: 3;
   display: flex;
