@@ -8,10 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
-    "predev": "node scripts/sync-uploaded-images.mjs",
-    "prebuild": "node scripts/sync-uploaded-images.mjs",
-    "precheck": "node scripts/sync-uploaded-images.mjs"
+    "check": "astro check"
   },
   "dependencies": {
     "astro": "^6.0.6"
