@@ -188,7 +188,7 @@
 .carousel-control:hover { border-color: var(--gold); color: var(--gold-bright); }
 .carousel-control:disabled { opacity:.35; cursor:not-allowed; }
 
-.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow:hidden; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; }
+.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; }
 .carousel-track::-webkit-scrollbar { display:none; }
 .carousel-slide { display:block; border:none; background:transparent; color:var(--muted); text-align:left; cursor:pointer; scroll-snap-align:start; }
 .carousel-slide.static { cursor:default; }
