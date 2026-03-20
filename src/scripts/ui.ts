@@ -41,12 +41,16 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
     return Math.max(1, Math.floor(carouselTrack.clientWidth / slideWidth));
   };
 
-  const updateCarousel = (behavior: ScrollBehavior = 'smooth') => {
+  const updateCarousel = (animate = true) => {
     const maxIndex = Math.max(0, slides.length - visibleSlides());
     if (currentIndex > maxIndex) currentIndex = 0;
     if (currentIndex < 0) currentIndex = maxIndex;
 
-    carouselTrack.scrollTo({ left: slides[currentIndex].offsetLeft, behavior });
+    const slideGap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
+    const shiftAmount = (slides[0].offsetWidth + slideGap) * currentIndex;
+
+    carouselTrack.style.transition = animate ? 'transform 320ms ease' : 'none';
+    carouselTrack.style.transform = `translateX(-${shiftAmount}px)`;
   };
 
   prevButton.addEventListener('click', () => {
@@ -59,6 +63,6 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
     updateCarousel();
   });
 
-  window.addEventListener('resize', () => updateCarousel('auto'));
-  updateCarousel('auto');
+  window.addEventListener('resize', () => updateCarousel(false));
+  updateCarousel(false);
 });
