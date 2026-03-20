@@ -10,20 +10,19 @@ import { siteConfig } from '../data/site';
       <a href="/gallery">Gallery</a>
     </nav>
 
-    <div class="nav-center-gap" aria-hidden="true"></div>
+    <a href="/" class="brand-mark" aria-label="OnyxDetails Home">
+      <span class="brand-word">ONYX</span>
+      <span class="brand-logo">
+        <img src={siteConfig.logoPath} alt="OnyxDetails logo" loading="lazy" onerror="this.style.display='none'; this.closest('.brand-mark')?.classList.add('logo-fallback');" />
+      </span>
+      <span class="brand-word">DETAILS</span>
+    </a>
 
     <nav class="site-nav-desktop nav-group nav-group-right" aria-label="Primary right">
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
       <button class="btn btn-primary" data-open-booking>Book Now</button>
     </nav>
-
-    <a href="/" class="logo-link" aria-label="OnyxDetails Home">
-      <span class="logo-diamond">
-        <img src={siteConfig.logoPath} alt="OnyxDetails logo" loading="lazy" onerror="this.style.display='none'; this.closest('.logo-link')?.classList.add('logo-fallback');" />
-      </span>
-    </a>
-    <span class="logo-text logo-brand-text">OnyxDetails</span>
 
     <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav id="site-nav" class="site-nav" aria-label="Mobile navigation">
