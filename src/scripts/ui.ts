@@ -35,10 +35,9 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
   let currentIndex = 0;
 
   const visibleSlides = () => {
-    const firstSlide = slides[0];
-    const slideWidth = firstSlide.offsetWidth;
-    if (slideWidth === 0) return 1;
-    return Math.max(1, Math.floor(carouselTrack.clientWidth / slideWidth));
+    if (window.matchMedia('(max-width: 800px)').matches) return 1;
+    if (window.matchMedia('(max-width: 1200px)').matches) return 2;
+    return 3;
   };
 
   const updateCarousel = (behavior: ScrollBehavior = 'smooth') => {
@@ -46,10 +45,7 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
     if (currentIndex > maxIndex) currentIndex = 0;
     if (currentIndex < 0) currentIndex = maxIndex;
 
-    const slideGap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
-    const targetLeft = (slides[0].offsetWidth + slideGap) * currentIndex;
-
-    carouselTrack.scrollTo({ left: targetLeft, behavior });
+    slides[currentIndex].scrollIntoView({ behavior, block: 'nearest', inline: 'start' });
   };
 
   prevButton.addEventListener('click', () => {
