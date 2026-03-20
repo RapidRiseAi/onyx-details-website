@@ -1,5 +1,5 @@
-const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-const nav = document.querySelector<HTMLElement>('.site-nav');
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.site-nav');
 if (menuToggle && nav) {
   menuToggle.addEventListener('click', () => {
     const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
@@ -8,9 +8,9 @@ if (menuToggle && nav) {
   });
 }
 
-const lightbox = document.querySelector<HTMLElement>('#lightbox');
-const lightboxImage = lightbox?.querySelector<HTMLImageElement>('img');
-document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((item) => {
+const lightbox = document.querySelector('#lightbox');
+const lightboxImage = lightbox?.querySelector('img');
+document.querySelectorAll('[data-lightbox-src]').forEach((item) => {
   item.addEventListener('click', () => {
     if (!lightbox || !lightboxImage) return;
     lightbox.hidden = false;
@@ -23,13 +23,13 @@ lightbox?.querySelector('[data-close-lightbox]')?.addEventListener('click', () =
   lightbox.hidden = true;
 });
 
-document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
-  const carouselTrack = carousel.querySelector<HTMLElement>('[data-carousel-track]');
-  const prevButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]');
-  const nextButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
+document.querySelectorAll('[data-carousel]').forEach((carousel) => {
+  const carouselTrack = carousel.querySelector('[data-carousel-track]');
+  const prevButton = carousel.querySelector('[data-carousel-prev]');
+  const nextButton = carousel.querySelector('[data-carousel-next]');
   if (!carouselTrack || !prevButton || !nextButton) return;
 
-  const slides = Array.from(carouselTrack.querySelectorAll<HTMLElement>('.carousel-slide'));
+  const slides = Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
   if (slides.length === 0) return;
 
   let currentIndex = 0;
@@ -40,7 +40,7 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
     return 3;
   };
 
-  const updateCarousel = (behavior: ScrollBehavior = 'smooth') => {
+  const updateCarousel = (behavior = 'smooth') => {
     const maxIndex = Math.max(0, slides.length - visibleSlides());
     if (currentIndex > maxIndex) currentIndex = 0;
     if (currentIndex < 0) currentIndex = maxIndex;

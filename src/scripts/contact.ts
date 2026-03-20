@@ -1,11 +1,11 @@
 import { formEndpoints } from '../data/endpoints';
 
-const form = document.querySelector<HTMLFormElement>('#contact-form');
+const form = document.querySelector('#contact-form');
 if (form) {
-  const status = form.querySelector<HTMLElement>('.form-status');
+  const status = form.querySelector('.form-status');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    status && (status.textContent = 'Sending enquiry...');
+    if (status) status.textContent = 'Sending enquiry...';
     const data = new FormData(form);
     const payload = {
       timestamp: new Date().toISOString(),
@@ -23,10 +23,10 @@ if (form) {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Failed to submit enquiry');
-      status && (status.textContent = 'Your enquiry has been sent. OnyxDetails will get back to you shortly.');
+      if (status) status.textContent = 'Your enquiry has been sent. OnyxDetails will get back to you shortly.';
       form.reset();
     } catch {
-      status && (status.textContent = 'Unable to send your enquiry right now. Please try again later.');
+      if (status) status.textContent = 'Unable to send your enquiry right now. Please try again later.';
     }
   });
 }

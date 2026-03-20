@@ -1,31 +1,31 @@
 import { formEndpoints } from '../data/endpoints';
 
-const modal = document.querySelector<HTMLDialogElement>('#booking-modal');
-const form = document.querySelector<HTMLFormElement>('#booking-form');
+const modal = document.querySelector('#booking-modal');
+const form = document.querySelector('#booking-form');
 if (modal && form) {
-  const status = form.querySelector<HTMLElement>('.form-status');
+  const status = form.querySelector('.form-status');
   if (modal.open) modal.close();
 
-  const open = (serviceId?: string, serviceName?: string) => {
+  const open = (serviceId, serviceName) => {
     form.reset();
-    (form.elements.namedItem('sourcePage') as HTMLInputElement).value = window.location.pathname;
-    (form.elements.namedItem('serviceId') as HTMLInputElement).value = serviceId ?? '';
-    if (serviceName) (form.elements.namedItem('selectedService') as HTMLSelectElement).value = serviceName;
+    form.elements.namedItem('sourcePage').value = window.location.pathname;
+    form.elements.namedItem('serviceId').value = serviceId ?? '';
+    if (serviceName) form.elements.namedItem('selectedService').value = serviceName;
     modal.showModal();
   };
 
-  document.querySelectorAll<HTMLElement>('[data-open-booking]').forEach((button) => {
+  document.querySelectorAll('[data-open-booking]').forEach((button) => {
     button.addEventListener('click', () => open(button.dataset.serviceId, button.dataset.serviceName));
   });
   modal.querySelector('[data-close-booking]')?.addEventListener('click', () => modal.close());
   modal.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
+    const target = event.target;
     if (target === modal) modal.close();
   });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    status && (status.textContent = 'Submitting your booking request...');
+    if (status) status.textContent = 'Submitting your booking request...';
     const data = new FormData(form);
     const payload = {
       timestamp: new Date().toISOString(),
@@ -47,12 +47,13 @@ if (modal && form) {
         body: JSON.stringify(payload)
       });
       if (!response.ok) throw new Error('Failed to submit booking request');
-      status &&
-        (status.textContent =
-          'Your booking request has been received. OnyxDetails will review your details and get back to you shortly to confirm availability.');
+      if (status) {
+        status.textContent =
+          'Your booking request has been received. OnyxDetails will review your details and get back to you shortly to confirm availability.';
+      }
       form.reset();
     } catch {
-      status && (status.textContent = 'Unable to send booking request right now. Please try again or reach out on WhatsApp.');
+      if (status) status.textContent = 'Unable to send booking request right now. Please try again or reach out on WhatsApp.';
     }
   });
 }
