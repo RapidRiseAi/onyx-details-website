@@ -43,11 +43,10 @@ document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => 
 
   const updateCarousel = (behavior: ScrollBehavior = 'smooth') => {
     const maxIndex = Math.max(0, slides.length - visibleSlides());
-    currentIndex = Math.min(Math.max(0, currentIndex), maxIndex);
-    carouselTrack.scrollTo({ left: slides[currentIndex].offsetLeft, behavior });
+    if (currentIndex > maxIndex) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = maxIndex;
 
-    prevButton.disabled = currentIndex === 0;
-    nextButton.disabled = currentIndex >= maxIndex;
+    carouselTrack.scrollTo({ left: slides[currentIndex].offsetLeft, behavior });
   };
 
   prevButton.addEventListener('click', () => {
