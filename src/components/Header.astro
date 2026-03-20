@@ -12,7 +12,7 @@ import { siteConfig } from '../data/site';
 
     <a href="/" class="logo-link" aria-label="OnyxDetails Home">
       <span class="logo-square">
-        <img src={siteConfig.logoPath} alt="OnyxDetails logo" loading="lazy" onerror="this.style.display='none'; this.closest('.logo-link')?.classList.add('logo-fallback');" />
+        <img src={siteConfig.logoPath} alt="OnyxDetails logo" loading="lazy" onerror="if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='true';this.src='/assets/logos/onyxdetails-logo.svg';return;} this.style.display='none'; this.closest('.logo-link')?.classList.add('logo-fallback');" />
       </span>
       <span class="logo-text">OnyxDetails</span>
     </a>

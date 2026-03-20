@@ -14,10 +14,19 @@ document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((item) => 
   item.addEventListener('click', () => {
     if (!lightbox || !lightboxImage) return;
     lightbox.hidden = false;
+    lightboxImage.dataset.fallbackSrc = item.dataset.lightboxFallback ?? '';
     lightboxImage.src = item.dataset.lightboxSrc ?? '';
     lightboxImage.alt = item.dataset.lightboxAlt ?? '';
   });
 });
+
+if (lightboxImage) {
+  lightboxImage.addEventListener('error', () => {
+    const fallbackSrc = lightboxImage.dataset.fallbackSrc;
+    if (!fallbackSrc || lightboxImage.getAttribute('src') === fallbackSrc) return;
+    lightboxImage.src = fallbackSrc;
+  });
+}
 lightbox?.querySelector('[data-close-lightbox]')?.addEventListener('click', () => {
   lightbox.hidden = true;
 });
