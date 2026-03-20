@@ -54,13 +54,10 @@
 .logo-link {
   position: absolute;
   left: 50%;
-  top: 130%;
+  top: 100%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.42rem;
+  display: block;
   text-decoration: none;
 }
 
@@ -86,8 +83,17 @@
   color: var(--gold-soft);
 }
 
+.logo-brand-text {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  margin-top: calc(clamp(112px, 12.5vw, 152px) / 2 + 0.55rem);
+  z-index: 3;
+}
+
 .logo-link.logo-fallback .logo-diamond { display: none; }
-.logo-link.logo-fallback .logo-text { font-size: 0.95rem; }
+.logo-link.logo-fallback + .logo-brand-text { font-size: 0.95rem; }
 
 .menu-toggle {
   display: none;
@@ -215,8 +221,9 @@
   .site-nav-desktop { display:none; }
   .nav-wrap { grid-template-columns: auto 1fr auto; min-height: 82px; }
   .nav-center-gap { display: none; }
-  .logo-link { position: static; transform: none; gap: 0.3rem; }
+  .logo-link { position: static; transform: none; }
   .logo-diamond { width: clamp(92px, 24vw, 122px); }
+  .logo-brand-text { position: static; transform: none; margin-top: 0.3rem; }
   .menu-toggle { display:block; }
   .site-nav {
     position:absolute;
