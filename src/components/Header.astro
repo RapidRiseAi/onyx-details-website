@@ -4,17 +4,18 @@ import { siteConfig } from '../data/site';
 
 <header class="site-header">
   <div class="container nav-wrap">
-    <nav class="site-nav-desktop nav-group" aria-label="Primary left">
+    <nav class="site-nav-desktop nav-group nav-group-left" aria-label="Primary left">
       <a href="/">Home</a>
       <a href="/services">Services</a>
       <a href="/gallery">Gallery</a>
     </nav>
 
-    <a href="/" class="logo-link" aria-label="OnyxDetails Home">
-      <span class="logo-diamond">
-        <img src={siteConfig.logoPath} alt="OnyxDetails logo" loading="lazy" onerror="this.style.display='none'; this.closest('.logo-link')?.classList.add('logo-fallback');" />
+    <a href="/" class="brand-mark" aria-label="OnyxDetails Home">
+      <span class="brand-word">ONYX</span>
+      <span class="brand-logo">
+        <img src={siteConfig.logoPath} alt="OnyxDetails logo" loading="lazy" onerror="this.style.display='none'; this.closest('.brand-mark')?.classList.add('logo-fallback');" />
       </span>
-      <span class="logo-text">OnyxDetails</span>
+      <span class="brand-word">DETAILS</span>
     </a>
 
     <nav class="site-nav-desktop nav-group nav-group-right" aria-label="Primary right">

@@ -7,6 +7,9 @@ import { contact } from '../data/contact';
 import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/pages.css';
+import uiScript from '../scripts/ui.ts?url';
+import bookingScript from '../scripts/booking.ts?url';
+import contactScript from '../scripts/contact.ts?url';
 
 interface Props {
   title?: string;
@@ -51,10 +54,8 @@ const canonical = new URL(canonicalPath, `https://${contact.domain}`).toString()
     <Footer />
     <a class="whatsapp-float" href={contact.whatsapp} target="_blank" rel="noreferrer" aria-label="Message OnyxDetails on WhatsApp">WhatsApp</a>
     <BookingModal />
-    <script type="module">
-      import '../scripts/ui.ts';
-      import '../scripts/booking.ts';
-      import '../scripts/contact.ts';
-    </script>
+    <script type="module" src={uiScript}></script>
+    <script type="module" src={bookingScript}></script>
+    <script type="module" src={contactScript}></script>
   </body>
 </html>

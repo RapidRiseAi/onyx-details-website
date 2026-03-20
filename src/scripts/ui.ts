@@ -1,5 +1,5 @@
-const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-const nav = document.querySelector<HTMLElement>('.site-nav');
+const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.site-nav');
 if (menuToggle && nav) {
   menuToggle.addEventListener('click', () => {
     const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
@@ -8,9 +8,9 @@ if (menuToggle && nav) {
   });
 }
 
-const lightbox = document.querySelector<HTMLElement>('#lightbox');
-const lightboxImage = lightbox?.querySelector<HTMLImageElement>('img');
-document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((item) => {
+const lightbox = document.querySelector('#lightbox');
+const lightboxImage = lightbox?.querySelector('img');
+document.querySelectorAll('[data-lightbox-src]').forEach((item) => {
   item.addEventListener('click', () => {
     if (!lightbox || !lightboxImage) return;
     lightbox.hidden = false;
@@ -18,21 +18,7 @@ document.querySelectorAll<HTMLElement>('[data-lightbox-src]').forEach((item) => 
     lightboxImage.alt = item.dataset.lightboxAlt ?? '';
   });
 });
+
 lightbox?.querySelector('[data-close-lightbox]')?.addEventListener('click', () => {
   lightbox.hidden = true;
-});
-
-document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
-  const carouselTrack = carousel.querySelector<HTMLElement>('[data-carousel-track]');
-  const prevButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-prev]');
-  const nextButton = carousel.querySelector<HTMLButtonElement>('[data-carousel-next]');
-  if (!carouselTrack || !prevButton || !nextButton) return;
-
-  const scrollByAmount = () => Math.max(carouselTrack.clientWidth * 0.9, 280);
-  prevButton.addEventListener('click', () => {
-    carouselTrack.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
-  });
-  nextButton.addEventListener('click', () => {
-    carouselTrack.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
-  });
 });
