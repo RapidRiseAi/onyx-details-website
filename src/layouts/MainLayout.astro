@@ -53,10 +53,6 @@ const canonical = new URL(canonicalPath, `https://${contact.domain}`).toString()
     <main><slot /></main>
     <Footer />
     <a class="whatsapp-float" href={contact.whatsapp} target="_blank" rel="noreferrer" aria-label="Message OnyxDetails on WhatsApp">WhatsApp</a>
-    <div class="mobile-action-dock" aria-label="Quick actions">
-      <button class="btn btn-primary" data-open-booking>Book Now</button>
-      <a class="btn btn-ghost" href={contact.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
-    </div>
     <BookingModal />
     <script type="module" src={uiScript}></script>
     <script type="module" src={bookingScript}></script>
