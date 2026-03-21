@@ -4,13 +4,15 @@ import { contact } from '../data/contact';
 ---
 <section class="hero">
   <div class="container">
-    <p class="eyebrow">Premium Mobile Vehicle Care · {contact.locationText}</p>
-    <h1>{siteConfig.heroHeadline}</h1>
-    <p>{siteConfig.heroCopy}</p>
-    <div class="hero-actions">
-      <button class="btn btn-primary" data-open-booking>Book Now</button>
-      <a class="btn btn-ghost" href="/services">View Services</a>
-      <a class="btn btn-subtle hero-whatsapp" href={contact.whatsapp} target="_blank" rel="noreferrer">Ask on WhatsApp</a>
+    <div class="hero-content">
+      <p class="eyebrow">Premium Mobile Vehicle Care · {contact.locationText}</p>
+      <h1>{siteConfig.heroHeadline}</h1>
+      <p>{siteConfig.heroCopy}</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-open-booking>Book Now</button>
+        <a class="btn btn-ghost" href="/services">View Services</a>
+        <a class="btn btn-subtle hero-whatsapp" href={contact.whatsapp} target="_blank" rel="noreferrer">Ask on WhatsApp</a>
+      </div>
     </div>
   </div>
 </section>
