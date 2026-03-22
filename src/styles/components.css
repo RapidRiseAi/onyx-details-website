@@ -422,7 +422,7 @@
 
   .hero h1 {
     display: block;
-    font-size: clamp(2.15rem, 11vw, 2.85rem);
+    font-size: clamp(1.65rem, 9vw, 2.35rem);
     line-height: 1.04;
     letter-spacing: -0.01em;
     max-width: 11ch;
@@ -436,7 +436,7 @@
   .hero p:not(.eyebrow):not(.hero-location-mobile) {
     display: block;
     max-width: 30ch;
-    font-size: 0.95rem;
+    font-size: 0.72rem;
     line-height: 1.46;
     color: color-mix(in srgb, var(--text) 86%, #fff0 14%);
     margin-bottom: 0.95rem;
