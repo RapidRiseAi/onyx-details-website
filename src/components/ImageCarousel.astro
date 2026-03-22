@@ -49,6 +49,11 @@ const { items, title, subtitle, interactive = false } = Astro.props;
         if (slides.length <= 1) return;
 
         let currentIndex = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartLeft = 0;
+        let draggedDistance = 0;
+        let blockClickUntil = 0;
 
         const visibleSlides = () => {
           if (window.matchMedia('(max-width: 800px)').matches) return 1;
@@ -56,13 +61,47 @@ const { items, title, subtitle, interactive = false } = Astro.props;
           return 3;
         };
 
+        const slideSize = () => {
+          const gap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
+          return slides[0].offsetWidth + gap;
+        };
+
+        const syncIndexFromScroll = () => {
+          const unit = slideSize();
+          if (unit <= 0) return;
+          currentIndex = Math.round(carouselTrack.scrollLeft / unit);
+        };
+
         const updateCarousel = (behavior = 'smooth') => {
           const maxIndex = Math.max(0, slides.length - visibleSlides());
           if (currentIndex > maxIndex) currentIndex = 0;
           if (currentIndex < 0) currentIndex = maxIndex;
-          const gap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
-          const targetLeft = currentIndex * (slides[0].offsetWidth + gap);
+          const targetLeft = currentIndex * slideSize();
           carouselTrack.scrollTo({ left: targetLeft, behavior });
+        };
+
+        const startDrag = (clientX) => {
+          isDragging = true;
+          dragStartX = clientX;
+          dragStartLeft = carouselTrack.scrollLeft;
+          draggedDistance = 0;
+          carouselTrack.classList.add('dragging');
+        };
+
+        const moveDrag = (clientX) => {
+          if (!isDragging) return;
+          const distance = clientX - dragStartX;
+          draggedDistance = Math.max(draggedDistance, Math.abs(distance));
+          carouselTrack.scrollLeft = dragStartLeft - distance;
+        };
+
+        const endDrag = () => {
+          if (!isDragging) return;
+          isDragging = false;
+          carouselTrack.classList.remove('dragging');
+          if (draggedDistance > 8) blockClickUntil = Date.now() + 220;
+          syncIndexFromScroll();
+          updateCarousel();
         };
 
         prevButton.addEventListener('click', () => {
@@ -74,6 +113,40 @@ const { items, title, subtitle, interactive = false } = Astro.props;
           currentIndex += 1;
           updateCarousel();
         });
+
+        carouselTrack.addEventListener('scroll', syncIndexFromScroll, { passive: true });
+
+        carouselTrack.addEventListener('mousedown', (event) => {
+          if (event.button !== 0) return;
+          startDrag(event.clientX);
+        });
+
+        carouselTrack.addEventListener('mousemove', (event) => {
+          if (!isDragging) return;
+          event.preventDefault();
+          moveDrag(event.clientX);
+        });
+
+        carouselTrack.addEventListener('touchstart', (event) => {
+          const [touch] = event.touches;
+          if (!touch) return;
+          startDrag(touch.clientX);
+        }, { passive: true });
+
+        carouselTrack.addEventListener('touchmove', (event) => {
+          const [touch] = event.touches;
+          if (!touch) return;
+          moveDrag(touch.clientX);
+        }, { passive: true });
+
+        carouselTrack.addEventListener('mouseleave', endDrag);
+        carouselTrack.addEventListener('mouseup', endDrag);
+        carouselTrack.addEventListener('touchend', endDrag);
+        carouselTrack.addEventListener('touchcancel', endDrag);
+        document.addEventListener('mouseup', endDrag);
+        carouselTrack.addEventListener('click', (event) => {
+          if (Date.now() <= blockClickUntil) event.preventDefault();
+        }, true);
 
         window.addEventListener('resize', () => updateCarousel('auto'));
         updateCarousel('auto');

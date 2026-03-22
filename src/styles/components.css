@@ -195,8 +195,9 @@
 .carousel-control:hover { border-color: var(--gold); color: var(--gold-bright); }
 .carousel-control:disabled { opacity:.35; cursor:not-allowed; }
 
-.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; }
+.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; -webkit-overflow-scrolling:touch; touch-action:pan-x; overscroll-behavior-x:contain; cursor:grab; }
 .carousel-track::-webkit-scrollbar { display:none; }
+.carousel-track.dragging { cursor:grabbing; scroll-snap-type:none; }
 .carousel-slide { display:block; border:none; background:transparent; color:var(--muted); text-align:left; cursor:pointer; scroll-snap-align:start; }
 .carousel-slide.static { cursor:default; }
 .carousel-slide img { width:100%; border-radius:16px; border:1px solid var(--border-strong); box-shadow: 0 10px 22px rgba(0,0,0,.25); }
