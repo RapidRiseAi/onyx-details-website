@@ -513,7 +513,8 @@
     -ms-overflow-style: none;
   }
 
-  .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
+   .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
+  .service-grid-mobile-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
   .service-grid-mobile-carousel > * {
     flex: 0 0 86% !important;
     min-width: 86% !important;

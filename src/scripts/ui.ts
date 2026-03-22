@@ -43,13 +43,74 @@ const initMobileMenu = () => {
   });
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initMobileMenu, { once: true });
-} else {
+const initServiceCarousels = () => {
+  document.querySelectorAll('.service-grid-mobile-carousel').forEach((carousel) => {
+    if (carousel.dataset.carouselInit === 'true') return;
+    carousel.dataset.carouselInit = 'true';
+
+    let isPointerDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+
+    const startDrag = (clientX) => {
+      isPointerDown = true;
+      startX = clientX;
+      startScrollLeft = carousel.scrollLeft;
+      carousel.classList.add('dragging');
+    };
+
+    const moveDrag = (clientX) => {
+      if (!isPointerDown) return;
+      const distance = clientX - startX;
+      carousel.scrollLeft = startScrollLeft - distance;
+    };
+
+    const endDrag = () => {
+      isPointerDown = false;
+      carousel.classList.remove('dragging');
+    };
+
+    carousel.addEventListener('pointerdown', (event) => {
+      startDrag(event.clientX);
+      carousel.setPointerCapture?.(event.pointerId);
+    });
+
+    carousel.addEventListener('pointermove', (event) => {
+      if (!isPointerDown) return;
+      event.preventDefault();
+      moveDrag(event.clientX);
+    });
+
+    carousel.addEventListener('pointerup', endDrag);
+    carousel.addEventListener('pointercancel', endDrag);
+    carousel.addEventListener('pointerleave', endDrag);
+
+    carousel.addEventListener('touchstart', (event) => {
+      if (event.touches.length !== 1) return;
+      startDrag(event.touches[0].clientX);
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', (event) => {
+      if (!isPointerDown || event.touches.length !== 1) return;
+      moveDrag(event.touches[0].clientX);
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', endDrag);
+  });
+};
+
+const initUi = () => {
   initMobileMenu();
+  initServiceCarousels();
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUi, { once: true });
+} else {
+  initUi();
 }
 
-document.addEventListener('astro:page-load', initMobileMenu);
+document.addEventListener('astro:page-load', initUi);
 
 const lightbox = document.querySelector('#lightbox');
 const lightboxImage = lightbox?.querySelector('img');
