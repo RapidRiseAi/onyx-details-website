@@ -264,6 +264,15 @@
     box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
   }
 
+  .site-header .container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding-inline: 1rem;
+  }
+
+
+
   .nav-wrap {
     grid-template-columns: 1fr auto;
     min-height: 68px;
