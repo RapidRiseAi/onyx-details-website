@@ -48,54 +48,49 @@ const initServiceCarousels = () => {
     if (carousel.dataset.carouselInit === 'true') return;
     carousel.dataset.carouselInit = 'true';
 
-    let isPointerDown = false;
+    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!supportsFinePointer) return;
+
+    let isMouseDown = false;
     let startX = 0;
     let startScrollLeft = 0;
 
-    const startDrag = (clientX) => {
-      isPointerDown = true;
+    const startDrag = (clientX: number) => {
+      isMouseDown = true;
       startX = clientX;
       startScrollLeft = carousel.scrollLeft;
       carousel.classList.add('dragging');
     };
 
-    const moveDrag = (clientX) => {
-      if (!isPointerDown) return;
+    const moveDrag = (clientX: number) => {
+      if (!isMouseDown) return;
       const distance = clientX - startX;
       carousel.scrollLeft = startScrollLeft - distance;
     };
 
     const endDrag = () => {
-      isPointerDown = false;
+      if (!isMouseDown) return;
+      isMouseDown = false;
       carousel.classList.remove('dragging');
     };
 
-    carousel.addEventListener('pointerdown', (event) => {
+    carousel.addEventListener('mousedown', (event) => {
+      if (event.button !== 0) return;
       startDrag(event.clientX);
-      carousel.setPointerCapture?.(event.pointerId);
     });
 
-    carousel.addEventListener('pointermove', (event) => {
-      if (!isPointerDown) return;
+    carousel.addEventListener('mousemove', (event) => {
+      if (!isMouseDown) return;
       event.preventDefault();
       moveDrag(event.clientX);
     });
 
-    carousel.addEventListener('pointerup', endDrag);
-    carousel.addEventListener('pointercancel', endDrag);
-    carousel.addEventListener('pointerleave', endDrag);
+    carousel.addEventListener('mouseleave', endDrag);
+    document.addEventListener('mouseup', endDrag);
 
-    carousel.addEventListener('touchstart', (event) => {
-      if (event.touches.length !== 1) return;
-      startDrag(event.touches[0].clientX);
-    }, { passive: true });
-
-    carousel.addEventListener('touchmove', (event) => {
-      if (!isPointerDown || event.touches.length !== 1) return;
-      moveDrag(event.touches[0].clientX);
-    }, { passive: true });
-
-    carousel.addEventListener('touchend', endDrag);
+    carousel.addEventListener('dragstart', (event) => {
+      event.preventDefault();
+    });
   });
 };
 
