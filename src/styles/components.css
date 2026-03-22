@@ -49,6 +49,9 @@
 
 .brand-mark {
   display: inline-flex;
+  position: relative;
+  z-index: 120;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
@@ -236,6 +239,24 @@
   .site-nav a { width: 100%; padding: 0.5rem 0.2rem; }
   .site-nav .btn { width: 100%; margin-top: 0.35rem; }
   .site-nav.open { display:flex; }
+
+  .service-grid-mobile-carousel {
+    display: flex;
+    gap: 0.72rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    padding-bottom: 0.35rem;
+  }
+
+  .service-grid-mobile-carousel > * {
+    flex: 0 0 82%;
+    min-width: 82%;
+    scroll-snap-align: start;
+  }
 }
 
 @media (max-width: 800px){
