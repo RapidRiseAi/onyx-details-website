@@ -24,14 +24,24 @@ import { siteConfig } from '../data/site';
       <button class="btn btn-primary" data-open-booking>Book Now</button>
     </nav>
 
-    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
-    <nav id="site-nav" class="site-nav" aria-label="Mobile navigation">
-      <a href="/">Home</a>
-      <a href="/services">Services</a>
-      <a href="/gallery">Gallery</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-      <button class="btn btn-primary" data-open-booking>Book Now</button>
-    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu-panel" aria-label="Open mobile menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
+
+  <div class="mobile-menu-backdrop" data-mobile-backdrop hidden></div>
+  <nav id="mobile-menu-panel" class="site-nav" aria-label="Mobile navigation" aria-hidden="true" hidden>
+    <div class="site-nav-head">
+      <p>Navigation</p>
+      <button type="button" class="menu-close" data-mobile-menu-close aria-label="Close mobile menu">✕</button>
+    </div>
+    <a href="/">Home</a>
+    <a href="/services">Services</a>
+    <a href="/gallery">Gallery</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <button class="btn btn-primary" data-open-booking>Book Now</button>
+  </nav>
 </header>

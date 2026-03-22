@@ -13,7 +13,7 @@
 
 * { box-sizing: border-box; }
 
-html, body { overflow-x: clip; }
+html, body { overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -92,3 +92,7 @@ a { color: inherit; }
 .form-status { color: var(--gold-bright); min-height:1.2rem; }
 
 :focus-visible { outline: 2px solid var(--gold-bright); outline-offset:2px; }
+
+body.mobile-menu-open {
+  overflow: hidden;
+}
