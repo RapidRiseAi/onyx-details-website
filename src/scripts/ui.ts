@@ -1,12 +1,17 @@
-const body = document.body;
-const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('#mobile-menu-panel');
-const menuClose = document.querySelector('[data-mobile-menu-close]');
-const backdrop = document.querySelector('[data-mobile-backdrop]');
-const mobileLinks = nav ? Array.from(nav.querySelectorAll('a')) : [];
-const mobileCtas = nav ? Array.from(nav.querySelectorAll('[data-open-booking]')) : [];
+const initMobileMenu = () => {
+  const body = document.body;
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('#mobile-menu-panel');
+  const menuClose = document.querySelector('[data-mobile-menu-close]');
+  const backdrop = document.querySelector('[data-mobile-backdrop]');
 
-if (menuToggle && nav && backdrop) {
+  if (!menuToggle || !nav || !backdrop) return;
+  if (menuToggle.dataset.menuInit === 'true') return;
+  menuToggle.dataset.menuInit = 'true';
+
+  const mobileLinks = Array.from(nav.querySelectorAll('a'));
+  const mobileCtas = Array.from(nav.querySelectorAll('[data-open-booking]'));
+
   const setMenuState = (open) => {
     menuToggle.setAttribute('aria-expanded', String(open));
     nav.setAttribute('aria-hidden', String(!open));
@@ -36,7 +41,15 @@ if (menuToggle && nav && backdrop) {
   window.addEventListener('resize', () => {
     if (window.matchMedia('(min-width: 768px)').matches) setMenuState(false);
   });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMobileMenu, { once: true });
+} else {
+  initMobileMenu();
 }
+
+document.addEventListener('astro:page-load', initMobileMenu);
 
 const lightbox = document.querySelector('#lightbox');
 const lightboxImage = lightbox?.querySelector('img');
