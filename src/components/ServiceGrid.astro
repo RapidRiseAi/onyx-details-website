@@ -1,7 +1,10 @@
 ---
 import type { Service } from '../data/services';
 import ServiceCard from './ServiceCard.astro';
-interface Props { services: Service[] }
-const { services } = Astro.props;
+interface Props {
+  services: Service[];
+  carouselOnMobile?: boolean;
+}
+const { services, carouselOnMobile = false } = Astro.props;
 ---
-<div class="service-grid">{services.map((service) => <ServiceCard service={service} />)}</div>
+<div class={`service-grid ${carouselOnMobile ? 'service-grid-mobile-carousel' : ''}`}>{services.map((service) => <ServiceCard service={service} />)}</div>
