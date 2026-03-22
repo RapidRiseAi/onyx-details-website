@@ -5,10 +5,9 @@ interface Props {
   items: GalleryItem[];
   title: string;
   subtitle?: string;
-  interactive?: boolean;
 }
 
-const { items, title, subtitle, interactive = false } = Astro.props;
+const { items, title, subtitle } = Astro.props;
 ---
 <section class="before-after-carousel-section">
   <div class="section-heading compact">
@@ -18,12 +17,7 @@ const { items, title, subtitle, interactive = false } = Astro.props;
   <div class="before-after-carousel" data-carousel>
     <button class="carousel-control" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
     <div class="carousel-track" data-carousel-track>
-      {interactive ? items.map((item) => (
-        <button class="carousel-slide" data-lightbox-src={item.src} data-lightbox-alt={item.alt}>
-          <img src={item.src} alt={item.alt} loading="lazy" />
-          <span>{item.title}</span>
-        </button>
-      )) : items.map((item) => (
+      {items.map((item) => (
         <article class="carousel-slide static">
           <img src={item.src} alt={item.alt} loading="lazy" />
           <span>{item.title}</span>
@@ -56,12 +50,22 @@ const { items, title, subtitle, interactive = false } = Astro.props;
           return 3;
         };
 
+        const slideSize = () => {
+          const gap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
+          return slides[0].offsetWidth + gap;
+        };
+
+        const syncIndexFromScroll = () => {
+          const unit = slideSize();
+          if (unit <= 0) return;
+          currentIndex = Math.round(carouselTrack.scrollLeft / unit);
+        };
+
         const updateCarousel = (behavior = 'smooth') => {
           const maxIndex = Math.max(0, slides.length - visibleSlides());
           if (currentIndex > maxIndex) currentIndex = 0;
           if (currentIndex < 0) currentIndex = maxIndex;
-          const gap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
-          const targetLeft = currentIndex * (slides[0].offsetWidth + gap);
+          const targetLeft = currentIndex * slideSize();
           carouselTrack.scrollTo({ left: targetLeft, behavior });
         };
 
@@ -74,6 +78,8 @@ const { items, title, subtitle, interactive = false } = Astro.props;
           currentIndex += 1;
           updateCarousel();
         });
+
+        carouselTrack.addEventListener('scroll', syncIndexFromScroll, { passive: true });
 
         window.addEventListener('resize', () => updateCarousel('auto'));
         updateCarousel('auto');
