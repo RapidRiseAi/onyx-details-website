@@ -48,49 +48,100 @@ const initServiceCarousels = () => {
     if (carousel.dataset.carouselInit === 'true') return;
     carousel.dataset.carouselInit = 'true';
 
-    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!supportsFinePointer) return;
-
-    let isMouseDown = false;
+    let isPointerDown = false;
+    let isDragging = false;
+    let activePointerId: number | null = null;
     let startX = 0;
+    let startY = 0;
     let startScrollLeft = 0;
+    let dragLockedToAxis = false;
 
-    const startDrag = (clientX: number) => {
-      isMouseDown = true;
-      startX = clientX;
-      startScrollLeft = carousel.scrollLeft;
-      carousel.classList.add('dragging');
+    const getSlideUnit = () => {
+      const firstSlide = carousel.firstElementChild as HTMLElement | null;
+      if (!firstSlide) return 0;
+      const gap = Number.parseFloat(window.getComputedStyle(carousel).columnGap || window.getComputedStyle(carousel).gap || '0');
+      return firstSlide.getBoundingClientRect().width + gap;
     };
 
-    const moveDrag = (clientX: number) => {
-      if (!isMouseDown) return;
-      const distance = clientX - startX;
-      carousel.scrollLeft = startScrollLeft - distance;
+    const startDrag = (clientX: number, clientY: number) => {
+      isPointerDown = true;
+      isDragging = false;
+      dragLockedToAxis = false;
+      startX = clientX;
+      startY = clientY;
+      startScrollLeft = carousel.scrollLeft;
+    };
+
+    const moveDrag = (event: PointerEvent) => {
+      if (!isPointerDown) return;
+      const deltaX = event.clientX - startX;
+      const deltaY = event.clientY - startY;
+
+      if (!dragLockedToAxis) {
+        if (Math.abs(deltaX) < 5 && Math.abs(deltaY) < 5) return;
+        dragLockedToAxis = true;
+      }
+
+      if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+      isDragging = true;
+      carousel.classList.add('dragging');
+      event.preventDefault();
+      carousel.scrollLeft = startScrollLeft - deltaX;
     };
 
     const endDrag = () => {
-      if (!isMouseDown) return;
-      isMouseDown = false;
+      if (!isPointerDown) return;
+      isPointerDown = false;
       carousel.classList.remove('dragging');
+
+      if (!isDragging) return;
+      isDragging = false;
+      const unit = getSlideUnit();
+      if (unit <= 0) return;
+      const targetIndex = Math.round(carousel.scrollLeft / unit);
+      carousel.scrollTo({ left: targetIndex * unit, behavior: 'smooth' });
     };
 
-    carousel.addEventListener('mousedown', (event) => {
-      if (event.button !== 0) return;
-      startDrag(event.clientX);
+    carousel.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      activePointerId = event.pointerId;
+      carousel.setPointerCapture(event.pointerId);
+      startDrag(event.clientX, event.clientY);
     });
 
-    carousel.addEventListener('mousemove', (event) => {
-      if (!isMouseDown) return;
-      event.preventDefault();
-      moveDrag(event.clientX);
+    carousel.addEventListener('pointermove', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      moveDrag(event);
     });
 
-    carousel.addEventListener('mouseleave', endDrag);
-    document.addEventListener('mouseup', endDrag);
+    carousel.addEventListener('pointerup', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
+      activePointerId = null;
+      endDrag();
+    });
+
+    carousel.addEventListener('pointercancel', (event) => {
+      if (event.pointerId !== activePointerId) return;
+      if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
+      activePointerId = null;
+      endDrag();
+    });
 
     carousel.addEventListener('dragstart', (event) => {
       event.preventDefault();
     });
+
+    carousel.addEventListener(
+      'click',
+      (event) => {
+        if (!isDragging) return;
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      true
+    );
   });
 };
 

@@ -247,7 +247,7 @@
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    touch-action: pan-y;
     overscroll-behavior-x: contain;
     padding-bottom: 0.35rem;
   }
@@ -505,9 +505,9 @@
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x !important;
+    touch-action: pan-y !important;
     overscroll-behavior-x: contain;
-    scroll-snap-stop: always;
+    scroll-behavior: smooth;
     cursor: grab;
     scrollbar-width: none;
     -ms-overflow-style: none;
