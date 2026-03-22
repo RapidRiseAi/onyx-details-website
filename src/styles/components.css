@@ -283,7 +283,7 @@
     gap: 0.55rem;
   }
 
-  .brand-mark { justify-self: start; gap: 0.22rem; }
+  .brand-mark { justify-self: start; gap: 0.22rem; padding: 0.18rem 0.08rem; }
   .brand-word { font-size: 0.78rem; letter-spacing: 0.12em; color: #ffffff; font-weight: 700; }
   .brand-logo { width: 30px; height: 30px; }
 
@@ -425,7 +425,7 @@
     font-size: clamp(1.65rem, 9vw, 2.35rem);
     line-height: 1.04;
     letter-spacing: -0.01em;
-    max-width: 11ch;
+    max-width: none;
     margin: 0 0 0.7rem;
     color: #ffffff;
     font-family: Inter, system-ui, sans-serif;
@@ -435,7 +435,7 @@
 
   .hero p:not(.eyebrow):not(.hero-location-mobile) {
     display: block;
-    max-width: 30ch;
+    max-width: none;
     font-size: 0.72rem;
     line-height: 1.46;
     color: color-mix(in srgb, var(--text) 86%, #fff0 14%);
@@ -476,24 +476,26 @@
   .feature-grid,.service-grid,.steps-grid,.faq-grid { gap: 0.6rem; }
 
   .service-grid-mobile-carousel {
-    display: flex;
+    display: flex !important;
     gap: 0.72rem;
-    overflow-x: auto;
+    overflow-x: scroll !important;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    touch-action: pan-x !important;
     overscroll-behavior-x: contain;
+    scroll-snap-stop: always;
+    cursor: grab;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
   .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
   .service-grid-mobile-carousel > * {
-    flex: 0 0 86%;
-    min-width: 86%;
+    flex: 0 0 86% !important;
+    min-width: 86% !important;
     scroll-snap-align: start;
   }
 
