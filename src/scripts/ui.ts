@@ -44,104 +44,72 @@ const initMobileMenu = () => {
 };
 
 const initServiceCarousels = () => {
-  document.querySelectorAll('.service-grid-mobile-carousel').forEach((carousel) => {
+  document.querySelectorAll('[data-service-carousel]').forEach((carousel) => {
     if (carousel.dataset.carouselInit === 'true') return;
     carousel.dataset.carouselInit = 'true';
 
-    let isPointerDown = false;
-    let isDragging = false;
-    let activePointerId: number | null = null;
-    let startX = 0;
-    let startY = 0;
-    let startScrollLeft = 0;
-    let dragLockedToAxis = false;
+    const track = carousel.querySelector('[data-service-carousel-track]') as HTMLElement | null;
+    const prevButton = carousel.querySelector('[data-service-carousel-prev]') as HTMLButtonElement | null;
+    const nextButton = carousel.querySelector('[data-service-carousel-next]') as HTMLButtonElement | null;
+    const dotsContainer = carousel.querySelector('[data-service-carousel-dots]') as HTMLElement | null;
+    if (!track || !prevButton || !nextButton || !dotsContainer) return;
+
+    const slides = Array.from(track.children);
+    if (slides.length === 0) return;
+
+    let currentIndex = 0;
+    let rafId = 0;
 
     const getSlideUnit = () => {
-      const firstSlide = carousel.firstElementChild as HTMLElement | null;
-      if (!firstSlide) return 0;
-      const gap = Number.parseFloat(window.getComputedStyle(carousel).columnGap || window.getComputedStyle(carousel).gap || '0');
+      const firstSlide = slides[0] as HTMLElement;
+      const style = window.getComputedStyle(track);
+      const gap = Number.parseFloat(style.columnGap || style.gap || '0');
       return firstSlide.getBoundingClientRect().width + gap;
     };
 
-    const startDrag = (clientX: number, clientY: number) => {
-      isPointerDown = true;
-      isDragging = false;
-      dragLockedToAxis = false;
-      startX = clientX;
-      startY = clientY;
-      startScrollLeft = carousel.scrollLeft;
+    const clampIndex = (index: number) => Math.max(0, Math.min(index, slides.length - 1));
+
+    const goToIndex = (index: number, behavior: ScrollBehavior = 'smooth') => {
+      currentIndex = clampIndex(index);
+      const slideUnit = getSlideUnit();
+      if (slideUnit <= 0) return;
+      track.scrollTo({ left: currentIndex * slideUnit, behavior });
+      updateUi();
     };
 
-    const moveDrag = (event: PointerEvent) => {
-      if (!isPointerDown) return;
-      const deltaX = event.clientX - startX;
-      const deltaY = event.clientY - startY;
-
-      if (!dragLockedToAxis) {
-        if (Math.abs(deltaX) < 5 && Math.abs(deltaY) < 5) return;
-        dragLockedToAxis = true;
-      }
-
-      if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
-
-      isDragging = true;
-      carousel.classList.add('dragging');
-      event.preventDefault();
-      carousel.scrollLeft = startScrollLeft - deltaX;
+    const updateUi = () => {
+      prevButton.toggleAttribute('disabled', currentIndex === 0);
+      nextButton.toggleAttribute('disabled', currentIndex === slides.length - 1);
+      Array.from(dotsContainer.children).forEach((dot, dotIndex) => {
+        dot.toggleAttribute('aria-current', dotIndex === currentIndex);
+      });
     };
 
-    const endDrag = () => {
-      if (!isPointerDown) return;
-      isPointerDown = false;
-      carousel.classList.remove('dragging');
-
-      if (!isDragging) return;
-      isDragging = false;
-      const unit = getSlideUnit();
-      if (unit <= 0) return;
-      const targetIndex = Math.round(carousel.scrollLeft / unit);
-      carousel.scrollTo({ left: targetIndex * unit, behavior: 'smooth' });
+    const syncFromScroll = () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = window.requestAnimationFrame(() => {
+        const slideUnit = getSlideUnit();
+        if (slideUnit <= 0) return;
+        currentIndex = clampIndex(Math.round(track.scrollLeft / slideUnit));
+        updateUi();
+      });
     };
 
-    carousel.addEventListener('pointerdown', (event) => {
-      if (event.pointerType === 'mouse' && event.button !== 0) return;
-      activePointerId = event.pointerId;
-      carousel.setPointerCapture(event.pointerId);
-      startDrag(event.clientX, event.clientY);
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'service-carousel-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Go to service ${index + 1}`);
+      dot.addEventListener('click', () => goToIndex(index));
+      dotsContainer.append(dot);
     });
 
-    carousel.addEventListener('pointermove', (event) => {
-      if (event.pointerId !== activePointerId) return;
-      moveDrag(event);
-    });
+    prevButton.addEventListener('click', () => goToIndex(currentIndex - 1));
+    nextButton.addEventListener('click', () => goToIndex(currentIndex + 1));
+    track.addEventListener('scroll', syncFromScroll, { passive: true });
+    window.addEventListener('resize', () => goToIndex(currentIndex, 'auto'));
 
-    carousel.addEventListener('pointerup', (event) => {
-      if (event.pointerId !== activePointerId) return;
-      if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
-      activePointerId = null;
-      endDrag();
-    });
-
-    carousel.addEventListener('pointercancel', (event) => {
-      if (event.pointerId !== activePointerId) return;
-      if (carousel.hasPointerCapture(event.pointerId)) carousel.releasePointerCapture(event.pointerId);
-      activePointerId = null;
-      endDrag();
-    });
-
-    carousel.addEventListener('dragstart', (event) => {
-      event.preventDefault();
-    });
-
-    carousel.addEventListener(
-      'click',
-      (event) => {
-        if (!isDragging) return;
-        event.preventDefault();
-        event.stopPropagation();
-      },
-      true
-    );
+    goToIndex(0, 'auto');
   });
 };
 
