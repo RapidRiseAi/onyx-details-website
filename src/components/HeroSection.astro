@@ -6,13 +6,17 @@ import { contact } from '../data/contact';
   <div class="container">
     <div class="hero-content">
       <p class="eyebrow">Premium Mobile Vehicle Care · {contact.locationText}</p>
-      <h1>{siteConfig.heroHeadline}</h1>
+      <h1>
+        <span class="hero-title-desktop">{siteConfig.heroHeadline}</span>
+        <span class="hero-title-mobile">Premium Mobile Car Wash And Detailing At Your Door</span>
+      </h1>
       <p>{siteConfig.heroCopy}</p>
       <div class="hero-actions">
         <button class="btn btn-primary" data-open-booking>Book Now</button>
         <a class="btn btn-ghost" href="/services">View Services</a>
         <a class="btn btn-subtle hero-whatsapp" href={contact.whatsapp} target="_blank" rel="noreferrer">Ask on WhatsApp</a>
       </div>
+      <p class="hero-location-mobile">Serving {contact.serviceAreas.join(' · ')}</p>
     </div>
   </div>
 </section>
