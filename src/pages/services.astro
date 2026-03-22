@@ -17,12 +17,12 @@ const monthlyPackages = services.filter((service) => service.serviceType === 'mo
       <div class="service-group">
         <h2>One-Time Services</h2>
         <p class="service-group-intro">Book a once-off clean whenever your vehicle needs a reset.</p>
-        <ServiceGrid services={oneTimeServices} />
+        <ServiceGrid carouselOnMobile={true} services={oneTimeServices} />
       </div>
       <div class="service-group">
         <h2>Monthly Packages</h2>
         <p class="service-group-intro">Keep your vehicle in top condition with scheduled recurring care.</p>
-        <ServiceGrid services={monthlyPackages} />
+        <ServiceGrid carouselOnMobile={true} services={monthlyPackages} />
       </div>
     </div>
   </section>

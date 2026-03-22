@@ -18,7 +18,7 @@ const beforeAfterItems = galleryItems.filter((item) => item.category === 'before
 <MainLayout title={pageSeo.home.title} description={pageSeo.home.description}>
   <HeroSection />
   <section class="section"><div class="container"><h2>Why Choose OnyxDetails</h2><div class="feature-grid">{['We come to you','Premium finish','Recurring plans available','Professional and reliable','Suitable for homes, farms, and workplaces'].map((p)=><article class="card"><h3>{p}</h3></article>)}</div></div></section>
-  <section class="section"><div class="container"><h2>Services Preview</h2><ServiceGrid services={services.filter((s)=>['basic-wash','detail-interior-exterior','detail-bi-weekly','special-pack'].includes(s.id))} /></div></section>
+  <section class="section"><div class="container"><h2>Services Preview</h2><ServiceGrid carouselOnMobile={true} services={services.filter((s)=>['basic-wash','detail-interior-exterior','detail-bi-weekly','special-pack'].includes(s.id))} /></div></section>
   <PromoBanner />
   <HowItWorks />
   <section class="section"><div class="container"><ImageCarousel items={beforeAfterItems} title="Before and After Results" subtitle="A quick look at real transformations from recent details." /><p><a class="btn btn-ghost" href="/gallery">View Full Gallery</a></p></div></section>
