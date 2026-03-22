@@ -112,6 +112,7 @@
 .hero-content { max-width: 680px; }
 .hero-title-mobile,
 .hero-location-mobile { display: none; }
+.hero-mobile-media { display: none; }
 
 .feature-grid,.service-grid,.steps-grid,.faq-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:1.15rem; }
 .service-card .price { color: var(--gold-bright); font-weight: 700; }
@@ -362,30 +363,23 @@
   .site-nav .btn { margin-top: auto; width: 100%; min-height: 42px; }
 
   .hero {
-    padding: 1.1rem 0 0.9rem;
-    min-height: 50svh;
-    display: flex;
-    align-items: stretch;
-    background-image:
-      linear-gradient(115deg, rgba(4, 5, 7, 0.9) 6%, rgba(4, 5, 7, 0.65) 46%, rgba(4, 5, 7, 0.26) 100%),
-      linear-gradient(180deg, rgba(4, 5, 7, 0.2) 0%, rgba(4, 5, 7, 0.74) 57%, rgba(4, 5, 7, 0.95) 100%),
-      url('https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Home-Page-Hero.png');
-    background-position: center, center, 52% 24%;
-    background-size: cover, cover, cover;
+    padding: 1.05rem 0 0.95rem;
+    min-height: auto;
+    background:
+      radial-gradient(120% 140% at 12% 12%, rgba(199, 163, 93, 0.1), transparent 58%),
+      linear-gradient(180deg, #07090f 0%, #05070b 100%);
   }
 
   .hero .container {
     max-width: 100%;
     width: 100%;
-    padding-inline: 1.05rem;
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
+    padding-inline: 1rem;
   }
 
   .hero-content {
     max-width: 100%;
     width: 100%;
-    min-height: calc(50svh - 0.9rem);
+    min-height: auto;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -393,54 +387,84 @@
     border-radius: 0;
     background: transparent;
     box-shadow: none;
+    gap: 0;
+  }
+
+  .hero-mobile-media {
+    display: block;
+    margin: 0 0 1rem;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(199, 163, 93, 0.2);
+    background: #080b11;
+  }
+
+  .hero-mobile-media img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center 36%;
+    display: block;
+    filter: brightness(0.88) contrast(1.05);
   }
 
   .eyebrow {
-    font-size: 1.22rem;
-    letter-spacing: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
     margin-bottom: 0.5rem;
-    font-weight: 800;
-    text-transform: none;
-    max-width: 21ch;
-    text-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #3f86ff;
   }
 
   .hero-title-desktop { display: none; }
   .hero-title-mobile { display: inline; }
 
   .hero h1 {
-    display: none;
+    display: block;
+    font-size: clamp(2.15rem, 11vw, 2.85rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    max-width: 11ch;
+    margin: 0 0 0.7rem;
+    color: #ffffff;
+    font-family: Inter, system-ui, sans-serif;
+    font-weight: 800;
+    text-wrap: balance;
   }
 
   .hero p:not(.eyebrow):not(.hero-location-mobile) {
-    display: none;
+    display: block;
+    max-width: 30ch;
+    font-size: 0.95rem;
+    line-height: 1.46;
+    color: color-mix(in srgb, var(--text) 86%, #fff0 14%);
+    margin-bottom: 0.95rem;
   }
 
   .hero-actions {
-    margin-top: auto;
-    gap: 0.5rem;
+    margin-top: 0;
+    gap: 0.6rem;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .hero-whatsapp { display: none; }
 
   .hero-actions .btn {
     width: 100%;
-    min-height: 42px;
-    font-size: 0.85rem;
-    padding-block: 0.54rem;
-    border-radius: 999px;
+    min-height: 50px;
+    font-size: 0.98rem;
+    padding-block: 0.64rem;
+    border-radius: 16px;
   }
 
   .hero-location-mobile {
     display: block;
-    margin-top: 0.72rem;
-    font-size: 0.66rem;
+    margin-top: 0.9rem;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--muted) 80%, var(--gold-soft) 20%);
+    color: color-mix(in srgb, var(--muted) 78%, #ffffff 22%);
   }
 
 
@@ -452,19 +476,26 @@
   .feature-grid,.service-grid,.steps-grid,.faq-grid { gap: 0.6rem; }
 
   .service-grid-mobile-carousel {
-    grid-auto-flow: column;
-    grid-auto-columns: 88%;
+    display: flex;
+    gap: 0.72rem;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
   .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
-  .service-grid-mobile-carousel > * { scroll-snap-align: start; }
+  .service-grid-mobile-carousel > * {
+    flex: 0 0 86%;
+    min-width: 86%;
+    scroll-snap-align: start;
+  }
 
   .card {
     border-radius: 18px;
