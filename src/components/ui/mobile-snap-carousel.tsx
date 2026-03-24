@@ -7,6 +7,7 @@ type Props = PropsWithChildren<{
   itemClassName?: string;
   showPagination?: boolean;
   desktopClassName?: string;
+  desktopMode?: 'grid' | 'carousel';
 }>;
 
 export function MobileSnapCarousel({
@@ -14,7 +15,8 @@ export function MobileSnapCarousel({
   className,
   itemClassName,
   showPagination = true,
-  desktopClassName
+  desktopClassName,
+  desktopMode = 'grid'
 }: Props) {
   const items = useMemo(() => (Array.isArray(children) ? children : [children]), [children]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -52,18 +54,23 @@ export function MobileSnapCarousel({
     return () => observer.disconnect();
   }, [items.length, isMobile]);
 
+  const desktopLayoutClasses =
+    desktopMode === 'grid'
+      ? `md:grid md:px-0 ${desktopClassName ?? ''}`
+      : `md:flex md:gap-4 md:px-0`;
+
   return (
     <div className={className}>
       <div
         ref={viewportRef}
-        className={`flex snap-x snap-mandatory gap-3 overflow-x-auto px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:px-0 ${desktopClassName ?? ''}`}
+        className={`flex snap-x snap-mandatory gap-3 overflow-x-auto px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${desktopLayoutClasses}`}
       >
         {items.map((item, index) => (
           <div
             key={index}
             data-carousel-item="true"
             data-carousel-index={index}
-            className={`w-[85%] shrink-0 snap-center md:w-auto md:shrink md:snap-none ${itemClassName ?? ''}`}
+            className={`w-[85%] shrink-0 snap-center md:snap-none ${desktopMode === 'grid' ? 'md:w-auto md:shrink' : 'md:w-[32%] md:shrink-0'} ${itemClassName ?? ''}`}
           >
             {item}
           </div>
