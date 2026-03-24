@@ -56,50 +56,67 @@ const initSwipeTracks = () => {
 
     let startX = 0;
     let startY = 0;
-    let didSwipe = false;
+    let startScrollLeft = 0;
+    let activePointerId: number | null = null;
+    let dragAxisLocked = false;
+    let isDragging = false;
+    let suppressClickUntil = 0;
 
-    const getStep = () => {
-      const firstItem = track.firstElementChild as HTMLElement | null;
-      if (!firstItem) return track.clientWidth * 0.85;
-      const style = window.getComputedStyle(track);
-      const gap = Number.parseFloat(style.columnGap || style.gap || '0');
-      return firstItem.getBoundingClientRect().width + gap;
+    const endDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      suppressClickUntil = Date.now() + 300;
+      track.classList.remove('is-dragging');
     };
 
-    track.addEventListener(
-      'touchstart',
-      (event) => {
-        const touch = event.touches[0];
-        if (!touch) return;
-        didSwipe = false;
-        startX = touch.clientX;
-        startY = touch.clientY;
-      },
-      { passive: true }
-    );
+    track.addEventListener('pointerdown', (event) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      activePointerId = event.pointerId;
+      dragAxisLocked = false;
+      isDragging = false;
+      startX = event.clientX;
+      startY = event.clientY;
+      startScrollLeft = track.scrollLeft;
+      track.setPointerCapture(event.pointerId);
+    });
 
-    track.addEventListener(
-      'touchend',
-      (event) => {
-        const touch = event.changedTouches[0];
-        if (!touch) return;
-        const deltaX = touch.clientX - startX;
-        const deltaY = touch.clientY - startY;
-        if (Math.abs(deltaX) < 28 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
-        didSwipe = true;
-        const direction = deltaX < 0 ? 1 : -1;
-        track.scrollBy({ left: getStep() * direction, behavior: 'smooth' });
-      },
-      { passive: true }
-    );
+    track.addEventListener('pointermove', (event) => {
+      if (activePointerId !== event.pointerId) return;
+      const deltaX = event.clientX - startX;
+      const deltaY = event.clientY - startY;
+
+      if (!dragAxisLocked) {
+        if (Math.abs(deltaX) < 4 && Math.abs(deltaY) < 4) return;
+        dragAxisLocked = true;
+      }
+
+      if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+      isDragging = true;
+      track.classList.add('is-dragging');
+      event.preventDefault();
+      track.scrollLeft = startScrollLeft - deltaX;
+    });
+
+    track.addEventListener('pointerup', (event) => {
+      if (activePointerId !== event.pointerId) return;
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+      activePointerId = null;
+      endDrag();
+    });
+
+    track.addEventListener('pointercancel', (event) => {
+      if (activePointerId !== event.pointerId) return;
+      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+      activePointerId = null;
+      endDrag();
+    });
 
     track.addEventListener(
       'click',
       (event) => {
-        if (!didSwipe) return;
+        if (Date.now() > suppressClickUntil) return;
         event.preventDefault();
         event.stopPropagation();
-        didSwipe = false;
       },
       true
     );
