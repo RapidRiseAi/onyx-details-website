@@ -6,15 +6,77 @@ export const navLinks = [
   { href: '/contact', label: 'Contact' }
 ];
 
+export const contact = {
+  phone: '+1 (555) 123-4567',
+  email: 'bookings@onyxdetails.com',
+  areas: ['Clayton', 'Dandenong', 'Narre Warren', 'Berwick', 'Pakenham'],
+  whatsapp: 'https://wa.me/15551234567'
+};
+
+export const hero = {
+  title: 'Premium Mobile Detailing at Your Doorstep',
+  subtitle:
+    'We come to your home, farm, or workplace and deliver reliable, high-finish detailing with consistent quality.',
+  image:
+    'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Home-Page-Hero.png'
+};
+
 export const services = [
-  { id: 'wash', title: 'Basic Wash', price: '$85+', desc: 'Exterior hand wash and wheel clean.' },
-  { id: 'detail', title: 'Full Detail', price: '$220+', desc: 'Interior + exterior premium detail.' },
-  { id: 'maintenance', title: 'Maintenance Plan', price: '$140+', desc: 'Recurring maintenance service.' },
-  { id: 'special', title: 'Special Package', price: '$320+', desc: 'Paint-safe deep clean and finish.' }
+  {
+    id: 'wash',
+    title: 'Basic Wash',
+    price: '$85+',
+    desc: 'Exterior hand wash, wheel clean, and tire dressing for regular upkeep.',
+    bullets: ['Paint-safe hand wash', 'Wheel faces and tires', 'Glass cleaned']
+  },
+  {
+    id: 'detail',
+    title: 'Full Detail',
+    price: '$220+',
+    desc: 'Complete interior and exterior detail for a full reset.',
+    bullets: ['Interior vacuum + wipe down', 'Exterior deep clean', 'Finish enhancement']
+  },
+  {
+    id: 'maintenance',
+    title: 'Maintenance Plan',
+    price: '$140+',
+    desc: 'Recurring plan to keep your car consistently clean without hassle.',
+    bullets: ['Scheduled visits', 'Priority booking', 'Consistent finish']
+  },
+  {
+    id: 'special',
+    title: 'Special Package',
+    price: '$320+',
+    desc: 'High-attention package focused on premium presentation.',
+    bullets: ['Deep interior attention', 'Detail-focused finish', 'Ideal before sale/events']
+  }
 ];
 
 export const gallery = [
-  { src: '/Before-After3.png', alt: 'Before and after vehicle detail', title: 'Before / After' },
-  { src: '/Before-After4.png', alt: 'Detailed black vehicle', title: 'Shine Finish' },
-  { src: '/Lifestyle1.png', alt: 'Mobile detail lifestyle shot', title: 'Mobile Service' }
+  { src: '/Before-After3.png', alt: 'Before and after vehicle detail', title: 'Before / After Transformation' },
+  { src: '/Before-After4.png', alt: 'Detailed black vehicle', title: 'Deep Gloss Finish' },
+  { src: '/Lifestyle1.png', alt: 'Mobile detail lifestyle shot', title: 'On-Site Mobile Service' }
+];
+
+export const whyChoose = [
+  'We come to you',
+  'Premium finish every visit',
+  'Reliable recurring plans',
+  'Professional and respectful service',
+  'Suitable for homes, farms, and workplaces'
+];
+
+export const steps = [
+  { title: 'Choose a service', text: 'Pick the wash/detail package that matches your vehicle and schedule.' },
+  { title: 'Book your slot', text: 'Send your preferred date/time and location with quick contact details.' },
+  { title: 'We detail on-site', text: 'Our team arrives equipped and completes the service at your location.' },
+  { title: 'Enjoy the result', text: 'You get a clean, polished vehicle without leaving home or work.' }
+];
+
+export const testimonials = [
+  {
+    name: 'M. Taylor',
+    quote:
+      'Super easy to book, showed up on time, and the car looked showroom-ready. Best mobile detail we have used.'
+  }
 ];
