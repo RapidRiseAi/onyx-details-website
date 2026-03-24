@@ -15,7 +15,7 @@ const { items, title, subtitle } = Astro.props;
     {subtitle && <p>{subtitle}</p>}
   </div>
   <div class="before-after-carousel" data-carousel>
-    <button class="carousel-control" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
+    <button type="button" class="carousel-control" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
     <div class="carousel-track" data-carousel-track>
       {items.map((item) => (
         <article class="carousel-slide static">
@@ -24,7 +24,7 @@ const { items, title, subtitle } = Astro.props;
         </article>
       ))}
     </div>
-    <button class="carousel-control" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
+    <button type="button" class="carousel-control" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
   </div>
 </section>
 

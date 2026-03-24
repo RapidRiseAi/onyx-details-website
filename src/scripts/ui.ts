@@ -45,6 +45,66 @@ const initMobileMenu = () => {
 
 const initUi = () => {
   initMobileMenu();
+  initSwipeTracks();
+};
+
+const initSwipeTracks = () => {
+  document.querySelectorAll('.service-grid-mobile-carousel, .carousel-track').forEach((trackEl) => {
+    const track = trackEl as HTMLElement;
+    if (track.dataset.swipeInit === 'true') return;
+    track.dataset.swipeInit = 'true';
+
+    let pointerDown = false;
+    let hasDragged = false;
+    let startX = 0;
+    let startY = 0;
+    let startScrollLeft = 0;
+
+    const onStart = (clientX: number, clientY: number) => {
+      pointerDown = true;
+      hasDragged = false;
+      startX = clientX;
+      startY = clientY;
+      startScrollLeft = track.scrollLeft;
+    };
+
+    const onMove = (event: TouchEvent) => {
+      if (!pointerDown) return;
+      const touch = event.touches[0];
+      if (!touch) return;
+      const deltaX = touch.clientX - startX;
+      const deltaY = touch.clientY - startY;
+
+      if (Math.abs(deltaX) <= Math.abs(deltaY) || Math.abs(deltaX) < 6) return;
+      hasDragged = true;
+      event.preventDefault();
+      track.scrollLeft = startScrollLeft - deltaX;
+    };
+
+    const onEnd = () => {
+      pointerDown = false;
+    };
+
+    track.addEventListener('touchstart', (event) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      onStart(touch.clientX, touch.clientY);
+    }, { passive: true });
+
+    track.addEventListener('touchmove', onMove, { passive: false });
+    track.addEventListener('touchend', onEnd, { passive: true });
+    track.addEventListener('touchcancel', onEnd, { passive: true });
+
+    track.addEventListener(
+      'click',
+      (event) => {
+        if (!hasDragged) return;
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      true
+    );
+  });
 };
 
 if (document.readyState === 'loading') {
