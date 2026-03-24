@@ -86,54 +86,6 @@ const { items, title, subtitle } = Astro.props;
           updateCarousel();
         });
 
-        let pointerActive = false;
-        let pointerId = null;
-        let startX = 0;
-        let startScrollLeft = 0;
-        const dragThreshold = 8;
-        let didDrag = false;
-
-        carouselTrack.addEventListener('pointerdown', (event) => {
-          if (event.pointerType === 'mouse' && event.button !== 0) return;
-          pointerActive = true;
-          pointerId = event.pointerId;
-          didDrag = false;
-          startX = event.clientX;
-          startScrollLeft = carouselTrack.scrollLeft;
-          carouselTrack.classList.add('dragging');
-          carouselTrack.setPointerCapture(event.pointerId);
-        });
-
-        carouselTrack.addEventListener(
-          'pointermove',
-          (event) => {
-            if (!pointerActive || pointerId !== event.pointerId) return;
-            const distance = event.clientX - startX;
-            if (!didDrag && Math.abs(distance) >= dragThreshold) didDrag = true;
-            if (!didDrag) return;
-            event.preventDefault();
-            carouselTrack.scrollLeft = startScrollLeft - distance;
-          },
-          { passive: false }
-        );
-
-        const endPointerDrag = (event) => {
-          if (!pointerActive || pointerId !== event.pointerId) return;
-          pointerActive = false;
-          pointerId = null;
-          carouselTrack.classList.remove('dragging');
-          syncIndexFromScroll();
-          updateControls();
-        };
-
-        carouselTrack.addEventListener('pointerup', endPointerDrag);
-        carouselTrack.addEventListener('pointercancel', endPointerDrag);
-        carouselTrack.addEventListener('lostpointercapture', () => {
-          pointerActive = false;
-          pointerId = null;
-          carouselTrack.classList.remove('dragging');
-        });
-
         carouselTrack.addEventListener('scroll', () => {
           syncIndexFromScroll();
           updateControls();

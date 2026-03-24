@@ -47,69 +47,6 @@ const initServiceCarousels = () => {
   document.querySelectorAll('.service-grid-mobile-carousel').forEach((carousel) => {
     if (carousel.dataset.carouselInit === 'true') return;
     carousel.dataset.carouselInit = 'true';
-
-    let pointerActive = false;
-    let pointerId: number | null = null;
-    let startX = 0;
-    let startScrollLeft = 0;
-    let didDrag = false;
-
-    const dragThreshold = 8;
-    const isInteractiveElement = (element: EventTarget | null) =>
-      element instanceof HTMLElement && Boolean(element.closest('a, button, input, textarea, select, label'));
-
-    const onPointerDown = (event: PointerEvent) => {
-      if (event.pointerType === 'mouse' && event.button !== 0) return;
-      if (isInteractiveElement(event.target)) return;
-
-      pointerActive = true;
-      pointerId = event.pointerId;
-      didDrag = false;
-      startX = event.clientX;
-      startScrollLeft = carousel.scrollLeft;
-      carousel.classList.add('dragging');
-      carousel.setPointerCapture(event.pointerId);
-    };
-
-    const onPointerMove = (event: PointerEvent) => {
-      if (!pointerActive || pointerId !== event.pointerId) return;
-
-      const distance = event.clientX - startX;
-      if (!didDrag && Math.abs(distance) >= dragThreshold) didDrag = true;
-      if (!didDrag) return;
-
-      event.preventDefault();
-      carousel.scrollLeft = startScrollLeft - distance;
-    };
-
-    const onPointerUp = (event: PointerEvent) => {
-      if (!pointerActive || pointerId !== event.pointerId) return;
-      pointerActive = false;
-      pointerId = null;
-      carousel.classList.remove('dragging');
-    };
-
-    carousel.addEventListener('pointerdown', onPointerDown);
-    carousel.addEventListener('pointermove', onPointerMove, { passive: false });
-    carousel.addEventListener('pointerup', onPointerUp);
-    carousel.addEventListener('pointercancel', onPointerUp);
-    carousel.addEventListener('lostpointercapture', () => {
-      pointerActive = false;
-      pointerId = null;
-      carousel.classList.remove('dragging');
-    });
-
-    carousel.addEventListener(
-      'click',
-      (event) => {
-        if (!didDrag) return;
-        event.preventDefault();
-        event.stopPropagation();
-      },
-      true
-    );
-
-    carousel.addEventListener('dragstart', (event) => event.preventDefault());
   });
 };
 
