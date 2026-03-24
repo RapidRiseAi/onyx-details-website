@@ -1,16 +1,11 @@
+"use client";
+
+import { useSearchParams } from 'next/navigation';
 import { contact } from '@/content/siteContent';
 
-type ContactPageProps = {
-  searchParams?: Promise<{
-    service?: string | string[];
-  }>;
-};
-
-export default async function ContactPage({ searchParams }: ContactPageProps) {
-  const resolvedSearchParams = await searchParams;
-  const selectedService = Array.isArray(resolvedSearchParams?.service)
-    ? resolvedSearchParams?.service[0]
-    : resolvedSearchParams?.service;
+export default function ContactPage() {
+  const searchParams = useSearchParams();
+  const selectedService = searchParams.get('service');
 
   return (
     <div className="space-y-5">
