@@ -15,17 +15,20 @@ const { items, title, subtitle } = Astro.props;
     {subtitle && <p>{subtitle}</p>}
   </div>
   <div class="before-after-carousel" data-carousel>
-    <button class="carousel-control" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
-    <div class="carousel-track" data-carousel-track>
-      {items.map((item) => (
-        <article class="carousel-slide static">
-          <img src={item.src} alt={item.alt} loading="lazy" />
-          <span>{item.title}</span>
-        </article>
-      ))}
+    <button class="carousel-control" type="button" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
+    <div class="carousel-viewport" data-carousel-viewport>
+      <div class="carousel-track" data-carousel-track>
+        {items.map((item) => (
+          <article class="carousel-slide static">
+            <img src={item.src} alt={item.alt} loading="lazy" draggable="false" />
+            <span>{item.title}</span>
+          </article>
+        ))}
+      </div>
     </div>
-    <button class="carousel-control" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
+    <button class="carousel-control" type="button" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
   </div>
+  <div class="carousel-pagination" data-carousel-pagination aria-hidden="true"></div>
 </section>
 
 <script is:inline>
@@ -35,14 +38,24 @@ const { items, title, subtitle } = Astro.props;
     const initCarousels = () => {
       document.querySelectorAll('[data-carousel]').forEach((carousel) => {
         const carouselTrack = carousel.querySelector('[data-carousel-track]');
+        const carouselViewport = carousel.querySelector('[data-carousel-viewport]');
         const prevButton = carousel.querySelector('[data-carousel-prev]');
         const nextButton = carousel.querySelector('[data-carousel-next]');
-        if (!carouselTrack || !prevButton || !nextButton) return;
+        const pagination = carousel.parentElement?.querySelector('[data-carousel-pagination]');
+        if (!carouselTrack || !carouselViewport || !prevButton || !nextButton) return;
 
         const slides = Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
-        if (slides.length <= 1) return;
+        if (slides.length <= 1) {
+          prevButton.disabled = true;
+          nextButton.disabled = true;
+          return;
+        }
 
-        let currentIndex = 0;
+        const slideStep = () => {
+          const styles = window.getComputedStyle(carouselTrack);
+          const gap = parseFloat(styles.columnGap || styles.gap || '0');
+          return slides[0].offsetWidth + gap;
+        };
 
         const visibleSlides = () => {
           if (window.matchMedia('(max-width: 800px)').matches) return 1;
@@ -50,49 +63,58 @@ const { items, title, subtitle } = Astro.props;
           return 3;
         };
 
-        const slideSize = () => {
-          const gap = parseFloat(window.getComputedStyle(carouselTrack).columnGap || '0');
-          return slides[0].offsetWidth + gap;
+        const maxIndex = () => Math.max(0, slides.length - visibleSlides());
+        const getIndex = () => {
+          const step = slideStep();
+          if (step <= 0) return 0;
+          return Math.round(carouselTrack.scrollLeft / step);
         };
 
-        const syncIndexFromScroll = () => {
-          const unit = slideSize();
-          if (unit <= 0) return;
-          currentIndex = Math.round(carouselTrack.scrollLeft / unit);
+        const renderPagination = () => {
+          if (!pagination) return;
+          const pages = Math.max(1, maxIndex() + 1);
+          pagination.innerHTML = Array.from({ length: pages })
+            .map((_, index) => `<button type="button" class="carousel-dot" data-carousel-dot="${index}" aria-label="Go to slide group ${index + 1}"></button>`)
+            .join('');
+          pagination.querySelectorAll('[data-carousel-dot]').forEach((dot) => {
+            dot.addEventListener('click', () => {
+              const index = Number(dot.getAttribute('data-carousel-dot') || '0');
+              carouselTrack.scrollTo({ left: index * slideStep(), behavior: 'smooth' });
+            });
+          });
         };
 
         const updateControls = () => {
+          const index = Math.min(maxIndex(), Math.max(0, getIndex()));
           const mobile = window.matchMedia('(max-width: 800px)').matches;
-          prevButton.disabled = mobile || currentIndex <= 0;
-          nextButton.disabled = mobile || currentIndex >= Math.max(0, slides.length - visibleSlides());
-        };
+          prevButton.disabled = mobile || index <= 0;
+          nextButton.disabled = mobile || index >= maxIndex();
 
-        const updateCarousel = (behavior = 'smooth') => {
-          const maxIndex = Math.max(0, slides.length - visibleSlides());
-          if (currentIndex > maxIndex) currentIndex = maxIndex;
-          if (currentIndex < 0) currentIndex = 0;
-          const targetLeft = currentIndex * slideSize();
-          carouselTrack.scrollTo({ left: targetLeft, behavior });
-          updateControls();
+          if (pagination) {
+            pagination.querySelectorAll('[data-carousel-dot]').forEach((dot, dotIndex) => {
+              dot.classList.toggle('active', dotIndex === index);
+            });
+          }
         };
 
         prevButton.addEventListener('click', () => {
-          currentIndex -= 1;
-          updateCarousel();
+          const index = Math.max(0, getIndex() - 1);
+          carouselTrack.scrollTo({ left: index * slideStep(), behavior: 'smooth' });
         });
 
         nextButton.addEventListener('click', () => {
-          currentIndex += 1;
-          updateCarousel();
+          const index = Math.min(maxIndex(), getIndex() + 1);
+          carouselTrack.scrollTo({ left: index * slideStep(), behavior: 'smooth' });
         });
 
-        carouselTrack.addEventListener('scroll', () => {
-          syncIndexFromScroll();
+        carouselTrack.addEventListener('scroll', updateControls, { passive: true });
+        window.addEventListener('resize', () => {
+          renderPagination();
           updateControls();
-        }, { passive: true });
+        });
 
-        window.addEventListener('resize', () => updateCarousel('auto'));
-        updateCarousel('auto');
+        renderPagination();
+        updateControls();
       });
     };
 
