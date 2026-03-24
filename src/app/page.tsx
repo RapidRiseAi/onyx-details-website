@@ -7,6 +7,8 @@ import { gallery, hero, services, steps, testimonials, whyChoose } from '@/conte
 
 export default function HomePage() {
   const beforeAfterGallery = gallery.filter((item) => item.src.includes('Before-After'));
+  const oneTimeServices = services.filter((service) => service.category === 'one-time');
+  const subscriptionServices = services.filter((service) => service.category === 'subscription');
 
   return (
     <div className="space-y-10">
@@ -30,14 +32,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Section className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4 md:hidden">
+      <Section className="space-y-4 md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.image} alt={hero.title} className="h-48 w-full rounded-xl object-cover" />
-        <p className="text-xs uppercase tracking-[0.22em] text-blue-400">Business Systems</p>
         <h1 className="font-serif text-5xl font-semibold leading-[1.03]">Premium Mobile Car Wash and Detailing</h1>
         <p className="text-zinc-300">{hero.subtitle}</p>
         <div className="grid grid-cols-2 gap-3">
-          <Button className="w-full rounded-2xl py-3">Book Now</Button>
+          <Link href="/contact" className="rounded-2xl bg-gold px-4 py-3 text-center text-sm font-semibold text-zinc-950">Book Now</Link>
           <Link href="/services" className="rounded-2xl border border-zinc-600 px-4 py-3 text-center font-semibold">View Services</Link>
         </div>
       </Section>
@@ -53,13 +54,26 @@ export default function HomePage() {
 
       <Section>
         <h2 className="text-2xl font-semibold">Services</h2>
-        <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service) => (
+        <h3 className="mt-3 text-sm uppercase tracking-[0.18em] text-gold">One-time services</h3>
+        <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
+          {oneTimeServices.map((service) => (
             <Card key={service.id}>
               <h3 className="text-lg font-semibold">{service.title}</h3>
               <p className="text-gold">{service.price}</p>
               <p className="mt-2 text-sm text-zinc-300">{service.desc}</p>
-              <Button className="mt-4 w-full">Book This Service</Button>
+              <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="mt-4 block rounded-lg bg-gold px-4 py-2 text-center text-sm font-semibold text-zinc-950">Book This Service</Link>
+            </Card>
+          ))}
+        </MobileSnapCarousel>
+
+        <h3 className="mt-6 text-sm uppercase tracking-[0.18em] text-gold">Subscription services</h3>
+        <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
+          {subscriptionServices.map((service) => (
+            <Card key={service.id}>
+              <h3 className="text-lg font-semibold">{service.title}</h3>
+              <p className="text-gold">{service.price}</p>
+              <p className="mt-2 text-sm text-zinc-300">{service.desc}</p>
+              <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="mt-4 block rounded-lg bg-gold px-4 py-2 text-center text-sm font-semibold text-zinc-950">Book This Service</Link>
             </Card>
           ))}
         </MobileSnapCarousel>

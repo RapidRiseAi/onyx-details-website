@@ -27,6 +27,7 @@ export const hero = {
 export const services = [
   {
     id: 'wash',
+    category: 'one-time',
     title: 'Basic Wash',
     price: '$85+',
     desc: 'Exterior hand wash, wheel clean, and tire dressing for regular upkeep.',
@@ -34,6 +35,7 @@ export const services = [
   },
   {
     id: 'detail',
+    category: 'one-time',
     title: 'Full Detail',
     price: '$220+',
     desc: 'Complete interior and exterior detail for a full reset.',
@@ -41,6 +43,7 @@ export const services = [
   },
   {
     id: 'maintenance',
+    category: 'subscription',
     title: 'Maintenance Plan',
     price: '$140+',
     desc: 'Recurring plan to keep your car consistently clean without hassle.',
@@ -48,6 +51,7 @@ export const services = [
   },
   {
     id: 'special',
+    category: 'subscription',
     title: 'Special Package',
     price: '$320+',
     desc: 'High-attention package focused on premium presentation.',
