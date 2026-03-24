@@ -8,12 +8,22 @@ import { gallery, hero, services, steps, testimonials, whyChoose } from '@/conte
 export default function HomePage() {
   return (
     <div className="space-y-10">
-      <Section className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 md:p-8">
-        <p className="text-xs uppercase tracking-[0.22em] text-gold">Premium mobile detailing</p>
-        <h1 className="text-4xl font-bold md:text-5xl">Premium Mobile Detailing</h1>
-        <p className="max-w-2xl text-zinc-300">{hero.subtitle}</p>
+      <Section className="relative overflow-hidden rounded-2xl border border-zinc-800">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-64 w-full rounded-xl object-cover md:h-80" />
+        <img src={hero.image} alt={hero.title} className="h-[74vh] min-h-[480px] w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/40" />
+        <div className="absolute inset-0 p-6 md:p-10">
+          <p className="text-xs uppercase tracking-[0.22em] text-gold">Premium mobile vehicle care</p>
+          <h1 className="mt-4 max-w-3xl font-serif text-5xl font-semibold leading-[1.06] md:text-7xl">
+            Premium Mobile Car Wash and Detailing at Your Home, Farm, or Workplace
+          </h1>
+          <p className="mt-4 max-w-2xl text-zinc-200">{hero.subtitle}</p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button className="rounded-full px-6 py-3">Book Now</Button>
+            <Link href="/services" className="rounded-full border border-gold/80 px-6 py-3 font-semibold text-zinc-100">View Services</Link>
+            <Link href="https://wa.me/15551234567" className="rounded-full border border-zinc-500 px-6 py-3 font-semibold text-zinc-100">Ask on WhatsApp</Link>
+          </div>
+        </div>
       </Section>
 
       <Section>
