@@ -81,8 +81,48 @@
     updateControls();
   };
 
+  const initResponsiveVariants = () => {
+    const media = window.matchMedia('(max-width: 980px)');
+    const sync = () => {
+      const mobile = media.matches;
+
+      document.querySelectorAll('[data-carousel-root]').forEach((root) => {
+        const desktop = root.querySelector('[data-carousel-desktop-variant]');
+        const mobileVariant = root.querySelector('[data-carousel-mobile-variant]');
+        if (desktop instanceof HTMLElement) {
+          desktop.hidden = mobile;
+          desktop.setAttribute('aria-hidden', String(mobile));
+          desktop.inert = mobile;
+        }
+        if (mobileVariant instanceof HTMLElement) {
+          mobileVariant.hidden = !mobile;
+          mobileVariant.setAttribute('aria-hidden', String(!mobile));
+          mobileVariant.inert = !mobile;
+        }
+      });
+
+      document.querySelectorAll('[data-service-carousel-root]').forEach((root) => {
+        const desktop = root.querySelector('[data-service-desktop-variant]');
+        const mobileVariant = root.querySelector('[data-service-mobile-variant]');
+        if (desktop instanceof HTMLElement) {
+          desktop.hidden = mobile;
+          desktop.setAttribute('aria-hidden', String(mobile));
+          desktop.inert = mobile;
+        }
+        if (mobileVariant instanceof HTMLElement) {
+          mobileVariant.hidden = !mobile;
+          mobileVariant.setAttribute('aria-hidden', String(!mobile));
+          mobileVariant.inert = !mobile;
+        }
+      });
+    };
+
+    media.addEventListener('change', sync);
+    sync();
+  };
+
   const initImageCarousels = () => {
-    document.querySelectorAll('[data-image-carousel]').forEach((carousel) => {
+    document.querySelectorAll('[data-carousel-desktop-variant], [data-carousel-mobile-variant]').forEach((carousel) => {
       if (!(carousel instanceof HTMLElement)) return;
       if (carousel.dataset.carouselInit === 'true') return;
       carousel.dataset.carouselInit = 'true';
@@ -95,7 +135,7 @@
   };
 
   const initServiceCarousels = () => {
-    document.querySelectorAll('[data-service-carousel]').forEach((carousel) => {
+    document.querySelectorAll('[data-service-mobile-variant]').forEach((carousel) => {
       if (!(carousel instanceof HTMLElement)) return;
       if (carousel.dataset.carouselInit === 'true') return;
       carousel.dataset.carouselInit = 'true';
@@ -220,6 +260,7 @@
 
   const init = () => {
     initMobileMenu();
+    initResponsiveVariants();
     initImageCarousels();
     initServiceCarousels();
     initBookingModal();

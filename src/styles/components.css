@@ -191,6 +191,9 @@
 
 .before-after-carousel-section { margin-bottom: 2rem; }
 .before-after-carousel { display:block; }
+.before-after-carousel-desktop,
+.before-after-carousel-mobile { width: 100%; }
+.before-after-carousel-mobile { display: none; }
 .before-after-carousel-controls { display:flex; justify-content:flex-end; gap:.45rem; margin-bottom:.45rem; }
 .carousel-viewport { overflow: hidden; }
 .carousel-control { border:1px solid var(--border-strong); border-radius:999px; background:#111317; color:var(--text); width:2.5rem; height:2.5rem; font-size:1.35rem; cursor:pointer; }
@@ -205,6 +208,7 @@
 .carousel-slide span { display:block; margin-top:.45rem; }
 .service-groups { display:grid; gap:2.2rem; }
 .service-group-intro { color:var(--muted); margin:.4rem 0 1rem; }
+.service-mobile-shell { display:none; }
 .service-mobile-controls { display:none; justify-content:flex-end; gap:0.45rem; margin-bottom:0.45rem; }
 .service-grid-carousel { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:1.15rem; }
 
@@ -244,6 +248,8 @@
   .site-nav.open { display:flex; }
 
   .service-mobile-controls { display:flex; }
+  .service-mobile-shell { display:block; }
+  .before-after-carousel-mobile { display:block; }
   .service-grid-carousel {
     display:flex;
     gap:0.72rem;
