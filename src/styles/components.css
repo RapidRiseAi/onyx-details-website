@@ -191,6 +191,7 @@
 
 .before-after-carousel-section { margin-bottom: 2rem; }
 .before-after-carousel { display:grid; grid-template-columns:auto 1fr auto; gap:.75rem; align-items:center; }
+.before-after-carousel-mobile { display: none; }
 .carousel-viewport { overflow: hidden; }
 .carousel-control { border:1px solid var(--border-strong); border-radius:999px; background:#111317; color:var(--text); width:2.5rem; height:2.5rem; font-size:1.35rem; cursor:pointer; }
 .carousel-control:hover { border-color: var(--gold); color: var(--gold-bright); }
@@ -202,9 +203,17 @@
 .carousel-slide.static { cursor:default; }
 .carousel-slide img { width:100%; border-radius:16px; border:1px solid var(--border-strong); box-shadow: 0 10px 22px rgba(0,0,0,.25); }
 .carousel-slide span { display:block; margin-top:.45rem; }
+.carousel-track-mobile { display:flex; gap:0.62rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; touch-action:pan-x; padding:0.2rem 0.1rem 0.35rem; scrollbar-width:none; }
+.carousel-track-mobile::-webkit-scrollbar { display:none; }
+.carousel-track-mobile .carousel-slide { flex:0 0 82%; min-width:82%; scroll-snap-align:start; }
 
 .service-groups { display:grid; gap:2.2rem; }
 .service-group-intro { color:var(--muted); margin:.4rem 0 1rem; }
+.service-grid-desktop { display:grid; }
+.service-grid-mobile-shell { display:none; }
+.service-grid-mobile-track { display:flex; gap:0.72rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; touch-action:pan-x; overscroll-behavior-x:contain; padding-bottom:0.35rem; scrollbar-width:none; -ms-overflow-style:none; }
+.service-grid-mobile-track::-webkit-scrollbar { display:none; }
+.service-grid-mobile-track > * { flex:0 0 82%; min-width:82%; scroll-snap-align:start; }
 
 @media (max-width: 1200px){
   .carousel-track { grid-auto-columns:calc((100% - 1rem) / 2); }
@@ -241,23 +250,8 @@
   .site-nav .btn { width: 100%; margin-top: 0.35rem; }
   .site-nav.open { display:flex; }
 
-  .service-grid-mobile-carousel {
-    display: flex;
-    gap: 0.72rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
-    overscroll-behavior-x: contain;
-    padding-bottom: 0.35rem;
-  }
-
-  .service-grid-mobile-carousel > * {
-    flex: 0 0 82%;
-    min-width: 82%;
-    scroll-snap-align: start;
-  }
+  .service-grid-desktop { display: none; }
+  .service-grid-mobile-shell { display:block; }
 }
 
 @media (max-width: 800px){
@@ -271,9 +265,8 @@
   .hero-actions .btn { width: 100%; }
   .card { padding: 1.05rem; }
   .split { grid-template-columns:1fr; }
-  .before-after-carousel { grid-template-columns:1fr; }
-  .carousel-control { display:none; pointer-events:none; }
-  .carousel-track { grid-auto-columns:minmax(82%, 1fr); }
+  .before-after-carousel-desktop { display:none; }
+  .before-after-carousel-mobile { display:block; }
   .cta { padding: 4rem 0 5rem; }
   .whatsapp-float { right: 0.65rem; bottom: 0.65rem; padding: 0.65rem 0.92rem; }
 }
@@ -497,28 +490,14 @@
 
   .feature-grid,.service-grid,.steps-grid,.faq-grid { gap: 0.6rem; }
 
-  .service-grid-mobile-carousel {
-    display: flex !important;
-    gap: 0.72rem;
-    overflow-x: scroll !important;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+  .service-grid-mobile-track {
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-x !important;
-    overscroll-behavior-x: contain;
     scroll-snap-stop: always;
-    cursor: grab;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
   }
-
-   .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
-  .service-grid-mobile-carousel > * {
+  .service-grid-mobile-track > * {
     flex: 0 0 86% !important;
     min-width: 86% !important;
-    scroll-snap-align: start;
   }
 
   .card {
@@ -545,7 +524,7 @@
   .step { font-size: 0.62rem; letter-spacing: 0.12em; }
 
   .before-after-carousel-section { margin-bottom: 0.95rem; }
-  .carousel-track { grid-auto-columns: 82%; gap: 0.62rem; }
+  .carousel-track-mobile .carousel-slide { flex: 0 0 82%; min-width: 82%; }
   .carousel-slide img { border-radius: 12px; }
   .carousel-slide span { font-size: 0.8rem; margin-top: 0.3rem; }
 

@@ -14,9 +14,10 @@ const { items, title, subtitle } = Astro.props;
     <h2>{title}</h2>
     {subtitle && <p>{subtitle}</p>}
   </div>
-  <div class="before-after-carousel" data-carousel>
+
+  <div class="before-after-carousel before-after-carousel-desktop" data-carousel-desktop>
     <button class="carousel-control" type="button" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
-    <div class="carousel-viewport" data-carousel-viewport>
+    <div class="carousel-viewport">
       <div class="carousel-track" data-carousel-track>
         {items.map((item) => (
           <article class="carousel-slide static">
@@ -28,76 +29,81 @@ const { items, title, subtitle } = Astro.props;
     </div>
     <button class="carousel-control" type="button" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
   </div>
+
+  <div class="before-after-carousel-mobile" data-carousel-mobile aria-label={`${title} mobile gallery`}>
+    <div class="carousel-track-mobile" data-carousel-mobile-track>
+      {items.map((item) => (
+        <article class="carousel-slide static">
+          <img src={item.src} alt={item.alt} loading="lazy" draggable="false" />
+          <span>{item.title}</span>
+        </article>
+      ))}
+    </div>
+  </div>
 </section>
 
 <script is:inline>
-  if (!window.__onyxCarouselInit) {
-    window.__onyxCarouselInit = true;
+  if (!window.__onyxDesktopCarouselInit) {
+    window.__onyxDesktopCarouselInit = true;
 
-    const initCarousels = () => {
-      document.querySelectorAll('[data-carousel]').forEach((carousel) => {
-        const carouselTrack = carousel.querySelector('[data-carousel-track]');
-        const carouselViewport = carousel.querySelector('[data-carousel-viewport]');
+    const initDesktopCarousels = () => {
+      document.querySelectorAll('[data-carousel-desktop]').forEach((carousel) => {
+        const track = carousel.querySelector('[data-carousel-track]');
         const prevButton = carousel.querySelector('[data-carousel-prev]');
         const nextButton = carousel.querySelector('[data-carousel-next]');
-        if (!carouselTrack || !carouselViewport || !prevButton || !nextButton) return;
+        if (!track || !prevButton || !nextButton) return;
 
-        const slides = Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
+        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
         if (slides.length <= 1) {
           prevButton.disabled = true;
           nextButton.disabled = true;
           return;
         }
 
-        const slideStep = () => {
-          const styles = window.getComputedStyle(carouselTrack);
-          const gap = parseFloat(styles.columnGap || styles.gap || '0');
-          return slides[0].offsetWidth + gap;
-        };
-
         const visibleSlides = () => {
-          if (window.matchMedia('(max-width: 800px)').matches) return 1;
           if (window.matchMedia('(max-width: 1200px)').matches) return 2;
           return 3;
         };
 
+        const slideStep = () => {
+          const styles = window.getComputedStyle(track);
+          const gap = parseFloat(styles.columnGap || styles.gap || '0');
+          return slides[0].offsetWidth + gap;
+        };
+
         const maxIndex = () => Math.max(0, slides.length - visibleSlides());
-        const getIndex = () => {
+        const currentIndex = () => {
           const step = slideStep();
           if (step <= 0) return 0;
-          return Math.round(carouselTrack.scrollLeft / step);
+          return Math.round(track.scrollLeft / step);
         };
 
         const updateControls = () => {
-          const index = Math.min(maxIndex(), Math.max(0, getIndex()));
-          const mobile = window.matchMedia('(max-width: 980px)').matches;
-          prevButton.hidden = mobile;
-          nextButton.hidden = mobile;
-          prevButton.disabled = mobile || index <= 0;
-          nextButton.disabled = mobile || index >= maxIndex();
+          const index = Math.min(maxIndex(), Math.max(0, currentIndex()));
+          prevButton.disabled = index <= 0;
+          nextButton.disabled = index >= maxIndex();
         };
 
         prevButton.addEventListener('click', () => {
-          const index = Math.max(0, getIndex() - 1);
-          carouselTrack.scrollTo({ left: index * slideStep(), behavior: 'smooth' });
+          const target = Math.max(0, currentIndex() - 1);
+          track.scrollTo({ left: target * slideStep(), behavior: 'smooth' });
         });
 
         nextButton.addEventListener('click', () => {
-          const index = Math.min(maxIndex(), getIndex() + 1);
-          carouselTrack.scrollTo({ left: index * slideStep(), behavior: 'smooth' });
+          const target = Math.min(maxIndex(), currentIndex() + 1);
+          track.scrollTo({ left: target * slideStep(), behavior: 'smooth' });
         });
 
-        carouselTrack.addEventListener('scroll', updateControls, { passive: true });
+        track.addEventListener('scroll', updateControls, { passive: true });
         window.addEventListener('resize', updateControls);
-
         updateControls();
       });
     };
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCarousels, { once: true });
+      document.addEventListener('DOMContentLoaded', initDesktopCarousels, { once: true });
     } else {
-      initCarousels();
+      initDesktopCarousels();
     }
   }
 </script>

@@ -43,17 +43,8 @@ const initMobileMenu = () => {
   });
 };
 
-const initServiceCarousels = () => {
-  document.querySelectorAll('[data-service-carousel-track]').forEach((track) => {
-    if (!(track instanceof HTMLElement)) return;
-    if (track.dataset.carouselInit === 'true') return;
-    track.dataset.carouselInit = 'true';
-  });
-};
-
 const initUi = () => {
   initMobileMenu();
-  initServiceCarousels();
 };
 
 if (document.readyState === 'loading') {
