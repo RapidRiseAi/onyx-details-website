@@ -199,6 +199,7 @@
 .carousel-track::-webkit-scrollbar { display:none; }
 .carousel-track.is-dragging,
 .service-grid-mobile-carousel.is-dragging { scroll-snap-type: none; }
+.carousel-progress { display: none; }
 .carousel-slide { display:block; border:none; background:transparent; color:var(--muted); text-align:left; cursor:default; scroll-snap-align:start; }
 .carousel-slide.static { cursor:default; }
 .carousel-slide img { width:100%; border-radius:16px; border:1px solid var(--border-strong); box-shadow: 0 10px 22px rgba(0,0,0,.25); }
@@ -270,6 +271,13 @@
     flex: 0 0 82%;
     min-width: 82%;
     scroll-snap-align: start;
+  }
+
+  .carousel-progress {
+    display: block;
+    width: 100%;
+    margin-top: 0.3rem;
+    accent-color: var(--gold);
   }
 }
 

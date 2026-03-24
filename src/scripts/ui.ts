@@ -45,112 +45,40 @@ const initMobileMenu = () => {
 
 const initUi = () => {
   initMobileMenu();
-  initSwipeTracks();
+  initCarouselProgress();
 };
 
-const initSwipeTracks = () => {
-  document.querySelectorAll('.service-grid-mobile-carousel, .carousel-track').forEach((trackEl) => {
-    const track = trackEl as HTMLElement;
-    if (track.dataset.swipeInit === 'true') return;
-    track.dataset.swipeInit = 'true';
+const initCarouselProgress = () => {
+  document.querySelectorAll('[data-scroll-sync]').forEach((containerEl) => {
+    const container = containerEl as HTMLElement;
+    if (container.dataset.scrollSyncInit === 'true') return;
+    container.dataset.scrollSyncInit = 'true';
 
-    let startX = 0;
-    let startY = 0;
-    let startScrollLeft = 0;
-    let isTouching = false;
-    let isDragging = false;
-    let suppressClickUntil = 0;
+    const track = container.querySelector('[data-scroll-track]') as HTMLElement | null;
+    const progress = container.querySelector('[data-carousel-progress]') as HTMLInputElement | null;
+    if (!track || !progress) return;
 
-    const endDrag = () => {
-      if (isDragging) suppressClickUntil = Date.now() + 300;
-      isDragging = false;
-      isTouching = false;
-      track.classList.remove('is-dragging');
+    const syncProgress = () => {
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      if (maxScroll === 0) {
+        progress.value = '0';
+        progress.disabled = true;
+        return;
+      }
+      progress.disabled = false;
+      progress.value = String(Math.round((track.scrollLeft / maxScroll) * 100));
     };
 
-    track.addEventListener(
-      'touchstart',
-      (event) => {
-        const touch = event.touches[0];
-        if (!touch) return;
-        isTouching = true;
-        isDragging = false;
-        startX = touch.clientX;
-        startY = touch.clientY;
-        startScrollLeft = track.scrollLeft;
-      },
-      { passive: true }
-    );
-
-    track.addEventListener(
-      'touchmove',
-      (event) => {
-        if (!isTouching) return;
-        const touch = event.touches[0];
-        if (!touch) return;
-
-        const deltaX = touch.clientX - startX;
-        const deltaY = touch.clientY - startY;
-        if (Math.abs(deltaX) < 6) return;
-        if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
-
-        isDragging = true;
-        track.classList.add('is-dragging');
-        event.preventDefault();
-        track.scrollLeft = startScrollLeft - deltaX;
-      },
-      { passive: false }
-    );
-
-    track.addEventListener(
-      'touchend',
-      () => {
-        endDrag();
-      },
-      { passive: true }
-    );
-
-    track.addEventListener(
-      'touchcancel',
-      () => {
-        endDrag();
-      },
-      { passive: true }
-    );
-
-    track.addEventListener('mousedown', (event) => {
-      if (event.button !== 0) return;
-      isTouching = true;
-      isDragging = false;
-      startX = event.clientX;
-      startY = event.clientY;
-      startScrollLeft = track.scrollLeft;
+    progress.addEventListener('input', () => {
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      if (maxScroll === 0) return;
+      const target = (Number(progress.value) / 100) * maxScroll;
+      track.scrollTo({ left: target, behavior: 'auto' });
     });
 
-    track.addEventListener('mousemove', (event) => {
-      if (!isTouching) return;
-      const deltaX = event.clientX - startX;
-      const deltaY = event.clientY - startY;
-      if (Math.abs(deltaX) < 4) return;
-      if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
-      isDragging = true;
-      track.classList.add('is-dragging');
-      event.preventDefault();
-      track.scrollLeft = startScrollLeft - deltaX;
-    });
-
-    track.addEventListener('mouseleave', endDrag);
-    document.addEventListener('mouseup', endDrag);
-
-    track.addEventListener(
-      'click',
-      (event) => {
-        if (Date.now() > suppressClickUntil) return;
-        event.preventDefault();
-        event.stopPropagation();
-      },
-      true
-    );
+    track.addEventListener('scroll', syncProgress, { passive: true });
+    window.addEventListener('resize', syncProgress);
+    syncProgress();
   });
 };
 
