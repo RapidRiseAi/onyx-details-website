@@ -43,79 +43,8 @@ const initMobileMenu = () => {
   });
 };
 
-const initServiceCarousels = () => {
-  document.querySelectorAll('[data-service-carousel]').forEach((carousel) => {
-    if (carousel.dataset.carouselInit === 'true') return;
-    carousel.dataset.carouselInit = 'true';
-
-    const track = carousel.querySelector('[data-service-carousel-track]') as HTMLElement | null;
-    const prevButton = carousel.querySelector('[data-service-carousel-prev]') as HTMLButtonElement | null;
-    const nextButton = carousel.querySelector('[data-service-carousel-next]') as HTMLButtonElement | null;
-    const dotsContainer = carousel.querySelector('[data-service-carousel-dots]') as HTMLElement | null;
-    if (!track || !prevButton || !nextButton || !dotsContainer) return;
-
-    const slides = Array.from(track.children);
-    if (slides.length === 0) return;
-
-    let currentIndex = 0;
-    let rafId = 0;
-
-    const getSlideUnit = () => {
-      const firstSlide = slides[0] as HTMLElement;
-      const style = window.getComputedStyle(track);
-      const gap = Number.parseFloat(style.columnGap || style.gap || '0');
-      return firstSlide.getBoundingClientRect().width + gap;
-    };
-
-    const clampIndex = (index: number) => Math.max(0, Math.min(index, slides.length - 1));
-
-    const goToIndex = (index: number, behavior: ScrollBehavior = 'smooth') => {
-      currentIndex = clampIndex(index);
-      const slideUnit = getSlideUnit();
-      if (slideUnit <= 0) return;
-      track.scrollTo({ left: currentIndex * slideUnit, behavior });
-      updateUi();
-    };
-
-    const updateUi = () => {
-      prevButton.toggleAttribute('disabled', currentIndex === 0);
-      nextButton.toggleAttribute('disabled', currentIndex === slides.length - 1);
-      Array.from(dotsContainer.children).forEach((dot, dotIndex) => {
-        dot.toggleAttribute('aria-current', dotIndex === currentIndex);
-      });
-    };
-
-    const syncFromScroll = () => {
-      if (rafId) window.cancelAnimationFrame(rafId);
-      rafId = window.requestAnimationFrame(() => {
-        const slideUnit = getSlideUnit();
-        if (slideUnit <= 0) return;
-        currentIndex = clampIndex(Math.round(track.scrollLeft / slideUnit));
-        updateUi();
-      });
-    };
-
-    slides.forEach((_, index) => {
-      const dot = document.createElement('button');
-      dot.className = 'service-carousel-dot';
-      dot.type = 'button';
-      dot.setAttribute('aria-label', `Go to service ${index + 1}`);
-      dot.addEventListener('click', () => goToIndex(index));
-      dotsContainer.append(dot);
-    });
-
-    prevButton.addEventListener('click', () => goToIndex(currentIndex - 1));
-    nextButton.addEventListener('click', () => goToIndex(currentIndex + 1));
-    track.addEventListener('scroll', syncFromScroll, { passive: true });
-    window.addEventListener('resize', () => goToIndex(currentIndex, 'auto'));
-
-    goToIndex(0, 'auto');
-  });
-};
-
 const initUi = () => {
   initMobileMenu();
-  initServiceCarousels();
 };
 
 if (document.readyState === 'loading') {

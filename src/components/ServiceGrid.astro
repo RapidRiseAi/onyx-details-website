@@ -11,13 +11,10 @@ const { services, carouselOnMobile = false } = Astro.props;
   carouselOnMobile ? (
     <>
       <div class="service-grid service-grid-desktop">{services.map((service) => <ServiceCard service={service} />)}</div>
-      <section class="service-carousel" data-service-carousel>
-        <button class="service-carousel-control" data-service-carousel-prev aria-label="Show previous service">‹</button>
-        <div class="service-grid-mobile-carousel" data-service-carousel-track>
+      <section class="service-carousel" aria-label="Swipe through services">
+        <div class="service-grid-mobile-carousel">
           {services.map((service) => <ServiceCard service={service} />)}
         </div>
-        <button class="service-carousel-control" data-service-carousel-next aria-label="Show next service">›</button>
-        <div class="service-carousel-dots" data-service-carousel-dots aria-label="Service carousel navigation"></div>
       </section>
     </>
   ) : (
