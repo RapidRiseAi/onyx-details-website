@@ -31,6 +31,10 @@ const { items, title, subtitle } = Astro.props;
   </div>
 
   <div class="before-after-carousel-mobile" data-carousel-mobile aria-label={`${title} mobile gallery`}>
+    <div class="carousel-mobile-controls">
+      <button class="carousel-control" type="button" data-carousel-mobile-prev aria-label={`Show previous image in ${title}`}>‹</button>
+      <button class="carousel-control" type="button" data-carousel-mobile-next aria-label={`Show next image in ${title}`}>›</button>
+    </div>
     <div class="carousel-track-mobile" data-carousel-mobile-track>
       {items.map((item) => (
         <article class="carousel-slide static">
@@ -72,6 +76,53 @@ const { items, title, subtitle } = Astro.props;
         };
 
         const maxIndex = () => Math.max(0, slides.length - visibleSlides());
+        const currentIndex = () => {
+          const step = slideStep();
+          if (step <= 0) return 0;
+          return Math.round(track.scrollLeft / step);
+        };
+
+        const updateControls = () => {
+          const index = Math.min(maxIndex(), Math.max(0, currentIndex()));
+          prevButton.disabled = index <= 0;
+          nextButton.disabled = index >= maxIndex();
+        };
+
+        prevButton.addEventListener('click', () => {
+          const target = Math.max(0, currentIndex() - 1);
+          track.scrollTo({ left: target * slideStep(), behavior: 'smooth' });
+        });
+
+        nextButton.addEventListener('click', () => {
+          const target = Math.min(maxIndex(), currentIndex() + 1);
+          track.scrollTo({ left: target * slideStep(), behavior: 'smooth' });
+        });
+
+        track.addEventListener('scroll', updateControls, { passive: true });
+        window.addEventListener('resize', updateControls);
+        updateControls();
+      });
+
+      document.querySelectorAll('[data-carousel-mobile]').forEach((carousel) => {
+        const track = carousel.querySelector('[data-carousel-mobile-track]');
+        const prevButton = carousel.querySelector('[data-carousel-mobile-prev]');
+        const nextButton = carousel.querySelector('[data-carousel-mobile-next]');
+        if (!track || !prevButton || !nextButton) return;
+
+        const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+        if (slides.length <= 1) {
+          prevButton.disabled = true;
+          nextButton.disabled = true;
+          return;
+        }
+
+        const slideStep = () => {
+          const styles = window.getComputedStyle(track);
+          const gap = parseFloat(styles.columnGap || styles.gap || '0');
+          return slides[0].offsetWidth + gap;
+        };
+
+        const maxIndex = () => Math.max(0, slides.length - 1);
         const currentIndex = () => {
           const step = slideStep();
           if (step <= 0) return 0;

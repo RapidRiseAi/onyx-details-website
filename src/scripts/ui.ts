@@ -45,6 +45,56 @@ const initMobileMenu = () => {
 
 const initUi = () => {
   initMobileMenu();
+  document.querySelectorAll('[data-service-mobile-shell]').forEach((shell) => {
+    if (!(shell instanceof HTMLElement)) return;
+    if (shell.dataset.carouselInit === 'true') return;
+    shell.dataset.carouselInit = 'true';
+
+    const track = shell.querySelector('[data-service-mobile-track]');
+    const prev = shell.querySelector('[data-service-mobile-prev]');
+    const next = shell.querySelector('[data-service-mobile-next]');
+    if (!(track instanceof HTMLElement) || !(prev instanceof HTMLButtonElement) || !(next instanceof HTMLButtonElement)) return;
+
+    const slides = Array.from(track.children).filter((child): child is HTMLElement => child instanceof HTMLElement);
+    if (slides.length <= 1) {
+      prev.disabled = true;
+      next.disabled = true;
+      return;
+    }
+
+    const slideStep = () => {
+      const styles = window.getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap || '0');
+      return slides[0].offsetWidth + gap;
+    };
+
+    const maxIndex = () => Math.max(0, slides.length - 1);
+    const currentIndex = () => {
+      const step = slideStep();
+      if (step <= 0) return 0;
+      return Math.round(track.scrollLeft / step);
+    };
+
+    const updateControls = () => {
+      const index = Math.min(maxIndex(), Math.max(0, currentIndex()));
+      prev.disabled = index <= 0;
+      next.disabled = index >= maxIndex();
+    };
+
+    prev.addEventListener('click', () => {
+      const target = Math.max(0, currentIndex() - 1);
+      track.scrollTo({ left: target * slideStep(), behavior: 'smooth' });
+    });
+
+    next.addEventListener('click', () => {
+      const target = Math.min(maxIndex(), currentIndex() + 1);
+      track.scrollTo({ left: target * slideStep(), behavior: 'smooth' });
+    });
+
+    track.addEventListener('scroll', updateControls, { passive: true });
+    window.addEventListener('resize', updateControls);
+    updateControls();
+  });
 };
 
 if (document.readyState === 'loading') {

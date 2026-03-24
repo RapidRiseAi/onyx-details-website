@@ -206,11 +206,13 @@
 .carousel-track-mobile { display:flex; gap:0.62rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; touch-action:pan-x; padding:0.2rem 0.1rem 0.35rem; scrollbar-width:none; }
 .carousel-track-mobile::-webkit-scrollbar { display:none; }
 .carousel-track-mobile .carousel-slide { flex:0 0 82%; min-width:82%; scroll-snap-align:start; }
+.carousel-mobile-controls { display:flex; justify-content:flex-end; gap:0.45rem; margin-bottom:0.45rem; }
 
 .service-groups { display:grid; gap:2.2rem; }
 .service-group-intro { color:var(--muted); margin:.4rem 0 1rem; }
 .service-grid-desktop { display:grid; }
 .service-grid-mobile-shell { display:none; }
+.service-mobile-controls { display:flex; justify-content:flex-end; gap:0.45rem; margin-bottom:0.45rem; }
 .service-grid-mobile-track { display:flex; gap:0.72rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; touch-action:pan-x; overscroll-behavior-x:contain; padding-bottom:0.35rem; scrollbar-width:none; -ms-overflow-style:none; }
 .service-grid-mobile-track::-webkit-scrollbar { display:none; }
 .service-grid-mobile-track > * { flex:0 0 82%; min-width:82%; scroll-snap-align:start; }
@@ -252,6 +254,8 @@
 
   .service-grid-desktop { display: none; }
   .service-grid-mobile-shell { display:block; }
+  .before-after-carousel-desktop { display:none; }
+  .before-after-carousel-mobile { display:block; }
 }
 
 @media (max-width: 800px){
@@ -265,8 +269,6 @@
   .hero-actions .btn { width: 100%; }
   .card { padding: 1.05rem; }
   .split { grid-template-columns:1fr; }
-  .before-after-carousel-desktop { display:none; }
-  .before-after-carousel-mobile { display:block; }
   .cta { padding: 4rem 0 5rem; }
   .whatsapp-float { right: 0.65rem; bottom: 0.65rem; padding: 0.65rem 0.92rem; }
 }
