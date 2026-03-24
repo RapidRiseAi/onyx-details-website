@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ContactServiceNotice } from '@/components/contact-service-notice';
+import { BookingRequestForm } from '@/components/booking-request-form';
 import { contact } from '@/content/siteContent';
 
 export default function ContactPage() {
@@ -17,7 +17,7 @@ export default function ContactPage() {
 
       <p className="text-zinc-300">Call or message us to book your detailing service.</p>
       <Suspense fallback={null}>
-        <ContactServiceNotice />
+        <BookingRequestForm />
       </Suspense>
       <div className="grid gap-3 text-zinc-300 md:grid-cols-2">
         <p><strong>Phone:</strong> {contact.phone}</p>

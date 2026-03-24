@@ -82,7 +82,7 @@ export function MobileSnapCarousel({
           {items.map((_, index) => (
             <span
               key={index}
-              className={`h-1.5 rounded-full transition-all ${activeIndex === index ? 'w-5 bg-blue-500' : 'w-1.5 bg-white/30'}`}
+              className={`h-1.5 rounded-full transition-all ${activeIndex === index ? 'w-5 bg-gold' : 'w-1.5 bg-white/30'}`}
             />
           ))}
         </div>

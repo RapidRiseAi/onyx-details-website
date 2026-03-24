@@ -7,10 +7,10 @@ export const navLinks = [
 ];
 
 export const contact = {
-  phone: '+1 (555) 123-4567',
-  email: 'bookings@onyxdetails.com',
+  phone: '081 532 8774',
+  email: 'onyxdetails17@gmail.com',
   areas: ['Clayton', 'Dandenong', 'Narre Warren', 'Berwick', 'Pakenham'],
-  whatsapp: 'https://wa.me/15551234567'
+  whatsapp: 'https://wa.me/61815328774'
 };
 
 export const branding = {

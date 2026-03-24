@@ -3,7 +3,7 @@ import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
-import { gallery, hero, services, steps, testimonials, whyChoose } from '@/content/siteContent';
+import { contact, gallery, hero, services, steps, testimonials, whyChoose } from '@/content/siteContent';
 
 export default function HomePage() {
   const beforeAfterGallery = gallery.filter((item) => item.src.includes('Before-After'));
@@ -26,7 +26,7 @@ export default function HomePage() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Button className="rounded-full px-6 py-3">Book Now</Button>
               <Link href="/services" className="rounded-full border border-gold/80 px-6 py-3 font-semibold text-zinc-100">View Services</Link>
-              <Link href="https://wa.me/15551234567" className="rounded-full border border-zinc-500 px-6 py-3 font-semibold text-zinc-100">Ask on WhatsApp</Link>
+              <Link href={contact.whatsapp} className="rounded-full border border-zinc-500 px-6 py-3 font-semibold text-zinc-100">Ask on WhatsApp</Link>
             </div>
           </div>
         </div>
