@@ -280,7 +280,13 @@
     accent-color: var(--gold);
     position: relative;
     z-index: 3;
-    touch-action: none;
+    touch-action: pan-x;
+    pointer-events: auto;
+    min-height: 30px;
+  }
+
+  [data-scroll-sync][data-progress-active='true'] [data-scroll-track] {
+    pointer-events: none;
   }
 }
 

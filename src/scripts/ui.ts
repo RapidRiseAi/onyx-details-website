@@ -72,13 +72,51 @@ const initCarouselProgress = () => {
       track.scrollTo({ left: target, behavior: 'auto' });
     });
 
+    progress.addEventListener('change', () => {
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      if (maxScroll === 0) return;
+      const target = (Number(progress.value) / 100) * maxScroll;
+      track.scrollTo({ left: target, behavior: 'auto' });
+    });
+
     progress.addEventListener('pointerdown', (event) => {
+      container.dataset.progressActive = 'true';
       event.stopPropagation();
+    });
+
+    progress.addEventListener('pointerup', () => {
+      delete container.dataset.progressActive;
     });
 
     progress.addEventListener('click', (event) => {
       event.stopPropagation();
     });
+
+    progress.addEventListener(
+      'touchstart',
+      (event) => {
+        container.dataset.progressActive = 'true';
+        event.stopPropagation();
+      },
+      { passive: true }
+    );
+
+    progress.addEventListener(
+      'touchmove',
+      (event) => {
+        event.stopPropagation();
+      },
+      { passive: true }
+    );
+
+    progress.addEventListener(
+      'touchend',
+      (event) => {
+        delete container.dataset.progressActive;
+        event.stopPropagation();
+      },
+      { passive: true }
+    );
 
     track.addEventListener('scroll', syncProgress, { passive: true });
     window.addEventListener('resize', syncProgress);
