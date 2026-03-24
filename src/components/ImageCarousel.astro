@@ -28,7 +28,6 @@ const { items, title, subtitle } = Astro.props;
     </div>
     <button class="carousel-control" type="button" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
   </div>
-  <div class="carousel-pagination" data-carousel-pagination aria-hidden="true"></div>
 </section>
 
 <script is:inline>
@@ -41,7 +40,6 @@ const { items, title, subtitle } = Astro.props;
         const carouselViewport = carousel.querySelector('[data-carousel-viewport]');
         const prevButton = carousel.querySelector('[data-carousel-prev]');
         const nextButton = carousel.querySelector('[data-carousel-next]');
-        const pagination = carousel.parentElement?.querySelector('[data-carousel-pagination]');
         if (!carouselTrack || !carouselViewport || !prevButton || !nextButton) return;
 
         const slides = Array.from(carouselTrack.querySelectorAll('.carousel-slide'));
@@ -70,31 +68,13 @@ const { items, title, subtitle } = Astro.props;
           return Math.round(carouselTrack.scrollLeft / step);
         };
 
-        const renderPagination = () => {
-          if (!pagination) return;
-          const pages = Math.max(1, maxIndex() + 1);
-          pagination.innerHTML = Array.from({ length: pages })
-            .map((_, index) => `<button type="button" class="carousel-dot" data-carousel-dot="${index}" aria-label="Go to slide group ${index + 1}"></button>`)
-            .join('');
-          pagination.querySelectorAll('[data-carousel-dot]').forEach((dot) => {
-            dot.addEventListener('click', () => {
-              const index = Number(dot.getAttribute('data-carousel-dot') || '0');
-              carouselTrack.scrollTo({ left: index * slideStep(), behavior: 'smooth' });
-            });
-          });
-        };
-
         const updateControls = () => {
           const index = Math.min(maxIndex(), Math.max(0, getIndex()));
-          const mobile = window.matchMedia('(max-width: 800px)').matches;
+          const mobile = window.matchMedia('(max-width: 980px)').matches;
+          prevButton.hidden = mobile;
+          nextButton.hidden = mobile;
           prevButton.disabled = mobile || index <= 0;
           nextButton.disabled = mobile || index >= maxIndex();
-
-          if (pagination) {
-            pagination.querySelectorAll('[data-carousel-dot]').forEach((dot, dotIndex) => {
-              dot.classList.toggle('active', dotIndex === index);
-            });
-          }
         };
 
         prevButton.addEventListener('click', () => {
@@ -108,12 +88,8 @@ const { items, title, subtitle } = Astro.props;
         });
 
         carouselTrack.addEventListener('scroll', updateControls, { passive: true });
-        window.addEventListener('resize', () => {
-          renderPagination();
-          updateControls();
-        });
+        window.addEventListener('resize', updateControls);
 
-        renderPagination();
         updateControls();
       });
     };

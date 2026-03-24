@@ -202,13 +202,6 @@
 .carousel-slide.static { cursor:default; }
 .carousel-slide img { width:100%; border-radius:16px; border:1px solid var(--border-strong); box-shadow: 0 10px 22px rgba(0,0,0,.25); }
 .carousel-slide span { display:block; margin-top:.45rem; }
-.carousel-pagination { display: none; margin-top: 0.45rem; justify-content: center; gap: 0.4rem; }
-.carousel-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; border: 0; background: color-mix(in srgb, var(--muted) 70%, #000); opacity: 0.55; }
-.carousel-dot.active { opacity: 1; background: var(--gold-bright); }
-
-.service-carousel { display: grid; grid-template-columns: auto 1fr auto; gap: 0.65rem; align-items: center; }
-.service-carousel-viewport { overflow: hidden; }
-.service-carousel-control { display: none; }
 
 .service-groups { display:grid; gap:2.2rem; }
 .service-group-intro { color:var(--muted); margin:.4rem 0 1rem; }
@@ -281,7 +274,6 @@
   .before-after-carousel { grid-template-columns:1fr; }
   .carousel-control { display:none; pointer-events:none; }
   .carousel-track { grid-auto-columns:minmax(82%, 1fr); }
-  .carousel-pagination { display: flex; }
   .cta { padding: 4rem 0 5rem; }
   .whatsapp-float { right: 0.65rem; bottom: 0.65rem; padding: 0.65rem 0.92rem; }
 }
@@ -528,8 +520,6 @@
     min-width: 86% !important;
     scroll-snap-align: start;
   }
-  .service-carousel { grid-template-columns: 1fr; gap: 0.45rem; }
-  .service-carousel-control { display: none; }
 
   .card {
     border-radius: 18px;

@@ -44,48 +44,10 @@ const initMobileMenu = () => {
 };
 
 const initServiceCarousels = () => {
-  document.querySelectorAll('[data-service-carousel]').forEach((carousel) => {
-    if (!(carousel instanceof HTMLElement)) return;
-    if (carousel.dataset.carouselInit === 'true') return;
-    carousel.dataset.carouselInit = 'true';
-
-    const track = carousel.querySelector('[data-service-carousel-track]');
-    const viewport = carousel.querySelector('[data-service-carousel-viewport]');
-    const prevButton = carousel.querySelector('[data-service-carousel-prev]');
-    const nextButton = carousel.querySelector('[data-service-carousel-next]');
-    if (!(track instanceof HTMLElement) || !(viewport instanceof HTMLElement) || !(prevButton instanceof HTMLButtonElement) || !(nextButton instanceof HTMLButtonElement)) return;
-
-    const getSlides = () => Array.from(track.children).filter((item): item is HTMLElement => item instanceof HTMLElement);
-    const slideStep = () => {
-      const slides = getSlides();
-      if (!slides.length) return viewport.clientWidth;
-      const styles = window.getComputedStyle(track);
-      const gap = parseFloat(styles.columnGap || styles.gap || '0');
-      return slides[0].offsetWidth + gap;
-    };
-
-    const maxScrollLeft = () => Math.max(0, track.scrollWidth - track.clientWidth);
-    const canGoPrev = () => track.scrollLeft > 4;
-    const canGoNext = () => track.scrollLeft < maxScrollLeft() - 4;
-
-    const updateControls = () => {
-      const desktop = window.matchMedia('(min-width: 981px)').matches;
-      prevButton.disabled = desktop || !canGoPrev();
-      nextButton.disabled = desktop || !canGoNext();
-    };
-
-    const scrollBySlides = (direction: 1 | -1) => {
-      track.scrollBy({
-        left: slideStep() * direction,
-        behavior: 'smooth'
-      });
-    };
-
-    prevButton.addEventListener('click', () => scrollBySlides(-1));
-    nextButton.addEventListener('click', () => scrollBySlides(1));
-    track.addEventListener('scroll', updateControls, { passive: true });
-    window.addEventListener('resize', updateControls);
-    updateControls();
+  document.querySelectorAll('[data-service-carousel-track]').forEach((track) => {
+    if (!(track instanceof HTMLElement)) return;
+    if (track.dataset.carouselInit === 'true') return;
+    track.dataset.carouselInit = 'true';
   });
 };
 
