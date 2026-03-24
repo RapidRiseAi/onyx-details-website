@@ -1,13 +1,16 @@
 import { contact } from '@/content/siteContent';
 
 type ContactPageProps = {
-  searchParams?: {
+  searchParams?: Promise<{
     service?: string | string[];
-  };
+  }>;
 };
 
-export default function ContactPage({ searchParams }: ContactPageProps) {
-  const selectedService = Array.isArray(searchParams?.service) ? searchParams?.service[0] : searchParams?.service;
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const selectedService = Array.isArray(resolvedSearchParams?.service)
+    ? resolvedSearchParams?.service[0]
+    : resolvedSearchParams?.service;
 
   return (
     <div className="space-y-5">
