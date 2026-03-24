@@ -54,53 +54,52 @@ const initSwipeTracks = () => {
     if (track.dataset.swipeInit === 'true') return;
     track.dataset.swipeInit = 'true';
 
-    let pointerDown = false;
-    let hasDragged = false;
     let startX = 0;
     let startY = 0;
-    let startScrollLeft = 0;
+    let didSwipe = false;
 
-    const onStart = (clientX: number, clientY: number) => {
-      pointerDown = true;
-      hasDragged = false;
-      startX = clientX;
-      startY = clientY;
-      startScrollLeft = track.scrollLeft;
+    const getStep = () => {
+      const firstItem = track.firstElementChild as HTMLElement | null;
+      if (!firstItem) return track.clientWidth * 0.85;
+      const style = window.getComputedStyle(track);
+      const gap = Number.parseFloat(style.columnGap || style.gap || '0');
+      return firstItem.getBoundingClientRect().width + gap;
     };
 
-    const onMove = (event: TouchEvent) => {
-      if (!pointerDown) return;
-      const touch = event.touches[0];
-      if (!touch) return;
-      const deltaX = touch.clientX - startX;
-      const deltaY = touch.clientY - startY;
+    track.addEventListener(
+      'touchstart',
+      (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        didSwipe = false;
+        startX = touch.clientX;
+        startY = touch.clientY;
+      },
+      { passive: true }
+    );
 
-      if (Math.abs(deltaX) <= Math.abs(deltaY) || Math.abs(deltaX) < 6) return;
-      hasDragged = true;
-      event.preventDefault();
-      track.scrollLeft = startScrollLeft - deltaX;
-    };
-
-    const onEnd = () => {
-      pointerDown = false;
-    };
-
-    track.addEventListener('touchstart', (event) => {
-      const touch = event.touches[0];
-      if (!touch) return;
-      onStart(touch.clientX, touch.clientY);
-    }, { passive: true });
-
-    track.addEventListener('touchmove', onMove, { passive: false });
-    track.addEventListener('touchend', onEnd, { passive: true });
-    track.addEventListener('touchcancel', onEnd, { passive: true });
+    track.addEventListener(
+      'touchend',
+      (event) => {
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        if (Math.abs(deltaX) < 28 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        didSwipe = true;
+        const direction = deltaX < 0 ? 1 : -1;
+        track.scrollBy({ left: getStep() * direction, behavior: 'smooth' });
+      },
+      { passive: true }
+    );
 
     track.addEventListener(
       'click',
       (event) => {
-        if (!hasDragged) return;
+        if (!didSwipe) return;
         event.preventDefault();
         event.stopPropagation();
+        didSwipe = false;
       },
       true
     );
