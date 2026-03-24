@@ -60,12 +60,8 @@ const initCarouselProgress = () => {
 
     const syncProgress = () => {
       const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-      if (maxScroll === 0) {
-        progress.value = '0';
-        progress.disabled = true;
-        return;
-      }
-      progress.disabled = false;
+      if (maxScroll === 0) progress.value = '0';
+      if (maxScroll <= 0) return;
       progress.value = String(Math.round((track.scrollLeft / maxScroll) * 100));
     };
 
@@ -76,8 +72,22 @@ const initCarouselProgress = () => {
       track.scrollTo({ left: target, behavior: 'auto' });
     });
 
+    progress.addEventListener('pointerdown', (event) => {
+      event.stopPropagation();
+    });
+
+    progress.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
     track.addEventListener('scroll', syncProgress, { passive: true });
     window.addEventListener('resize', syncProgress);
+    window.addEventListener('load', syncProgress);
+    track.querySelectorAll('img').forEach((image) => image.addEventListener('load', syncProgress));
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(syncProgress);
+      observer.observe(track);
+    }
     syncProgress();
   });
 };
