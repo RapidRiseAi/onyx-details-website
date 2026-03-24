@@ -48,49 +48,68 @@ const initServiceCarousels = () => {
     if (carousel.dataset.carouselInit === 'true') return;
     carousel.dataset.carouselInit = 'true';
 
-    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!supportsFinePointer) return;
-
-    let isMouseDown = false;
+    let pointerActive = false;
+    let pointerId: number | null = null;
     let startX = 0;
     let startScrollLeft = 0;
+    let didDrag = false;
 
-    const startDrag = (clientX: number) => {
-      isMouseDown = true;
-      startX = clientX;
+    const dragThreshold = 8;
+    const isInteractiveElement = (element: EventTarget | null) =>
+      element instanceof HTMLElement && Boolean(element.closest('a, button, input, textarea, select, label'));
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      if (isInteractiveElement(event.target)) return;
+
+      pointerActive = true;
+      pointerId = event.pointerId;
+      didDrag = false;
+      startX = event.clientX;
       startScrollLeft = carousel.scrollLeft;
       carousel.classList.add('dragging');
+      carousel.setPointerCapture(event.pointerId);
     };
 
-    const moveDrag = (clientX: number) => {
-      if (!isMouseDown) return;
-      const distance = clientX - startX;
+    const onPointerMove = (event: PointerEvent) => {
+      if (!pointerActive || pointerId !== event.pointerId) return;
+
+      const distance = event.clientX - startX;
+      if (!didDrag && Math.abs(distance) >= dragThreshold) didDrag = true;
+      if (!didDrag) return;
+
+      event.preventDefault();
       carousel.scrollLeft = startScrollLeft - distance;
     };
 
-    const endDrag = () => {
-      if (!isMouseDown) return;
-      isMouseDown = false;
+    const onPointerUp = (event: PointerEvent) => {
+      if (!pointerActive || pointerId !== event.pointerId) return;
+      pointerActive = false;
+      pointerId = null;
       carousel.classList.remove('dragging');
     };
 
-    carousel.addEventListener('mousedown', (event) => {
-      if (event.button !== 0) return;
-      startDrag(event.clientX);
+    carousel.addEventListener('pointerdown', onPointerDown);
+    carousel.addEventListener('pointermove', onPointerMove, { passive: false });
+    carousel.addEventListener('pointerup', onPointerUp);
+    carousel.addEventListener('pointercancel', onPointerUp);
+    carousel.addEventListener('lostpointercapture', () => {
+      pointerActive = false;
+      pointerId = null;
+      carousel.classList.remove('dragging');
     });
 
-    carousel.addEventListener('mousemove', (event) => {
-      if (!isMouseDown) return;
-      event.preventDefault();
-      moveDrag(event.clientX);
-    });
+    carousel.addEventListener(
+      'click',
+      (event) => {
+        if (!didDrag) return;
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      true
+    );
 
-    carousel.addEventListener('mouseleave', endDrag);
-    document.addEventListener('mouseup', endDrag);
-
-    carousel.addEventListener('dragstart', (event) => {
-      event.preventDefault();
-    });
+    carousel.addEventListener('dragstart', (event) => event.preventDefault());
   });
 };
 
