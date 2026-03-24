@@ -9,14 +9,14 @@ interface Props {
 
 const { items, title, subtitle } = Astro.props;
 ---
-<section class="before-after-carousel-section" data-scroll-sync>
+<section class="before-after-carousel-section">
   <div class="section-heading compact">
     <h2>{title}</h2>
     {subtitle && <p>{subtitle}</p>}
   </div>
   <div class="before-after-carousel" data-carousel>
     <button type="button" class="carousel-control" data-carousel-prev aria-label={`Show previous image in ${title}`}>‹</button>
-    <div class="carousel-track" data-carousel-track data-scroll-track>
+    <div class="carousel-track" data-carousel-track>
       {items.map((item) => (
         <article class="carousel-slide static">
           <img src={item.src} alt={item.alt} loading="lazy" />
@@ -26,16 +26,6 @@ const { items, title, subtitle } = Astro.props;
     </div>
     <button type="button" class="carousel-control" data-carousel-next aria-label={`Show next image in ${title}`}>›</button>
   </div>
-  <input
-    class="carousel-progress"
-    data-carousel-progress
-    type="range"
-    min="0"
-    max="100"
-    value="0"
-    step="1"
-    aria-label={`Scroll through ${title}`}
-  />
 </section>
 
 <script is:inline>
