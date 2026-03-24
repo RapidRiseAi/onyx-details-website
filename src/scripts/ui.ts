@@ -45,6 +45,45 @@ const initMobileMenu = () => {
 
 const initUi = () => {
   initMobileMenu();
+  initServiceCarousels();
+};
+
+const initServiceCarousels = () => {
+  document.querySelectorAll('[data-service-carousel]').forEach((carousel) => {
+    if (carousel.dataset.serviceCarouselInit === 'true') return;
+    carousel.dataset.serviceCarouselInit = 'true';
+
+    const track = carousel.querySelector('[data-service-carousel-track]') as HTMLElement | null;
+    const prevButton = carousel.querySelector('[data-service-carousel-prev]') as HTMLButtonElement | null;
+    const nextButton = carousel.querySelector('[data-service-carousel-next]') as HTMLButtonElement | null;
+    if (!track || !prevButton || !nextButton) return;
+
+    const getStep = () => {
+      const firstSlide = track.firstElementChild as HTMLElement | null;
+      if (!firstSlide) return 0;
+      const style = window.getComputedStyle(track);
+      const gap = Number.parseFloat(style.columnGap || style.gap || '0');
+      return firstSlide.getBoundingClientRect().width + gap;
+    };
+
+    const syncButtons = () => {
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      prevButton.disabled = track.scrollLeft <= 4;
+      nextButton.disabled = track.scrollLeft >= maxScroll - 4;
+    };
+
+    const scrollByStep = (direction: 1 | -1) => {
+      const step = getStep();
+      if (step <= 0) return;
+      track.scrollBy({ left: step * direction, behavior: 'smooth' });
+    };
+
+    prevButton.addEventListener('click', () => scrollByStep(-1));
+    nextButton.addEventListener('click', () => scrollByStep(1));
+    track.addEventListener('scroll', syncButtons, { passive: true });
+    window.addEventListener('resize', syncButtons);
+    syncButtons();
+  });
 };
 
 if (document.readyState === 'loading') {
