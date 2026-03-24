@@ -57,39 +57,81 @@ const initSwipeTracks = () => {
     let startX = 0;
     let startY = 0;
     let startScrollLeft = 0;
-    let activePointerId: number | null = null;
-    let dragAxisLocked = false;
+    let isTouching = false;
     let isDragging = false;
     let suppressClickUntil = 0;
 
     const endDrag = () => {
-      if (!isDragging) return;
+      if (isDragging) suppressClickUntil = Date.now() + 300;
       isDragging = false;
-      suppressClickUntil = Date.now() + 300;
+      isTouching = false;
       track.classList.remove('is-dragging');
     };
 
-    track.addEventListener('pointerdown', (event) => {
-      if (event.pointerType === 'mouse' && event.button !== 0) return;
-      activePointerId = event.pointerId;
-      dragAxisLocked = false;
+    track.addEventListener(
+      'touchstart',
+      (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        isTouching = true;
+        isDragging = false;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        startScrollLeft = track.scrollLeft;
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      'touchmove',
+      (event) => {
+        if (!isTouching) return;
+        const touch = event.touches[0];
+        if (!touch) return;
+
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        if (Math.abs(deltaX) < 6) return;
+        if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+        isDragging = true;
+        track.classList.add('is-dragging');
+        event.preventDefault();
+        track.scrollLeft = startScrollLeft - deltaX;
+      },
+      { passive: false }
+    );
+
+    track.addEventListener(
+      'touchend',
+      () => {
+        endDrag();
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      'touchcancel',
+      () => {
+        endDrag();
+      },
+      { passive: true }
+    );
+
+    track.addEventListener('mousedown', (event) => {
+      if (event.button !== 0) return;
+      isTouching = true;
       isDragging = false;
       startX = event.clientX;
       startY = event.clientY;
       startScrollLeft = track.scrollLeft;
-      track.setPointerCapture(event.pointerId);
     });
 
-    track.addEventListener('pointermove', (event) => {
-      if (activePointerId !== event.pointerId) return;
+    track.addEventListener('mousemove', (event) => {
+      if (!isTouching) return;
       const deltaX = event.clientX - startX;
       const deltaY = event.clientY - startY;
-
-      if (!dragAxisLocked) {
-        if (Math.abs(deltaX) < 4 && Math.abs(deltaY) < 4) return;
-        dragAxisLocked = true;
-      }
-
+      if (Math.abs(deltaX) < 4) return;
       if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
       isDragging = true;
       track.classList.add('is-dragging');
@@ -97,19 +139,8 @@ const initSwipeTracks = () => {
       track.scrollLeft = startScrollLeft - deltaX;
     });
 
-    track.addEventListener('pointerup', (event) => {
-      if (activePointerId !== event.pointerId) return;
-      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
-      activePointerId = null;
-      endDrag();
-    });
-
-    track.addEventListener('pointercancel', (event) => {
-      if (activePointerId !== event.pointerId) return;
-      if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
-      activePointerId = null;
-      endDrag();
-    });
+    track.addEventListener('mouseleave', endDrag);
+    document.addEventListener('mouseup', endDrag);
 
     track.addEventListener(
       'click',

@@ -195,7 +195,7 @@
 .carousel-control:hover { border-color: var(--gold); color: var(--gold-bright); }
 .carousel-control:disabled { opacity:.35; cursor:not-allowed; }
 
-.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; -webkit-overflow-scrolling:touch; touch-action:pan-y; overscroll-behavior-x:contain; }
+.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; -webkit-overflow-scrolling:touch; touch-action:pan-x; overscroll-behavior-x:contain; }
 .carousel-track::-webkit-scrollbar { display:none; }
 .carousel-track.is-dragging,
 .service-grid-mobile-carousel.is-dragging { scroll-snap-type: none; }
@@ -257,7 +257,7 @@
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    touch-action: pan-x;
     overscroll-behavior-x: contain;
     padding: 0.2rem 0 0.35rem;
     scrollbar-width: none;
@@ -519,7 +519,7 @@
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    touch-action: pan-x;
     overscroll-behavior-x: contain;
     scroll-behavior: smooth;
     scrollbar-width: none;
