@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { @apply bg-zinc-950 text-zinc-100 antialiased; background-image: radial-gradient(circle at top, rgba(199,163,93,.15), transparent 40%); }
+a { @apply text-zinc-100; }
