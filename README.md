@@ -96,3 +96,8 @@ Both forms submit JSON payloads to Google Apps Script Web App URLs.
   - `public/assets/images/services`
   - `public/assets/images/gallery/*`
   - `public/assets/images/placeholders`
+
+## Google Apps Script booking webhook
+
+Use `GOOGLE_APPS_SCRIPT_BOOKING.gs` as the full copy/paste script for the booking webhook.
+It includes sheet setup, booking insert (newest row at top), archive flow, and email notifications.
