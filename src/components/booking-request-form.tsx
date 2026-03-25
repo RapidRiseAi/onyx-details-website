@@ -4,6 +4,9 @@ import { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { bookingAddOns, paintCorrectionOptions, services } from '@/content/siteContent';
 
+const BOOKING_WEBHOOK_URL =
+  'https://script.google.com/macros/s/AKfycbx--jvxjMu5lozfbKzaIMVc4KKbwZph52RRREg1IppF5j67EuV1k8rGH0JeKLVXM_rhOQ/exec';
+
 export function BookingRequestForm() {
   const searchParams = useSearchParams();
   const requestedService = searchParams.get('service') ?? '';
@@ -12,6 +15,7 @@ export function BookingRequestForm() {
   const defaultService = serviceOptions.includes(requestedService) ? requestedService : '';
 
   const [serviceType, setServiceType] = useState(defaultService);
+  const [clientName, setClientName] = useState('');
   const [city, setCity] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -19,12 +23,45 @@ export function BookingRequestForm() {
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [selectedPaintOptions, setSelectedPaintOptions] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const includesPaintCorrection = selectedAddOns.includes('paint-correction');
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmitted(true);
+    setSubmitError('');
+    setSubmitting(true);
+
+    try {
+      const payload = {
+        serviceType,
+        clientName,
+        clientEmail: email,
+        clientPhone: phone,
+        city,
+        preferredDate,
+        addOns: selectedAddOns,
+        paintCorrectionOptions: selectedPaintOptions,
+        notes: ''
+      };
+
+      const response = await fetch(BOOKING_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Could not send booking request right now. Please try again.');
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Submission failed. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const toggleSelection = (value: string, current: string[], setValue: (next: string[]) => void) => {
@@ -52,6 +89,17 @@ export function BookingRequestForm() {
               <option key={service} value={service}>{service}</option>
             ))}
           </select>
+        </label>
+
+        <label className="grid gap-1 text-sm">
+          <span>Your name</span>
+          <input
+            required
+            value={clientName}
+            onChange={(event) => setClientName(event.target.value)}
+            className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            placeholder="Enter your name"
+          />
         </label>
 
         <label className="grid gap-1 text-sm">
@@ -132,10 +180,18 @@ export function BookingRequestForm() {
           </fieldset>
         ) : null}
 
-        <button type="submit" className="mt-1 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950">
-          Submit Request
+        <button
+          type="submit"
+          disabled={submitting}
+          className="mt-1 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {submitting ? 'Submitting...' : 'Submit Request'}
         </button>
       </form>
+
+      {submitError ? (
+        <p className="rounded-md border border-red-400/40 bg-red-500/10 px-3 py-2 text-sm text-red-200">{submitError}</p>
+      ) : null}
 
       {submitted ? (
         <p className="rounded-md border border-gold/40 bg-gold/10 px-3 py-2 text-sm text-zinc-100">
