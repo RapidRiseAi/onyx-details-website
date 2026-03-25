@@ -2,7 +2,7 @@
 
 import { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { services } from '@/content/siteContent';
+import { bookingAddOns, paintCorrectionOptions, services } from '@/content/siteContent';
 
 export function BookingRequestForm() {
   const searchParams = useSearchParams();
@@ -16,11 +16,19 @@ export function BookingRequestForm() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [preferredDate, setPreferredDate] = useState('');
+  const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
+  const [selectedPaintOptions, setSelectedPaintOptions] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
+
+  const includesPaintCorrection = selectedAddOns.includes('paint-correction');
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitted(true);
+  };
+
+  const toggleSelection = (value: string, current: string[], setValue: (next: string[]) => void) => {
+    setValue(current.includes(value) ? current.filter((item) => item !== value) : [...current, value]);
   };
 
   return (
@@ -92,6 +100,37 @@ export function BookingRequestForm() {
             className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
           />
         </label>
+
+        <fieldset className="grid gap-2 rounded-md border border-zinc-800 p-3">
+          <legend className="px-1 text-sm">Optional add-ons</legend>
+          {bookingAddOns.map((addOn) => (
+            <label key={addOn.id} className="flex items-center gap-2 text-sm text-zinc-200">
+              <input
+                type="checkbox"
+                checked={selectedAddOns.includes(addOn.id)}
+                onChange={() => toggleSelection(addOn.id, selectedAddOns, setSelectedAddOns)}
+              />
+              <span>{addOn.label}</span>
+            </label>
+          ))}
+        </fieldset>
+
+        {includesPaintCorrection ? (
+          <fieldset className="grid gap-2 rounded-md border border-gold/40 bg-gold/5 p-3">
+            <legend className="px-1 text-sm">Paint correction pricing options</legend>
+            {paintCorrectionOptions.map((option) => (
+              <label key={option.id} className="flex items-center gap-2 text-sm text-zinc-100">
+                <input
+                  type="checkbox"
+                  checked={selectedPaintOptions.includes(option.id)}
+                  onChange={() => toggleSelection(option.id, selectedPaintOptions, setSelectedPaintOptions)}
+                />
+                <span>{option.label}</span>
+              </label>
+            ))}
+            <p className="text-xs text-zinc-300">Final paint correction pricing is confirmed on vehicle viewing.</p>
+          </fieldset>
+        ) : null}
 
         <button type="submit" className="mt-1 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950">
           Submit Request

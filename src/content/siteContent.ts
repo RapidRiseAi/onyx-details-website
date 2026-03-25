@@ -9,8 +9,8 @@ export const navLinks = [
 export const contact = {
   phone: '081 532 8774',
   email: 'onyxdetails17@gmail.com',
-  areas: ['Clayton', 'Dandenong', 'Narre Warren', 'Berwick', 'Pakenham'],
-  whatsapp: 'https://wa.me/61815328774'
+  areas: ['Sabie', 'Graskop', 'White River', 'Nelspruit', 'Hazyview'],
+  whatsapp: 'https://wa.me/27815328774'
 };
 
 export const branding = {
@@ -26,37 +26,86 @@ export const hero = {
 
 export const services = [
   {
-    id: 'wash',
+    id: 'basic-wash-single',
     category: 'one-time',
-    title: 'Basic Wash',
-    price: '$85+',
-    desc: 'Exterior hand wash, wheel clean, and tire dressing for regular upkeep.',
-    bullets: ['Paint-safe hand wash', 'Wheel faces and tires', 'Glass cleaned']
+    title: 'Basic Wash (Interior & Exterior)',
+    price: 'R219',
+    desc: 'Single-use clean for interior and exterior upkeep.',
+    bullets: ['Interior + exterior wash', 'Ideal for regular upkeep', 'Mobile on-site service']
   },
   {
-    id: 'detail',
+    id: 'detail-single',
     category: 'one-time',
-    title: 'Full Detail',
-    price: '$220+',
-    desc: 'Complete interior and exterior detail for a full reset.',
-    bullets: ['Interior vacuum + wipe down', 'Exterior deep clean', 'Finish enhancement']
+    title: 'Detail Interior & Exterior',
+    price: 'R399',
+    desc: 'Single-use full detail option for interior and exterior.',
+    bullets: ['Deeper interior attention', 'Exterior detail finish', 'Paint correction can be added']
   },
   {
-    id: 'maintenance',
-    category: 'subscription',
-    title: 'Maintenance Plan',
-    price: '$140+',
-    desc: 'Recurring plan to keep your car consistently clean without hassle.',
-    bullets: ['Scheduled visits', 'Priority booking', 'Consistent finish']
+    id: 'interior-single',
+    category: 'one-time',
+    title: 'Interior Detail Only',
+    price: 'R219',
+    desc: 'Focused interior-only clean for seats, trims, and surfaces.',
+    bullets: ['Interior-focused service', 'Great for regular reset', 'Mobile on-site convenience']
   },
   {
-    id: 'special',
+    id: 'exterior-single',
+    category: 'one-time',
+    title: 'Exterior Detail Only',
+    price: 'R219',
+    desc: 'Focused exterior-only clean with optional paint correction add-on.',
+    bullets: ['Exterior-focused service', 'Paint correction can be added', 'Ideal before events']
+  },
+  {
+    id: 'basic-weekly',
     category: 'subscription',
-    title: 'Special Package',
-    price: '$320+',
-    desc: 'High-attention package focused on premium presentation.',
-    bullets: ['Deep interior attention', 'Detail-focused finish', 'Ideal before sale/events']
+    title: 'Basic Wash (Weekly)',
+    price: 'R799 / month',
+    desc: 'Recurring weekly basic wash package.',
+    bullets: ['Weekly recurring schedule', 'Consistent monthly upkeep', 'Priority recurring slot']
+  },
+  {
+    id: 'basic-biweekly',
+    category: 'subscription',
+    title: 'Basic Wash (Bi-Weekly)',
+    price: 'R379 / month',
+    desc: 'Recurring bi-weekly basic wash option.',
+    bullets: ['Bi-weekly schedule', 'Lower monthly commitment', 'Convenient recurring care']
+  },
+  {
+    id: 'detail-biweekly',
+    category: 'subscription',
+    title: 'Detail Interior & Exterior (Bi-Weekly)',
+    price: 'R699 / month',
+    desc: 'Bi-weekly recurring detail plan for higher finish consistency.',
+    bullets: ['Bi-weekly detail service', 'Interior + exterior attention', 'Recurring premium upkeep']
+  },
+  {
+    id: 'special-pack',
+    category: 'subscription',
+    title: 'Special Pack (Week 1 Detail + Weeks 2-4 Basic Wash)',
+    price: 'R1049 / month',
+    desc: 'Monthly structure with 1 deep detail followed by 3 weekly basic washes.',
+    bullets: ['Week 1 full detail', 'Weeks 2-4 basic wash', 'Best-value monthly presentation plan']
   }
+];
+
+export const bookingAddOns = [
+  { id: 'paint-correction', label: 'Paint Correction (pricing below)' },
+  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)' },
+  { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)' },
+  { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)' },
+  { id: 'dash-protection', label: 'Dash Protection Layer (+R49)' },
+  { id: 'leather-protection', label: 'Leather Seats Protection (+R49)' },
+  { id: 'engine-bay', label: 'Engine Bay Cleaning (+R149)' },
+  { id: 'wax-application', label: 'Wax Application (+R199)' }
+];
+
+export const paintCorrectionOptions = [
+  { id: 'step-1', label: '1 Step Paint Correction (R649-R849 depending on vehicle size)' },
+  { id: 'step-2', label: '2 Step Paint Correction (R949-R1149 depending on vehicle size)' },
+  { id: 'ceramic-coating', label: 'Add Ceramic Coating (+R399)' }
 ];
 
 export const gallery = [

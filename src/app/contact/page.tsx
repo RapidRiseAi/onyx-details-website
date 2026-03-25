@@ -23,7 +23,7 @@ export default function ContactPage() {
         <p><strong>Phone:</strong> {contact.phone}</p>
         <p><strong>Email:</strong> {contact.email}</p>
       </div>
-      <p className="text-zinc-400">Service areas: {contact.areas.join(', ')}</p>
+      <p className="text-zinc-400">Service areas: {contact.areas.join(', ')}. Other areas available on request; travel fees may apply outside of Sabie.</p>
       <a href={contact.whatsapp} className="inline-block rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950">Message on WhatsApp</a>
     </div>
   );

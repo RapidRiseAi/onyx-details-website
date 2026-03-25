@@ -109,10 +109,17 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           </div>
           <div className="flex items-center justify-between gap-2">
             <span>© {new Date().getFullYear()} OnyxDetails</span>
-            <Link href={contact.whatsapp} className="rounded-full border border-zinc-700 px-3 py-1 text-zinc-200">WhatsApp</Link>
           </div>
         </div>
       </footer>
+
+      <Link
+        href={contact.whatsapp}
+        aria-label="Chat on WhatsApp"
+        className="fixed bottom-5 right-4 z-50 rounded-full bg-gold px-4 py-3 text-xs font-semibold text-zinc-950 shadow-[0_10px_24px_rgba(0,0,0,.35)] md:hidden"
+      >
+        WhatsApp
+      </Link>
     </div>
   );
 }
