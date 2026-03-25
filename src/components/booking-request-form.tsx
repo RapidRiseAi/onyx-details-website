@@ -85,9 +85,14 @@ export function BookingRequestForm() {
         clientPhone: phone,
         city,
         preferredDate,
-        addOns: selectedAddOns,
+        addOns: selectedAddOns
+          .map((addOnId) => bookingAddOns.find((item) => item.id === addOnId)?.label)
+          .filter((label): label is string => Boolean(label)),
         addOnApplication,
-        paintCorrectionOptions: [paintCorrectionStep, includeCeramicCoating ? 'ceramic-coating' : ''].filter(Boolean),
+        paintCorrectionOptions: [paintCorrectionStep, includeCeramicCoating ? 'ceramic-coating' : '']
+          .filter(Boolean)
+          .map((optionId) => paintCorrectionOptions.find((option) => option.id === optionId)?.label)
+          .filter((label): label is string => Boolean(label)),
         estimatedPrice: estimatedPriceLabel,
         notes
       };
