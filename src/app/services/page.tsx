@@ -10,10 +10,10 @@ export default function ServicesPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Services</h1>
-      <p className="max-w-3xl text-zinc-300">Choose from one-off washes, full details, and recurring maintenance plans tailored to your schedule.</p>
+      <p className="max-w-3xl text-zinc-300">Choose from once-off washes, full details, and recurring maintenance plans tailored to your schedule.</p>
 
       <section className="space-y-3">
-        <h2 className="text-sm uppercase tracking-[0.18em] text-gold">One-time services</h2>
+        <h2 className="text-sm uppercase tracking-[0.18em] text-gold">Once-off services</h2>
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2">
           {oneTimeServices.map((service) => (
             <Card key={service.id}>

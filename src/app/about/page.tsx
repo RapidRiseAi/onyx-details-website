@@ -6,7 +6,7 @@ export default function AboutPage() {
         <img
           src="https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Premium-Service-Promise.png"
           alt="Onyx Details service promise"
-          className="h-56 w-full rounded-xl object-cover"
+          className="aspect-video w-full rounded-xl object-cover"
         />
         <h1 className="text-3xl font-bold">About</h1>
       </section>

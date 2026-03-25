@@ -30,6 +30,8 @@ export const services = [
     category: 'one-time',
     title: 'Basic Wash (Interior & Exterior)',
     price: 'R219',
+    priceMin: 219,
+    priceMax: 219,
     desc: 'Single-use clean for interior and exterior upkeep.',
     bullets: ['Interior + exterior wash', 'Ideal for regular upkeep', 'Mobile on-site service']
   },
@@ -38,6 +40,8 @@ export const services = [
     category: 'one-time',
     title: 'Detail Interior & Exterior',
     price: 'R399',
+    priceMin: 399,
+    priceMax: 399,
     desc: 'Single-use full detail option for interior and exterior.',
     bullets: ['Deeper interior attention', 'Exterior detail finish', 'Paint correction can be added']
   },
@@ -46,6 +50,8 @@ export const services = [
     category: 'one-time',
     title: 'Interior Detail Only',
     price: 'R219',
+    priceMin: 219,
+    priceMax: 219,
     desc: 'Focused interior-only clean for seats, trims, and surfaces.',
     bullets: ['Interior-focused service', 'Great for regular reset', 'Mobile on-site convenience']
   },
@@ -54,6 +60,8 @@ export const services = [
     category: 'one-time',
     title: 'Exterior Detail Only',
     price: 'R219',
+    priceMin: 219,
+    priceMax: 219,
     desc: 'Focused exterior-only clean with optional paint correction add-on.',
     bullets: ['Exterior-focused service', 'Paint correction can be added', 'Ideal before events']
   },
@@ -62,6 +70,8 @@ export const services = [
     category: 'subscription',
     title: 'Basic Wash (Weekly)',
     price: 'R799 / month',
+    priceMin: 799,
+    priceMax: 799,
     desc: 'Recurring weekly basic wash package.',
     bullets: ['Weekly recurring schedule', 'Consistent monthly upkeep', 'Priority recurring slot']
   },
@@ -70,6 +80,8 @@ export const services = [
     category: 'subscription',
     title: 'Basic Wash (Bi-Weekly)',
     price: 'R379 / month',
+    priceMin: 379,
+    priceMax: 379,
     desc: 'Recurring bi-weekly basic wash option.',
     bullets: ['Bi-weekly schedule', 'Lower monthly commitment', 'Convenient recurring care']
   },
@@ -78,6 +90,8 @@ export const services = [
     category: 'subscription',
     title: 'Detail Interior & Exterior (Bi-Weekly)',
     price: 'R699 / month',
+    priceMin: 699,
+    priceMax: 699,
     desc: 'Bi-weekly recurring detail plan for higher finish consistency.',
     bullets: ['Bi-weekly detail service', 'Interior + exterior attention', 'Recurring premium upkeep']
   },
@@ -86,26 +100,28 @@ export const services = [
     category: 'subscription',
     title: 'Special Pack (Week 1 Detail + Weeks 2-4 Basic Wash)',
     price: 'R1049 / month',
+    priceMin: 1049,
+    priceMax: 1049,
     desc: 'Monthly structure with 1 deep detail followed by 3 weekly basic washes.',
     bullets: ['Week 1 full detail', 'Weeks 2-4 basic wash', 'Best-value monthly presentation plan']
   }
 ];
 
 export const bookingAddOns = [
-  { id: 'paint-correction', label: 'Paint Correction (pricing below)' },
-  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)' },
-  { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)' },
-  { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)' },
-  { id: 'dash-protection', label: 'Dash Protection Layer (+R49)' },
-  { id: 'leather-protection', label: 'Leather Seats Protection (+R49)' },
-  { id: 'engine-bay', label: 'Engine Bay Cleaning (+R149)' },
-  { id: 'wax-application', label: 'Wax Application (+R199)' }
+  { id: 'paint-correction', label: 'Paint Correction (pricing below)', priceMin: 0, priceMax: 0 },
+  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)', priceMin: 349, priceMax: 449 },
+  { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)', priceMin: 70, priceMax: 70 },
+  { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)', priceMin: 150, priceMax: 150 },
+  { id: 'dash-protection', label: 'Dash Protection Layer (+R49)', priceMin: 49, priceMax: 49 },
+  { id: 'leather-protection', label: 'Leather Seats Protection (+R49)', priceMin: 49, priceMax: 49 },
+  { id: 'engine-bay', label: 'Engine Bay Cleaning (+R149)', priceMin: 149, priceMax: 149 },
+  { id: 'wax-application', label: 'Wax Application (+R199)', priceMin: 199, priceMax: 199 }
 ];
 
 export const paintCorrectionOptions = [
-  { id: 'step-1', label: '1 Step Paint Correction (R649-R849 depending on vehicle size)' },
-  { id: 'step-2', label: '2 Step Paint Correction (R949-R1149 depending on vehicle size)' },
-  { id: 'ceramic-coating', label: 'Add Ceramic Coating (+R399)' }
+  { id: 'step-1', label: '1 Step Paint Correction (R649-R849 depending on vehicle size)', priceMin: 649, priceMax: 849 },
+  { id: 'step-2', label: '2 Step Paint Correction (R949-R1149 depending on vehicle size)', priceMin: 949, priceMax: 1149 },
+  { id: 'ceramic-coating', label: 'Add Ceramic Coating (+R399)', priceMin: 399, priceMax: 399 }
 ];
 
 export const gallery = [

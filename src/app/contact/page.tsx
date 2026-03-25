@@ -10,7 +10,7 @@ export default function ContactPage() {
         <img
           src="https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Built-Around-Convenience.png"
           alt="Mobile detailing at your location"
-          className="h-56 w-full rounded-xl object-cover"
+          className="aspect-video w-full rounded-xl object-cover"
         />
         <h1 className="text-3xl font-bold">Contact</h1>
       </section>

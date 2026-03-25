@@ -54,7 +54,7 @@ export default function HomePage() {
 
       <Section>
         <h2 className="text-2xl font-semibold">Services</h2>
-        <h3 className="mt-3 text-sm uppercase tracking-[0.18em] text-gold">One-time services</h3>
+        <h3 className="mt-3 text-sm uppercase tracking-[0.18em] text-gold">Once-off services</h3>
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {oneTimeServices.map((service) => (
             <Card key={service.id}>
