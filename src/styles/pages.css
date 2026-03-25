@@ -1,7 +1,0 @@
-.page-hero { padding: 4.4rem 0 2.3rem; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(199,163,93,.06), transparent); }
-.page-hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: .6rem; }
-.page-hero p, .section-heading p { color: var(--muted); max-width: 70ch; }
-.testimonial blockquote { margin: .4rem 0 1rem; color: var(--muted); }
-.filters { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1rem; }
-.booking-note { color: var(--muted); font-size:.88rem; }
-.step { color: var(--gold); font-size: .8rem; letter-spacing:.08em; }
