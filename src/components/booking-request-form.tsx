@@ -48,11 +48,12 @@ export function BookingRequestForm() {
 
       const response = await fetch(BOOKING_WEBHOOK_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
+      if (!response) {
         throw new Error('Could not send booking request right now. Please try again.');
       }
 
