@@ -137,7 +137,6 @@ export const gallery = [
   { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After2.png', alt: 'Before and after vehicle detail two', title: 'Before / After Transformation 2' },
   { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After3.png', alt: 'Before and after vehicle detail three', title: 'Before / After Transformation 3' },
   { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After4.png', alt: 'Before and after vehicle detail four', title: 'Before / After Transformation 4' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Lifestyle1.png', alt: 'Mobile detail lifestyle shot', title: 'On-Site Mobile Service' },
   { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Lifestyle2.png', alt: 'Premium detailing lifestyle shot', title: 'Premium Mobile Care' }
 ];
 
