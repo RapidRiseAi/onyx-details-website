@@ -7,4 +7,19 @@ interface Props {
 }
 const { services, carouselOnMobile = false } = Astro.props;
 ---
-<div class={`service-grid ${carouselOnMobile ? 'service-grid-mobile-carousel' : ''}`}>{services.map((service) => <ServiceCard service={service} />)}</div>
+{
+  carouselOnMobile ? (
+    <>
+      <div class="service-grid service-grid-desktop">{services.map((service) => <ServiceCard service={service} />)}</div>
+      <section class="service-carousel" data-service-carousel aria-label="Swipe through services">
+        <button type="button" class="carousel-control" data-service-carousel-prev aria-label="Show previous service">‹</button>
+        <div class="service-grid-mobile-carousel" data-service-carousel-track>
+          {services.map((service) => <ServiceCard service={service} showBookingButton={false} />)}
+        </div>
+        <button type="button" class="carousel-control" data-service-carousel-next aria-label="Show next service">›</button>
+      </section>
+    </>
+  ) : (
+    <div class="service-grid">{services.map((service) => <ServiceCard service={service} />)}</div>
+  )
+}

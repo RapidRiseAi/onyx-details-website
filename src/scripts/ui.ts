@@ -43,60 +43,106 @@ const initMobileMenu = () => {
   });
 };
 
-const initServiceCarousels = () => {
-  document.querySelectorAll('.service-grid-mobile-carousel').forEach((carousel) => {
-    if (carousel.dataset.carouselInit === 'true') return;
-    carousel.dataset.carouselInit = 'true';
-
-    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!supportsFinePointer) return;
-
-    let isMouseDown = false;
-    let startX = 0;
-    let startScrollLeft = 0;
-
-    const startDrag = (clientX: number) => {
-      isMouseDown = true;
-      startX = clientX;
-      startScrollLeft = carousel.scrollLeft;
-      carousel.classList.add('dragging');
-    };
-
-    const moveDrag = (clientX: number) => {
-      if (!isMouseDown) return;
-      const distance = clientX - startX;
-      carousel.scrollLeft = startScrollLeft - distance;
-    };
-
-    const endDrag = () => {
-      if (!isMouseDown) return;
-      isMouseDown = false;
-      carousel.classList.remove('dragging');
-    };
-
-    carousel.addEventListener('mousedown', (event) => {
-      if (event.button !== 0) return;
-      startDrag(event.clientX);
-    });
-
-    carousel.addEventListener('mousemove', (event) => {
-      if (!isMouseDown) return;
-      event.preventDefault();
-      moveDrag(event.clientX);
-    });
-
-    carousel.addEventListener('mouseleave', endDrag);
-    document.addEventListener('mouseup', endDrag);
-
-    carousel.addEventListener('dragstart', (event) => {
-      event.preventDefault();
-    });
-  });
-};
-
 const initUi = () => {
   initMobileMenu();
   initServiceCarousels();
+  initCarouselSwipeGuard();
+};
+
+const initServiceCarousels = () => {
+  document.querySelectorAll('[data-service-carousel]').forEach((carousel) => {
+    if (carousel.dataset.serviceCarouselInit === 'true') return;
+    carousel.dataset.serviceCarouselInit = 'true';
+
+    const track = carousel.querySelector('[data-service-carousel-track]') as HTMLElement | null;
+    const prevButton = carousel.querySelector('[data-service-carousel-prev]') as HTMLButtonElement | null;
+    const nextButton = carousel.querySelector('[data-service-carousel-next]') as HTMLButtonElement | null;
+    if (!track || !prevButton || !nextButton) return;
+
+    const getStep = () => {
+      const firstSlide = track.firstElementChild as HTMLElement | null;
+      if (!firstSlide) return 0;
+      const style = window.getComputedStyle(track);
+      const gap = Number.parseFloat(style.columnGap || style.gap || '0');
+      return firstSlide.getBoundingClientRect().width + gap;
+    };
+
+    const syncButtons = () => {
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      prevButton.disabled = track.scrollLeft <= 4;
+      nextButton.disabled = track.scrollLeft >= maxScroll - 4;
+    };
+
+    const scrollByStep = (direction: 1 | -1) => {
+      const step = getStep();
+      if (step <= 0) return;
+      track.scrollBy({ left: step * direction, behavior: 'smooth' });
+    };
+
+    prevButton.addEventListener('click', () => scrollByStep(-1));
+    nextButton.addEventListener('click', () => scrollByStep(1));
+    track.addEventListener('scroll', syncButtons, { passive: true });
+    window.addEventListener('resize', syncButtons);
+    syncButtons();
+  });
+};
+
+const initCarouselSwipeGuard = () => {
+  document.querySelectorAll('.service-grid-mobile-carousel, .carousel-track').forEach((trackEl) => {
+    const track = trackEl as HTMLElement;
+    if (track.dataset.swipeGuardInit === 'true') return;
+    track.dataset.swipeGuardInit = 'true';
+
+    let startX = 0;
+    let startY = 0;
+    let isSwipeGesture = false;
+    let suppressClicksUntil = 0;
+
+    track.addEventListener(
+      'touchstart',
+      (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        isSwipeGesture = false;
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      'touchmove',
+      (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        if (Math.abs(deltaX) < 8) return;
+        if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        isSwipeGesture = true;
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      'touchend',
+      () => {
+        if (!isSwipeGesture) return;
+        suppressClicksUntil = Date.now() + 350;
+      },
+      { passive: true }
+    );
+
+    track.addEventListener(
+      'click',
+      (event) => {
+        if (Date.now() > suppressClicksUntil) return;
+        event.preventDefault();
+        event.stopPropagation();
+      },
+      true
+    );
+  });
 };
 
 if (document.readyState === 'loading') {

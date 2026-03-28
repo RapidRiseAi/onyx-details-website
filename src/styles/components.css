@@ -195,8 +195,10 @@
 .carousel-control:hover { border-color: var(--gold); color: var(--gold-bright); }
 .carousel-control:disabled { opacity:.35; cursor:not-allowed; }
 
-.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; -webkit-overflow-scrolling:touch; touch-action:pan-x; overscroll-behavior-x:contain; }
+.carousel-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 2rem) / 3); gap:1rem; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x proximity; padding:.2rem; scrollbar-width:none; -ms-overflow-style:none; -webkit-overflow-scrolling:touch; touch-action:auto; overscroll-behavior-x:contain; }
 .carousel-track::-webkit-scrollbar { display:none; }
+.carousel-track.is-dragging,
+.service-grid-mobile-carousel.is-dragging { scroll-snap-type: none; }
 .carousel-slide { display:block; border:none; background:transparent; color:var(--muted); text-align:left; cursor:default; scroll-snap-align:start; }
 .carousel-slide.static { cursor:default; }
 .carousel-slide img { width:100%; border-radius:16px; border:1px solid var(--border-strong); box-shadow: 0 10px 22px rgba(0,0,0,.25); }
@@ -204,6 +206,8 @@
 
 .service-groups { display:grid; gap:2.2rem; }
 .service-group-intro { color:var(--muted); margin:.4rem 0 1rem; }
+.service-grid-desktop { display: grid; }
+.service-carousel { display: none; }
 
 @media (max-width: 1200px){
   .carousel-track { grid-auto-columns:calc((100% - 1rem) / 2); }
@@ -240,17 +244,30 @@
   .site-nav .btn { width: 100%; margin-top: 0.35rem; }
   .site-nav.open { display:flex; }
 
+  .service-carousel {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .service-grid-desktop { display: none; }
+
   .service-grid-mobile-carousel {
     display: flex;
     gap: 0.72rem;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    touch-action: auto;
     overscroll-behavior-x: contain;
-    padding-bottom: 0.35rem;
+    padding: 0.2rem 0 0.35rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
+
+  .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
 
   .service-grid-mobile-carousel > * {
     flex: 0 0 82%;
@@ -270,8 +287,7 @@
   .hero-actions .btn { width: 100%; }
   .card { padding: 1.05rem; }
   .split { grid-template-columns:1fr; }
-  .before-after-carousel { grid-template-columns:1fr; }
-  .carousel-control { display:none; }
+  .before-after-carousel { grid-template-columns:auto 1fr auto; }
   .carousel-track { grid-auto-columns:minmax(82%, 1fr); }
   .cta { padding: 4rem 0 5rem; }
   .whatsapp-float { right: 0.65rem; bottom: 0.65rem; padding: 0.65rem 0.92rem; }
@@ -497,27 +513,25 @@
   .feature-grid,.service-grid,.steps-grid,.faq-grid { gap: 0.6rem; }
 
   .service-grid-mobile-carousel {
-    display: flex !important;
+    display: flex;
     gap: 0.72rem;
-    overflow-x: scroll !important;
+    overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x !important;
+    touch-action: auto;
     overscroll-behavior-x: contain;
-    scroll-snap-stop: always;
-    cursor: grab;
+    scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
-   .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
-  .service-grid-mobile-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
+  .service-grid-mobile-carousel::-webkit-scrollbar { display: none; }
   .service-grid-mobile-carousel > * {
-    flex: 0 0 86% !important;
-    min-width: 86% !important;
+    flex: 0 0 86%;
+    min-width: 86%;
     scroll-snap-align: start;
   }
 
