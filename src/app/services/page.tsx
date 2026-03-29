@@ -1,6 +1,7 @@
 import { services } from '@/content/siteContent';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { Card } from '@/components/ui/card';
+import { InfoPopover } from '@/components/ui/info-popover';
 import Link from 'next/link';
 
 export default function ServicesPage() {
@@ -17,7 +18,10 @@ export default function ServicesPage() {
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2">
           {oneTimeServices.map((service) => (
             <Card key={service.id}>
-              <h3 className="text-xl font-semibold">{service.title}</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-xl font-semibold">{service.title}</h3>
+                <InfoPopover label={service.title} description={service.info ?? service.desc} />
+              </div>
               <p className="text-gold">{service.price}</p>
               <p className="mt-2 text-zinc-300">{service.desc}</p>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-400">
@@ -38,7 +42,10 @@ export default function ServicesPage() {
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2">
           {subscriptionServices.map((service) => (
             <Card key={service.id}>
-              <h3 className="text-xl font-semibold">{service.title}</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-xl font-semibold">{service.title}</h3>
+                <InfoPopover label={service.title} description={service.info ?? service.desc} />
+              </div>
               <p className="text-gold">{service.price}</p>
               <p className="mt-2 text-zinc-300">{service.desc}</p>
               <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-400">

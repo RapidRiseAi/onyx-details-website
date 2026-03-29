@@ -34,6 +34,7 @@ export const services = [
     priceMax: 219,
     washCount: 1,
     desc: 'Single-use clean for interior and exterior upkeep.',
+    info: 'A once-off maintenance clean covering cabin and exterior surfaces. Ideal when your vehicle needs a quality refresh without full correction work.',
     bullets: ['Interior + exterior wash', 'Ideal for regular upkeep', 'Mobile on-site service']
   },
   {
@@ -45,6 +46,7 @@ export const services = [
     priceMax: 399,
     washCount: 1,
     desc: 'Single-use full detail option for interior and exterior.',
+    info: 'A deeper once-off detailing package for both interior and exterior, with added attention to grime buildup and finish quality.',
     bullets: ['Deeper interior attention', 'Exterior detail finish', 'Paint correction can be added']
   },
   {
@@ -56,6 +58,7 @@ export const services = [
     priceMax: 219,
     washCount: 1,
     desc: 'Focused interior-only clean for seats, trims, and surfaces.',
+    info: 'Interior-only treatment for seats, mats, plastics, trims, and touch points when the cabin needs focused care.',
     bullets: ['Interior-focused service', 'Great for regular reset', 'Mobile on-site convenience']
   },
   {
@@ -67,6 +70,7 @@ export const services = [
     priceMax: 219,
     washCount: 1,
     desc: 'Focused exterior-only clean with optional paint correction add-on.',
+    info: 'Exterior-only service focused on bodywork, glass, and wheels. Best when the paintwork needs a clean presentation boost.',
     bullets: ['Exterior-focused service', 'Paint correction can be added', 'Ideal before events']
   },
   {
@@ -78,6 +82,7 @@ export const services = [
     priceMax: 799,
     washCount: 4,
     desc: 'Recurring weekly basic wash package.',
+    info: 'Monthly subscription with one visit per week (about four visits per month) to keep your vehicle consistently clean.',
     bullets: ['Weekly recurring schedule', 'Consistent monthly upkeep', 'Priority recurring slot']
   },
   {
@@ -89,6 +94,7 @@ export const services = [
     priceMax: 379,
     washCount: 2,
     desc: 'Recurring bi-weekly basic wash option.',
+    info: 'Monthly plan with two maintenance visits per month for lighter-use vehicles that still need regular care.',
     bullets: ['Bi-weekly schedule', 'Lower monthly commitment', 'Convenient recurring care']
   },
   {
@@ -100,6 +106,7 @@ export const services = [
     priceMax: 699,
     washCount: 2,
     desc: 'Bi-weekly recurring detail plan for higher finish consistency.',
+    info: 'Two detailed visits per month with stronger interior and exterior attention than a basic maintenance wash.',
     bullets: ['Bi-weekly detail service', 'Interior + exterior attention', 'Recurring premium upkeep']
   },
   {
@@ -111,19 +118,20 @@ export const services = [
     priceMax: 1049,
     washCount: 4,
     desc: 'Monthly structure with 1 deep detail followed by 3 weekly basic washes.',
+    info: 'Hybrid monthly plan: one deeper detail in week 1, then three upkeep washes for ongoing presentation through the month.',
     bullets: ['Week 1 full detail', 'Weeks 2-4 basic wash', 'Best-value monthly presentation plan']
   }
 ];
 
 export const bookingAddOns = [
-  { id: 'paint-correction', label: 'Paint Correction (pricing below)', priceMin: 0, priceMax: 0 },
-  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)', priceMin: 349, priceMax: 449 },
-  { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)', priceMin: 70, priceMax: 70 },
-  { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)', priceMin: 150, priceMax: 150 },
-  { id: 'dash-protection', label: 'Dash Protection Layer (+R49)', priceMin: 49, priceMax: 49 },
-  { id: 'leather-protection', label: 'Leather Seats Protection (+R49)', priceMin: 49, priceMax: 49 },
-  { id: 'engine-bay', label: 'Engine Bay Cleaning (+R149)', priceMin: 149, priceMax: 149 },
-  { id: 'wax-application', label: 'Wax Application (+R199)', priceMin: 199, priceMax: 199 }
+  { id: 'paint-correction', label: 'Paint Correction (pricing below)', description: 'Machine polishing add-on that reduces swirl marks, oxidation, and light paint imperfections. Step options are selected below.', priceMin: 0, priceMax: 0 },
+  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)', description: 'Restores cloudy or yellowed headlights to improve clarity, appearance, and night-time light output.', priceMin: 349, priceMax: 449 },
+  { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)', description: 'Hydrophobic coating for the front windshield that helps water bead and roll off more easily.', priceMin: 70, priceMax: 70 },
+  { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)', description: 'Extra time and tools to remove embedded pet hair from seats, carpets, and boot areas.', priceMin: 150, priceMax: 150 },
+  { id: 'dash-protection', label: 'Dash Protection Layer (+R49)', description: 'Protective interior dressing applied to dashboard plastics to reduce fading and dust adhesion.', priceMin: 49, priceMax: 49 },
+  { id: 'leather-protection', label: 'Leather Seats Protection (+R49)', description: 'Conditioning and protection layer for leather seats to support softness and help resist cracking.', priceMin: 49, priceMax: 49 },
+  { id: 'engine-bay', label: 'Engine Bay Cleaning (+R149)', description: 'Safe cleaning and dressing of visible engine bay surfaces for a neater, maintained look.', priceMin: 149, priceMax: 149 },
+  { id: 'wax-application', label: 'Wax Application (+R199)', description: 'Protective wax layer that adds gloss and short-term protection against environmental fallout.', priceMin: 199, priceMax: 199 }
 ];
 
 export const paintCorrectionOptions = [
