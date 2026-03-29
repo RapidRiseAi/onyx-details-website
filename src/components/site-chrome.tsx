@@ -39,17 +39,17 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             type="button"
             aria-label="Open menu"
             onClick={() => setMenuOpen(true)}
-            className="rounded-lg border border-zinc-700 p-2 text-zinc-200"
+            className="shrink-0 rounded-lg border border-zinc-700 p-2 text-zinc-200"
           >
             <Menu size={18} />
           </button>
-          <Link href="/" className="flex items-center justify-center gap-2">
+          <Link href="/" className="mx-2 flex min-w-0 items-center justify-center gap-1.5 whitespace-nowrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-gold">ONYX</span>
-            <img src={branding.logo} alt="Onyx Details logo" className="h-8 w-8 object-contain" />
-            <span className="text-[11px] font-semibold tracking-[0.2em] text-gold">DETAILS</span>
+            <span className="text-[10px] font-semibold tracking-[0.18em] text-gold">ONYX</span>
+            <img src={branding.logo} alt="Onyx Details logo" className="h-8 w-8 shrink-0 object-contain" />
+            <span className="text-[10px] font-semibold tracking-[0.18em] text-gold">DETAILS</span>
           </Link>
-          <Link href="/contact" className="rounded-full bg-gold px-3 py-1.5 text-xs font-semibold text-zinc-950">
+          <Link href="/contact" className="shrink-0 rounded-full bg-gold px-3 py-1.5 text-xs font-semibold text-zinc-950">
             Book
           </Link>
         </div>
