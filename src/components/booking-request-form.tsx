@@ -225,17 +225,18 @@ export function BookingRequestForm() {
         <fieldset className="grid min-w-0 gap-2 rounded-md border border-zinc-800 p-3">
           <legend className="px-1 text-sm">Optional add-ons</legend>
           {bookingAddOns.map((addOn) => (
-            <label key={addOn.id} className="flex w-full min-w-0 items-start gap-2 overflow-hidden text-sm text-zinc-200">
-                <input
-                  type="checkbox"
-                  checked={selectedAddOns.includes(addOn.id)}
-                  onChange={() => toggleAddOn(addOn.id)}
-                />
-              <span className="flex min-w-0 flex-1 items-start gap-2">
-                <span className="min-w-0 break-words">{addOn.label}</span>
-                <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
-              </span>
-            </label>
+            <div key={addOn.id} className="flex w-full min-w-0 items-start gap-2 text-sm text-zinc-200">
+              <input
+                id={`addon-${addOn.id}`}
+                type="checkbox"
+                checked={selectedAddOns.includes(addOn.id)}
+                onChange={() => toggleAddOn(addOn.id)}
+              />
+              <label htmlFor={`addon-${addOn.id}`} className="min-w-0 flex-1 break-words">
+                {addOn.label}
+              </label>
+              <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
+            </div>
           ))}
         </fieldset>
 
