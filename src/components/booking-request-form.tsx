@@ -132,13 +132,13 @@ export function BookingRequestForm() {
   };
 
   return (
-    <div className="space-y-3 overflow-x-clip rounded-xl border border-zinc-800 bg-zinc-900/40 p-4 md:overflow-x-visible">
+    <div className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
       <h2 className="text-lg font-semibold">Book a Service Request</h2>
       <p className="text-sm text-zinc-300">
         Tell us what service you need and your preferred timing. Once submitted, Kaden will contact you with further arrangements.
       </p>
 
-      <form className="grid min-w-0 gap-3" onSubmit={onSubmit}>
+      <form className="grid gap-3" onSubmit={onSubmit}>
         <label className="grid gap-1 text-sm">
           <span>Service type</span>
           <select
@@ -222,17 +222,17 @@ export function BookingRequestForm() {
           ) : null}
         </div>
 
-        <fieldset className="grid min-w-0 gap-2 rounded-md border border-zinc-800 p-3">
+        <fieldset className="grid gap-2 rounded-md border border-zinc-800 p-3">
           <legend className="px-1 text-sm">Optional add-ons</legend>
           {bookingAddOns.map((addOn) => (
-            <label key={addOn.id} className="flex w-full min-w-0 items-start gap-2 text-sm text-zinc-200">
+            <label key={addOn.id} className="flex items-start gap-2 text-sm text-zinc-200">
                 <input
                   type="checkbox"
                   checked={selectedAddOns.includes(addOn.id)}
                   onChange={() => toggleAddOn(addOn.id)}
                 />
-              <span className="flex min-w-0 flex-1 items-start gap-2">
-                <span className="min-w-0 break-words">{addOn.label}</span>
+              <span className="flex items-start gap-2 break-words">
+                <span>{addOn.label}</span>
                 <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
               </span>
             </label>

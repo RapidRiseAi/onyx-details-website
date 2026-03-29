@@ -12,7 +12,7 @@ export function InfoPopover({ label, description }: InfoPopoverProps) {
       >
         i
       </summary>
-      <div className="absolute right-0 top-7 z-50 hidden w-[min(14rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2.5rem)] rounded-md border border-zinc-700 bg-zinc-950 p-2 text-xs leading-relaxed text-zinc-200 shadow-xl group-open:block md:w-64 md:max-w-none">
+      <div className="absolute right-0 top-7 z-50 hidden w-56 rounded-md border border-zinc-700 bg-zinc-950 p-2 text-xs leading-relaxed text-zinc-200 shadow-xl group-open:block md:w-64">
         {description}
       </div>
     </details>
