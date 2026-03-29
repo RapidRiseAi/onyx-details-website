@@ -14,7 +14,7 @@ export const contact = {
 };
 
 export const branding = {
-  logo: '/assets/logos/onyxdetails-logo.svg'
+  logo: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Onyx-Details-Logo.png'
 };
 
 export const hero = {
