@@ -59,8 +59,8 @@ export default function HomePage() {
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {oneTimeServices.map((service) => (
             <Card key={service.id}>
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg font-semibold">{service.title}</h3>
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="min-w-0 flex-1 text-lg font-semibold leading-tight">{service.title}</h3>
                 <InfoPopover label={service.title} description={service.info ?? service.desc} />
               </div>
               <p className="text-gold">{service.price}</p>
@@ -74,8 +74,8 @@ export default function HomePage() {
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {subscriptionServices.map((service) => (
             <Card key={service.id}>
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg font-semibold">{service.title}</h3>
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="min-w-0 flex-1 text-lg font-semibold leading-tight">{service.title}</h3>
                 <InfoPopover label={service.title} description={service.info ?? service.desc} />
               </div>
               <p className="text-gold">{service.price}</p>
