@@ -138,14 +138,14 @@ export function BookingRequestForm() {
         Tell us what service you need and your preferred timing. Once submitted, Kaden will contact you with further arrangements.
       </p>
 
-      <form className="grid gap-3" onSubmit={onSubmit}>
+      <form className="grid min-w-0 gap-3" onSubmit={onSubmit}>
         <label className="grid gap-1 text-sm">
           <span>Service type</span>
           <select
             required
             value={serviceType}
             onChange={(event) => setServiceType(event.target.value)}
-            className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
           >
             <option value="">Select a service</option>
             {serviceOptions.map((service) => (
@@ -160,7 +160,7 @@ export function BookingRequestForm() {
             required
             value={clientName}
             onChange={(event) => setClientName(event.target.value)}
-            className="min-w-0 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
             placeholder="Enter your name"
           />
         </label>
@@ -171,7 +171,7 @@ export function BookingRequestForm() {
             required
             value={city}
             onChange={(event) => setCity(event.target.value)}
-            className="min-w-0 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
             placeholder="Enter your city"
           />
           <span className="text-xs text-zinc-400">Travel fees may apply outside of Sabie.</span>
@@ -185,7 +185,7 @@ export function BookingRequestForm() {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="min-w-0 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+              className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
               placeholder="you@example.com"
             />
           </label>
@@ -196,7 +196,7 @@ export function BookingRequestForm() {
               required
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
-              className="min-w-0 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+              className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
               placeholder="Your contact number"
             />
           </label>
@@ -210,7 +210,7 @@ export function BookingRequestForm() {
             value={preferredDate}
             onChange={(event) => setPreferredDate(event.target.value)}
             onFocus={(event) => event.currentTarget.showPicker?.()}
-            className="min-w-0 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
           />
         </label>
 
@@ -222,17 +222,17 @@ export function BookingRequestForm() {
           ) : null}
         </div>
 
-        <fieldset className="grid gap-2 rounded-md border border-zinc-800 p-3">
+        <fieldset className="grid min-w-0 gap-2 rounded-md border border-zinc-800 p-3">
           <legend className="px-1 text-sm">Optional add-ons</legend>
           {bookingAddOns.map((addOn) => (
-            <label key={addOn.id} className="flex items-start gap-2 text-sm text-zinc-200">
+            <label key={addOn.id} className="flex w-full min-w-0 items-start gap-2 text-sm text-zinc-200">
                 <input
                   type="checkbox"
                   checked={selectedAddOns.includes(addOn.id)}
                   onChange={() => toggleAddOn(addOn.id)}
                 />
-              <span className="flex items-start gap-2 break-words">
-                <span>{addOn.label}</span>
+              <span className="flex min-w-0 flex-1 items-start gap-2">
+                <span className="min-w-0 break-words">{addOn.label}</span>
                 <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
               </span>
             </label>
@@ -297,7 +297,7 @@ export function BookingRequestForm() {
           <textarea
             value={notes}
             onChange={(event) => setNotes(event.target.value)}
-            className="min-w-0 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
             rows={3}
             placeholder="Any extra details for Kaden..."
           />
@@ -306,7 +306,7 @@ export function BookingRequestForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-1 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60"
+          className="mt-1 w-full rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
         >
           {submitting ? 'Submitting...' : 'Submit Request'}
         </button>
