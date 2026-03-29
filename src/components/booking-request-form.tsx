@@ -132,13 +132,13 @@ export function BookingRequestForm() {
   };
 
   return (
-    <div className="space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+    <div className="w-full max-w-full space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
       <h2 className="text-lg font-semibold">Book a Service Request</h2>
       <p className="text-sm text-zinc-300">
         Tell us what service you need and your preferred timing. Once submitted, Kaden will contact you with further arrangements.
       </p>
 
-      <form className="grid min-w-0 gap-3" onSubmit={onSubmit}>
+      <form className="grid min-w-0 w-full max-w-full gap-3 [&>*]:min-w-0" onSubmit={onSubmit}>
         <label className="grid gap-1 text-sm">
           <span>Service type</span>
           <select
@@ -177,7 +177,7 @@ export function BookingRequestForm() {
           <span className="text-xs text-zinc-400">Travel fees may apply outside of Sabie.</span>
         </label>
 
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid min-w-0 gap-3 md:grid-cols-2">
           <label className="grid gap-1 text-sm">
             <span>Email</span>
             <input
@@ -225,7 +225,7 @@ export function BookingRequestForm() {
         <fieldset className="grid min-w-0 gap-2 rounded-md border border-zinc-800 p-3">
           <legend className="px-1 text-sm">Optional add-ons</legend>
           {bookingAddOns.map((addOn) => (
-            <label key={addOn.id} className="flex w-full min-w-0 items-start gap-2 text-sm text-zinc-200">
+            <label key={addOn.id} className="flex w-full min-w-0 items-start gap-2 overflow-hidden text-sm text-zinc-200">
                 <input
                   type="checkbox"
                   checked={selectedAddOns.includes(addOn.id)}
@@ -306,7 +306,7 @@ export function BookingRequestForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-1 w-full rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
+          className="mt-1 w-full max-w-full rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
         >
           {submitting ? 'Submitting...' : 'Submit Request'}
         </button>
