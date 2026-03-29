@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { bookingAddOns, paintCorrectionOptions, services } from '@/content/siteContent';
+import { InfoPopover } from '@/components/ui/info-popover';
 
 const BOOKING_WEBHOOK_URL =
   'https://script.google.com/macros/s/AKfycbx--jvxjMu5lozfbKzaIMVc4KKbwZph52RRREg1IppF5j67EuV1k8rGH0JeKLVXM_rhOQ/exec';
@@ -230,7 +231,10 @@ export function BookingRequestForm() {
                   checked={selectedAddOns.includes(addOn.id)}
                   onChange={() => toggleAddOn(addOn.id)}
                 />
-              <span className="break-words">{addOn.label}</span>
+              <span className="flex items-start gap-2 break-words">
+                <span>{addOn.label}</span>
+                <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
+              </span>
             </label>
           ))}
         </fieldset>

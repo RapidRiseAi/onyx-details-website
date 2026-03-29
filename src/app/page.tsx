@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { InfoPopover } from '@/components/ui/info-popover';
 import { Section } from '@/components/ui/section';
 import { contact, gallery, hero, services, steps, testimonials, whyChoose } from '@/content/siteContent';
 
@@ -58,7 +59,10 @@ export default function HomePage() {
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {oneTimeServices.map((service) => (
             <Card key={service.id}>
-              <h3 className="text-lg font-semibold">{service.title}</h3>
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="min-w-0 flex-1 text-lg font-semibold leading-tight">{service.title}</h3>
+                <InfoPopover label={service.title} description={service.info ?? service.desc} />
+              </div>
               <p className="text-gold">{service.price}</p>
               <p className="mt-2 text-sm text-zinc-300">{service.desc}</p>
               <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="mt-4 block rounded-lg bg-gold px-4 py-2 text-center text-sm font-semibold text-zinc-950">Book This Service</Link>
@@ -70,7 +74,10 @@ export default function HomePage() {
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {subscriptionServices.map((service) => (
             <Card key={service.id}>
-              <h3 className="text-lg font-semibold">{service.title}</h3>
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="min-w-0 flex-1 text-lg font-semibold leading-tight">{service.title}</h3>
+                <InfoPopover label={service.title} description={service.info ?? service.desc} />
+              </div>
               <p className="text-gold">{service.price}</p>
               <p className="mt-2 text-sm text-zinc-300">{service.desc}</p>
               <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="mt-4 block rounded-lg bg-gold px-4 py-2 text-center text-sm font-semibold text-zinc-950">Book This Service</Link>
