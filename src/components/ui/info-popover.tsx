@@ -1,70 +1,94 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type InfoPopoverProps = {
   label: string;
   description: string;
 };
 
-function closeOtherInfoPopovers(current: HTMLDetailsElement) {
-  document
-    .querySelectorAll<HTMLDetailsElement>('details[data-info-popover="true"][open]')
-    .forEach((popover) => {
-      if (popover !== current) {
-        popover.open = false;
-      }
-    });
-}
+let activePopoverCloser: null | (() => void) = null;
 
 export function InfoPopover({ label, description }: InfoPopoverProps) {
-  const popoverRef = useRef<HTMLDetailsElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const popoverRef = useRef<HTMLDivElement>(null);
+
+  const closePopover = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const openPopover = useCallback(() => {
+    if (activePopoverCloser && activePopoverCloser !== closePopover) {
+      activePopoverCloser();
+    }
+
+    activePopoverCloser = closePopover;
+    setIsOpen(true);
+  }, [closePopover]);
 
   useEffect(() => {
+    if (!isOpen) {
+      if (activePopoverCloser === closePopover) {
+        activePopoverCloser = null;
+      }
+      return;
+    }
+
     const handlePointerDown = (event: PointerEvent) => {
       const popover = popoverRef.current;
-      if (!popover || !popover.open) {
+      if (!popover) {
         return;
       }
 
       const target = event.target;
       if (target instanceof Node && !popover.contains(target)) {
-        popover.open = false;
+        closePopover();
       }
     };
 
-    document.addEventListener('pointerdown', handlePointerDown);
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closePopover();
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    document.addEventListener('keydown', handleEscape);
 
     return () => {
-      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+      document.removeEventListener('keydown', handleEscape);
     };
-  }, []);
+  }, [closePopover, isOpen]);
 
   const handleToggle = () => {
-    const popover = popoverRef.current;
-    if (!popover || !popover.open) {
+    if (isOpen) {
+      closePopover();
       return;
     }
 
-    closeOtherInfoPopovers(popover);
+    openPopover();
   };
 
   return (
-    <details
+    <div
       ref={popoverRef}
       data-info-popover="true"
-      onToggle={handleToggle}
       className="group relative inline-block shrink-0 align-middle"
     >
-      <summary
+      <button
+        type="button"
+        onClick={handleToggle}
         className="flex h-5 w-5 cursor-pointer list-none items-center justify-center rounded-full border border-zinc-600 bg-zinc-900 text-[11px] font-semibold text-zinc-200 transition hover:border-gold hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
         aria-label={`More info about ${label}`}
       >
         i
-      </summary>
-      <div className="absolute right-0 top-7 z-50 hidden w-[min(14rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2.5rem)] rounded-md border border-zinc-700 bg-zinc-950 p-2 text-xs leading-relaxed text-zinc-200 shadow-xl group-open:block md:w-64 md:max-w-none">
+      </button>
+      <div
+        className={`absolute right-0 top-7 z-50 w-[min(14rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2.5rem)] rounded-md border border-zinc-700 bg-zinc-950 p-2 text-xs leading-relaxed text-zinc-200 shadow-xl md:w-64 md:max-w-none ${isOpen ? 'block' : 'hidden'}`}
+      >
         {description}
       </div>
-    </details>
+    </div>
   );
 }

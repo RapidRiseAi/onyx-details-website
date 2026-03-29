@@ -225,7 +225,7 @@ export function BookingRequestForm() {
         <fieldset className="grid min-w-0 gap-2 rounded-md border border-zinc-800 p-3">
           <legend className="px-1 text-sm">Optional add-ons</legend>
           {bookingAddOns.map((addOn) => (
-            <div key={addOn.id} className="flex w-full min-w-0 items-start gap-2 overflow-hidden text-sm text-zinc-200">
+            <div key={addOn.id} className="flex w-full min-w-0 items-start gap-2 text-sm text-zinc-200">
               <input
                 id={`addon-${addOn.id}`}
                 type="checkbox"
