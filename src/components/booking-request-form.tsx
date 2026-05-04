@@ -21,6 +21,7 @@ export function BookingRequestForm() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [vehicleType, setVehicleType] = useState('');
+  const [vehicleTypeOther, setVehicleTypeOther] = useState('');
   const [preferredDate, setPreferredDate] = useState('');
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [paintCorrectionStep, setPaintCorrectionStep] = useState<'step-1' | 'step-2' | ''>('');
@@ -95,7 +96,7 @@ export function BookingRequestForm() {
         clientName,
         clientEmail: email,
         clientPhone: phone,
-        vehicleType,
+        vehicleType: vehicleType === 'Other' ? `Other: ${vehicleTypeOther}` : vehicleType,
         city,
         preferredDate,
         addOns: selectedAddOns
@@ -226,7 +227,11 @@ export function BookingRequestForm() {
           <select
             required
             value={vehicleType}
-            onChange={(event) => setVehicleType(event.target.value)}
+            onChange={(event) => {
+              const nextType = event.target.value;
+              setVehicleType(nextType);
+              if (nextType !== 'Other') setVehicleTypeOther('');
+            }}
             className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
           >
             <option value="">Select vehicle type</option>
@@ -235,6 +240,18 @@ export function BookingRequestForm() {
             ))}
           </select>
         </label>
+        {vehicleType === 'Other' ? (
+          <label className="grid gap-1 text-sm">
+            <span>Please specify vehicle type</span>
+            <input
+              required
+              value={vehicleTypeOther}
+              onChange={(event) => setVehicleTypeOther(event.target.value)}
+              className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+              placeholder="Example: Crossover, MPV, Sports Car..."
+            />
+          </label>
+        ) : null}
 
         <label className="grid gap-1 text-sm">
           <span>Preferred service date</span>
