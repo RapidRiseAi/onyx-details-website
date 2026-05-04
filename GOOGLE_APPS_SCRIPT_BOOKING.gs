@@ -30,7 +30,6 @@ const HEADERS = [
   'Add-on Application',
   'Paint Correction',
   'Main Problem',
-  'Photo Links',
   'Uploaded Photo URLs',
   'Notes',
   'Raw Payload JSON'
@@ -64,7 +63,6 @@ function doPost(e) {
     const addOns = normalizeList_(payload.addOns);
     const paintCorrection = normalizeList_(payload.paintCorrectionOptions);
     const savedPhotoUrls = savePhotosToDrive_(payload.photos, payload.clientName);
-    const manualPhotoLinks = normalizeList_(payload.photoLinks);
 
     const row = [
       false,
@@ -81,7 +79,6 @@ function doPost(e) {
       payload.addOnApplication || '',
       paintCorrection,
       payload.mainProblem || '',
-      manualPhotoLinks,
       normalizeList_(savedPhotoUrls),
       payload.notes || '',
       JSON.stringify(payload)
@@ -92,8 +89,8 @@ function doPost(e) {
     active.getRange(2, 1, 1, HEADERS.length).setValues([row]);
     active.getRange(2, 1).insertCheckboxes();
 
-    sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, manualPhotoLinks, normalizeList_(savedPhotoUrls));
-    sendCustomerEmail_(payload, addOns, paintCorrection, manualPhotoLinks, normalizeList_(savedPhotoUrls));
+    sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, normalizeList_(savedPhotoUrls));
+    sendCustomerEmail_(payload, addOns, paintCorrection, normalizeList_(savedPhotoUrls));
 
     return json_({ ok: true, message: 'Booking saved + emails sent.' });
   } catch (error) {
@@ -154,7 +151,7 @@ function archiveCompletedBookings() {
   }
 }
 
-function sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, manualPhotoLinks, savedPhotoLinks) {
+function sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, savedPhotoLinks) {
   MailApp.sendEmail({
     to: COMPANY_EMAIL,
     subject: `New Booking: ${payload.serviceType || 'Unknown Service'}`,
@@ -174,14 +171,13 @@ function sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, manualPh
       `Add-on Application: ${payload.addOnApplication || 'N/A'}`,
       `Paint Correction: ${paintCorrection || 'None'}`,
       `Main Problem: ${payload.mainProblem || 'None'}`,
-      `Photo Links (manual): ${manualPhotoLinks || 'None'}`,
       `Uploaded Photo URLs: ${savedPhotoLinks || 'None'}`,
       `Notes: ${payload.notes || 'None'}`
     ].join('\n')
   });
 }
 
-function sendCustomerEmail_(payload, addOns, paintCorrection, manualPhotoLinks, savedPhotoLinks) {
+function sendCustomerEmail_(payload, addOns, paintCorrection, savedPhotoLinks) {
   if (!payload.clientEmail) return;
 
   MailApp.sendEmail({
@@ -201,7 +197,6 @@ function sendCustomerEmail_(payload, addOns, paintCorrection, manualPhotoLinks, 
       `- Add-ons: ${addOns || 'None'}`,
       `- Paint Correction: ${paintCorrection || 'None'}`,
       `- Main Problem: ${payload.mainProblem || 'None'}`,
-      `- Photo Links (manual): ${manualPhotoLinks || 'None'}`,
       `- Uploaded Photo URLs: ${savedPhotoLinks || 'None'}`,
       '',
       'Kaden from Onyx Details will contact you shortly.',

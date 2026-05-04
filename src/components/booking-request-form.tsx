@@ -26,7 +26,6 @@ export function BookingRequestForm() {
   const [paintCorrectionStep, setPaintCorrectionStep] = useState<'step-1' | 'step-2' | ''>('');
   const [addOnApplication, setAddOnApplication] = useState<'one-time' | 'every-wash'>('one-time');
   const [mainProblem, setMainProblem] = useState('');
-  const [photoLinks, setPhotoLinks] = useState('');
   const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
   const [notes, setNotes] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -109,7 +108,6 @@ export function BookingRequestForm() {
           .filter((label): label is string => Boolean(label)),
         estimatedPrice: estimatedPriceLabel,
         mainProblem,
-        photoLinks,
         photos,
         notes
       };
@@ -270,6 +268,9 @@ export function BookingRequestForm() {
               />
               <label htmlFor={`addon-${addOn.id}`} className="min-w-0 flex-1 break-words">
                 {addOn.label}
+                {addOn.id === 'ceramic-coating' ? (
+                  <span className="mt-1 block text-xs text-zinc-400">Recommended with a paint correction to really see the full benefit.</span>
+                ) : null}
               </label>
               <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
             </div>
@@ -344,17 +345,6 @@ export function BookingRequestForm() {
             className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100 file:mr-3 file:rounded-md file:border-0 file:bg-gold file:px-3 file:py-1 file:text-xs file:font-semibold file:text-zinc-950"
           />
           <span className="text-xs text-zinc-400">Please upload clear interior and exterior photos, plus close-up photos of the main pain points you want solved.</span>
-        </label>
-
-        <label className="grid gap-1 text-sm">
-          <span>Photo links (optional backup)</span>
-          <textarea
-            value={photoLinks}
-            onChange={(event) => setPhotoLinks(event.target.value)}
-            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
-            rows={2}
-            placeholder="If needed, paste Google Drive/Dropbox links to photos here."
-          />
         </label>
 
         <label className="grid gap-1 text-sm">
