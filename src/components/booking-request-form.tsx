@@ -20,11 +20,14 @@ export function BookingRequestForm() {
   const [city, setCity] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [vehicleType, setVehicleType] = useState('');
   const [preferredDate, setPreferredDate] = useState('');
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
   const [paintCorrectionStep, setPaintCorrectionStep] = useState<'step-1' | 'step-2' | ''>('');
-  const [includeCeramicCoating, setIncludeCeramicCoating] = useState(false);
   const [addOnApplication, setAddOnApplication] = useState<'one-time' | 'every-wash'>('one-time');
+  const [mainProblem, setMainProblem] = useState('');
+  const [photoLinks, setPhotoLinks] = useState('');
+  const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
   const [notes, setNotes] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -56,17 +59,10 @@ export function BookingRequestForm() {
         max += paintOption.priceMax;
       }
 
-      if (includeCeramicCoating) {
-        const ceramic = paintCorrectionOptions.find((option) => option.id === 'ceramic-coating');
-        if (ceramic) {
-          min += ceramic.priceMin;
-          max += ceramic.priceMax;
-        }
-      }
     }
 
     return { min, max };
-  }, [addOnApplication, includeCeramicCoating, includesPaintCorrection, paintCorrectionStep, selectedAddOns, selectedService]);
+  }, [addOnApplication, includesPaintCorrection, paintCorrectionStep, selectedAddOns, selectedService]);
 
   const estimatedPriceLabel =
     calculatedEstimate.min === calculatedEstimate.max
@@ -79,22 +75,42 @@ export function BookingRequestForm() {
     setSubmitting(true);
 
     try {
+      const photos = await Promise.all(
+        uploadedPhotos.map(
+          (file) =>
+            new Promise<{ name: string; type: string; base64: string }>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const result = String(reader.result || '');
+                const base64 = result.includes(',') ? result.split(',')[1] : '';
+                resolve({ name: file.name, type: file.type || 'application/octet-stream', base64 });
+              };
+              reader.onerror = () => reject(new Error(`Could not read file: ${file.name}`));
+              reader.readAsDataURL(file);
+            })
+        )
+      );
+
       const payload = {
         serviceType,
         clientName,
         clientEmail: email,
         clientPhone: phone,
+        vehicleType,
         city,
         preferredDate,
         addOns: selectedAddOns
           .map((addOnId) => bookingAddOns.find((item) => item.id === addOnId)?.label)
           .filter((label): label is string => Boolean(label)),
         addOnApplication,
-        paintCorrectionOptions: [paintCorrectionStep, includeCeramicCoating ? 'ceramic-coating' : '']
+        paintCorrectionOptions: [paintCorrectionStep]
           .filter(Boolean)
           .map((optionId) => paintCorrectionOptions.find((option) => option.id === optionId)?.label)
           .filter((label): label is string => Boolean(label)),
         estimatedPrice: estimatedPriceLabel,
+        mainProblem,
+        photoLinks,
+        photos,
         notes
       };
 
@@ -127,8 +143,13 @@ export function BookingRequestForm() {
 
     if (addOnId === 'paint-correction' && currentlySelected) {
       setPaintCorrectionStep('');
-      setIncludeCeramicCoating(false);
     }
+  };
+
+  const onPhotoSelection = (files: FileList | null) => {
+    if (!files) return;
+    const selected = Array.from(files).slice(0, 8);
+    setUploadedPhotos(selected);
   };
 
   return (
@@ -203,6 +224,21 @@ export function BookingRequestForm() {
         </div>
 
         <label className="grid gap-1 text-sm">
+          <span>Vehicle type</span>
+          <select
+            required
+            value={vehicleType}
+            onChange={(event) => setVehicleType(event.target.value)}
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+          >
+            <option value="">Select vehicle type</option>
+            {['Sedan', 'Hatchback', 'SUV', 'Bakkie', 'Coupe', 'Van/Minibus', 'Other'].map((type) => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className="grid gap-1 text-sm">
           <span>Preferred service date</span>
           <input
             type="date"
@@ -268,7 +304,6 @@ export function BookingRequestForm() {
           <fieldset className="grid gap-2 rounded-md border border-gold/40 bg-gold/5 p-3">
             <legend className="px-1 text-sm">Paint correction pricing options (choose one step)</legend>
             {paintCorrectionOptions
-              .filter((option) => option.id !== 'ceramic-coating')
               .map((option) => (
                 <label key={option.id} className="flex items-start gap-2 text-sm text-zinc-100">
                   <input
@@ -278,20 +313,49 @@ export function BookingRequestForm() {
                     onChange={() => setPaintCorrectionStep(option.id as 'step-1' | 'step-2')}
                   />
                   <span className="break-words">{option.label}</span>
+                  {'description' in option && option.description ? (
+                    <span className="block text-xs text-zinc-300">{option.description}</span>
+                  ) : null}
                 </label>
               ))}
-
-            <label className="mt-1 flex items-start gap-2 text-sm text-zinc-100">
-              <input
-                type="checkbox"
-                checked={includeCeramicCoating}
-                onChange={(event) => setIncludeCeramicCoating(event.target.checked)}
-              />
-              <span>Add Ceramic Coating (+R399)</span>
-            </label>
+            <p className="text-xs text-zinc-300">Ceramic coating is recommended with at least the Gloss Revival Polish option.</p>
             <p className="text-xs text-zinc-300">Final paint correction pricing is confirmed on vehicle viewing.</p>
           </fieldset>
         ) : null}
+
+        <label className="grid gap-1 text-sm">
+          <span>Main problem you want solved (optional)</span>
+          <textarea
+            value={mainProblem}
+            onChange={(event) => setMainProblem(event.target.value)}
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            rows={3}
+            placeholder="Example: swirls on bonnet, stained seats, pet hair, bad odor..."
+          />
+        </label>
+
+        <label className="grid gap-1 text-sm">
+          <span>Upload reference photos (optional)</span>
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(event) => onPhotoSelection(event.target.files)}
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100 file:mr-3 file:rounded-md file:border-0 file:bg-gold file:px-3 file:py-1 file:text-xs file:font-semibold file:text-zinc-950"
+          />
+          <span className="text-xs text-zinc-400">Please upload clear interior and exterior photos, plus close-up photos of the main pain points you want solved.</span>
+        </label>
+
+        <label className="grid gap-1 text-sm">
+          <span>Photo links (optional backup)</span>
+          <textarea
+            value={photoLinks}
+            onChange={(event) => setPhotoLinks(event.target.value)}
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
+            rows={2}
+            placeholder="If needed, paste Google Drive/Dropbox links to photos here."
+          />
+        </label>
 
         <label className="grid gap-1 text-sm">
           <span>Notes</span>
