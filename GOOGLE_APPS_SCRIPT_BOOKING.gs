@@ -62,7 +62,7 @@ function doPost(e) {
     const timestamp = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm:ss');
     const addOns = normalizeList_(payload.addOns);
     const paintCorrection = normalizeList_(payload.paintCorrectionOptions);
-    const savedPhotoUrls = savePhotosToDrive_(payload.photos, payload.clientName);
+    const savedPhotoUrls = savePhotosToDrive_(payload.photos, payload.clientName, payload.preferredDate);
 
     const row = [
       false,
@@ -218,9 +218,12 @@ function validatePayload_(payload) {
   if (!payload.preferredDate) throw new Error('Missing preferredDate');
 }
 
-function savePhotosToDrive_(photos, clientName) {
+function savePhotosToDrive_(photos, clientName, preferredDate) {
   if (!photos || !Array.isArray(photos) || !photos.length) return [];
-  const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+  const rootFolder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+  const bookingDate = formatFolderDate_(preferredDate ? new Date(preferredDate) : new Date());
+  const customerFolderName = `${sanitizeFolderPart_(clientName || 'Client')} - ${bookingDate}`;
+  const folder = rootFolder.createFolder(customerFolderName);
 
   return photos
     .filter((photo) => photo && photo.base64 && photo.name)
@@ -235,7 +238,18 @@ function savePhotosToDrive_(photos, clientName) {
 
 function normalizeList_(value) {
   if (!value) return '';
-  return Array.isArray(value) ? value.join(', ') : String(value);
+  return Array.isArray(value) ? value.join(' , ') : String(value);
+}
+
+function sanitizeFolderPart_(value) {
+  return String(value || '')
+    .replace(/[\\/:*?"<>|]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function formatFolderDate_(date) {
+  return Utilities.formatDate(date, TIMEZONE, 'yyyy-MM-dd');
 }
 
 function ensureHeaders_(sheet) {
