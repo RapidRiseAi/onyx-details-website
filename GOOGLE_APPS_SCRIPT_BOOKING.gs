@@ -62,7 +62,13 @@ function doPost(e) {
     const timestamp = Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd HH:mm:ss');
     const addOns = normalizeList_(payload.addOns);
     const paintCorrection = normalizeList_(payload.paintCorrectionOptions);
-    const savedPhotoUrls = savePhotosToDrive_(payload.photos, payload.clientName, payload.preferredDate);
+    let savedPhotoUrls = [];
+    let photoUploadError = '';
+    try {
+      savedPhotoUrls = savePhotosToDrive_(payload.photos, payload.clientName, payload.preferredDate);
+    } catch (photoError) {
+      photoUploadError = photoError && photoError.message ? photoError.message : String(photoError);
+    }
 
     const row = [
       false,
@@ -80,7 +86,7 @@ function doPost(e) {
       paintCorrection,
       payload.mainProblem || '',
       normalizeList_(savedPhotoUrls),
-      payload.notes || '',
+      [payload.notes || '', photoUploadError ? `Photo upload error: ${photoUploadError}` : ''].filter(Boolean).join(' | '),
       JSON.stringify(payload)
     ];
 
@@ -89,8 +95,8 @@ function doPost(e) {
     active.getRange(2, 1, 1, HEADERS.length).setValues([row]);
     active.getRange(2, 1).insertCheckboxes();
 
-    sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, normalizeList_(savedPhotoUrls));
-    sendCustomerEmail_(payload, addOns, paintCorrection, normalizeList_(savedPhotoUrls));
+    sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, normalizeList_(savedPhotoUrls), photoUploadError);
+    sendCustomerEmail_(payload, addOns, paintCorrection, normalizeList_(savedPhotoUrls), photoUploadError);
 
     return json_({ ok: true, message: 'Booking saved + emails sent.' });
   } catch (error) {
@@ -151,7 +157,7 @@ function archiveCompletedBookings() {
   }
 }
 
-function sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, savedPhotoLinks) {
+function sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, savedPhotoLinks, photoUploadError) {
   MailApp.sendEmail({
     to: COMPANY_EMAIL,
     subject: `New Booking: ${payload.serviceType || 'Unknown Service'}`,
@@ -172,12 +178,13 @@ function sendCompanyEmail_(payload, timestamp, addOns, paintCorrection, savedPho
       `Paint Correction: ${paintCorrection || 'None'}`,
       `Main Problem: ${payload.mainProblem || 'None'}`,
       `Uploaded Photo URLs: ${savedPhotoLinks || 'None'}`,
+      `Photo Upload Error: ${photoUploadError || 'None'}`,
       `Notes: ${payload.notes || 'None'}`
     ].join('\n')
   });
 }
 
-function sendCustomerEmail_(payload, addOns, paintCorrection, savedPhotoLinks) {
+function sendCustomerEmail_(payload, addOns, paintCorrection, savedPhotoLinks, photoUploadError) {
   if (!payload.clientEmail) return;
 
   MailApp.sendEmail({
@@ -198,6 +205,7 @@ function sendCustomerEmail_(payload, addOns, paintCorrection, savedPhotoLinks) {
       `- Paint Correction: ${paintCorrection || 'None'}`,
       `- Main Problem: ${payload.mainProblem || 'None'}`,
       `- Uploaded Photo URLs: ${savedPhotoLinks || 'None'}`,
+      `- Photo Upload Error: ${photoUploadError || 'None'}`,
       '',
       'Kaden from Onyx Details will contact you shortly.',
       '',
@@ -249,6 +257,9 @@ function sanitizeFolderPart_(value) {
 }
 
 function formatFolderDate_(date) {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+    return Utilities.formatDate(new Date(), TIMEZONE, 'yyyy-MM-dd');
+  }
   return Utilities.formatDate(date, TIMEZONE, 'yyyy-MM-dd');
 }
 
