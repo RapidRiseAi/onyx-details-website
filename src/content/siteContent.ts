@@ -125,6 +125,7 @@ export const services = [
 
 export const bookingAddOns = [
   { id: 'paint-correction', label: 'Paint Correction (pricing below)', description: 'Machine polishing add-on that reduces swirl marks, oxidation, and light paint imperfections. Step options are selected below.', priceMin: 0, priceMax: 0 },
+  { id: 'ceramic-coating', label: 'Ceramic Coating (+R699)', description: 'Protective ceramic layer that helps repel water, contamination, and UV exposure while enhancing gloss.', priceMin: 699, priceMax: 699 },
   { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)', description: 'Restores cloudy or yellowed headlights to improve clarity, appearance, and night-time light output.', priceMin: 349, priceMax: 449 },
   { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)', description: 'Hydrophobic coating for the front windshield that helps water bead and roll off more easily.', priceMin: 70, priceMax: 70 },
   { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)', description: 'Extra time and tools to remove embedded pet hair from seats, carpets, and boot areas.', priceMin: 150, priceMax: 150 },
@@ -135,9 +136,22 @@ export const bookingAddOns = [
 ];
 
 export const paintCorrectionOptions = [
-  { id: 'step-1', label: '1 Step Paint Correction (R649-R849 depending on vehicle size)', priceMin: 649, priceMax: 849 },
-  { id: 'step-2', label: '2 Step Paint Correction (R949-R1149 depending on vehicle size)', priceMin: 949, priceMax: 1149 },
-  { id: 'ceramic-coating', label: 'Add Ceramic Coating (+R399)', priceMin: 399, priceMax: 399 }
+  {
+    id: 'step-1',
+    label: 'Gloss Revival Polish (R1699-R1999 depending on vehicle size)',
+    description:
+      'Best for vehicles with light swirl marks, dull paint, water spots, and minor fading. This service uses one polishing stage to restore shine, improve clarity, and make the paint look cleaner and glossier without going into heavy defect removal. Ideal for newer or well-maintained vehicles.',
+    priceMin: 1699,
+    priceMax: 1999
+  },
+  {
+    id: 'step-2',
+    label: 'Deep Clarity Correction (R2299-R2499 depending on vehicle size)',
+    description:
+      'Best for vehicles with heavier swirl marks, oxidation, deeper scratches, holograms, and dull paint. This service uses a cutting stage to remove more visible defects, followed by a refining polish to bring back deep gloss and a smoother finish. Ideal for older, neglected, or darker coloured vehicles.',
+    priceMin: 2299,
+    priceMax: 2499
+  }
 ];
 
 export const gallery = [
