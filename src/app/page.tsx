@@ -14,7 +14,7 @@ export default function HomePage() {
     <div className="-mt-10 space-y-10">
       <section className="relative left-1/2 right-1/2 -mx-4 hidden w-screen -translate-x-1/2 overflow-hidden md:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-[clamp(560px,72vh,700px)] w-full object-cover object-center" />
+        <img src={hero.image} alt={hero.title} className="h-[clamp(336px,43vh,420px)] w-full object-cover object-top" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(148,163,184,0.28),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.78)_30%,rgba(0,0,0,0.34)_58%,rgba(0,0,0,0.72)_100%)]" />
         <div className="absolute inset-0 mx-auto flex h-full w-full max-w-[96rem] items-center px-6">
           <div className="max-w-[52rem] -translate-y-3">
@@ -35,11 +35,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative left-1/2 right-1/2 -mx-4 -mt-6 min-h-[322px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
+      <section className="relative left-1/2 right-1/2 -mx-4 -mt-10 min-h-[193px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-center" />
+        <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-top" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
-        <div className="relative flex min-h-[322px] items-end px-4 pb-6 pt-11">
+        <div className="relative flex min-h-[193px] items-end px-4 pb-4 pt-7">
           <div>
             <p className="text-[0.39rem] font-normal uppercase tracking-[0.24em] text-white">Mobile Car Detailing</p>
             <h1 className="mt-3 text-[clamp(1.05rem,4.8vw,1.58rem)] font-medium uppercase leading-[1.12] tracking-[0.016em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
