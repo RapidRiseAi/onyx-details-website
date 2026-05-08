@@ -3,7 +3,7 @@ import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { Card } from '@/components/ui/card';
 import { ServiceCard } from '@/components/ui/service-card';
 import { Section } from '@/components/ui/section';
-import { contact, gallery, hero, services, steps, testimonials, whyChoose } from '@/content/siteContent';
+import { contact, gallery, hero, services, steps, testimonials } from '@/content/siteContent';
 
 export default function HomePage() {
   const beforeAfterGallery = gallery.filter((item) => item.src.includes('Before-After'));
@@ -58,14 +58,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Section>
-        <h2 className="text-2xl font-semibold">Why Choose OnyxDetails</h2>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {whyChoose.map((item) => (
-            <Card key={item}>{item}</Card>
-          ))}
-        </div>
-      </Section>
 
       <Section>
         <h2 className="text-2xl font-semibold">Services</h2>
