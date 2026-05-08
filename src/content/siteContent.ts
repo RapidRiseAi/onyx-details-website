@@ -18,9 +18,8 @@ export const branding = {
 };
 
 export const hero = {
-  title: 'Premium Mobile Detailing at Your Doorstep',
-  subtitle:
-    'We come to your home, farm, or workplace and deliver reliable, high-finish detailing with consistent quality.',
+  title: 'We Bring The Showroom To You',
+  subtitle: 'Premium car care at your home or office. Professional detailing. Pristine results.',
   image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Home-Page-Hero.png'
 };
 

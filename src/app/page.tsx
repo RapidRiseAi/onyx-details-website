@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { InfoPopover } from '@/components/ui/info-popover';
 import { Section } from '@/components/ui/section';
@@ -13,36 +12,51 @@ export default function HomePage() {
 
   return (
     <div className="space-y-10">
-      <section className="relative -mx-4 hidden w-screen left-1/2 right-1/2 -translate-x-1/2 overflow-hidden md:block">
+      <section className="relative left-1/2 right-1/2 -mx-4 hidden min-h-[620px] w-screen -translate-x-1/2 overflow-hidden md:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-[82vh] min-h-[620px] w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35" />
-        <div className="absolute inset-0 mx-auto flex h-full w-full max-w-6xl items-center px-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-gold">Premium mobile vehicle care</p>
-            <h1 className="mt-4 max-w-3xl font-serif text-7xl font-semibold leading-[1.03]">
-              Premium Mobile Car Wash and Detailing at Your Home, Farm, or Workplace
+        <img src={hero.image} alt={hero.title} className="h-[82vh] min-h-[620px] w-full object-cover object-center" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(148,163,184,0.28),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.78)_30%,rgba(0,0,0,0.34)_58%,rgba(0,0,0,0.72)_100%)]" />
+        <div className="absolute inset-0 flex h-full items-center px-[clamp(3rem,5vw,6.25rem)]">
+          <div className="max-w-[58rem] -translate-y-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.62em] text-zinc-100/90">Mobile Car Detailing</p>
+            <h1 className="mt-9 text-[clamp(4.25rem,6vw,6.5rem)] font-extrabold uppercase leading-[1.08] tracking-[0.055em] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
+              <span className="block">We Bring The</span>
+              <span className="block"><span className="text-[#f0b735]">Showroom</span> To You</span>
             </h1>
-            <p className="mt-4 max-w-2xl text-zinc-200">{hero.subtitle}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button className="rounded-full px-6 py-3">Book Now</Button>
-              <Link href="/services" className="rounded-full border border-gold/80 px-6 py-3 font-semibold text-zinc-100">View Services</Link>
-              <Link href={contact.whatsapp} className="rounded-full border border-zinc-500 px-6 py-3 font-semibold text-zinc-100">Ask on WhatsApp</Link>
+            <p className="mt-8 max-w-3xl text-2xl leading-relaxed tracking-[0.02em] text-zinc-200">
+              Premium car care at your home or office.<br />
+              Professional detailing. Pristine results.
+            </p>
+            <div className="mt-12 flex flex-wrap gap-10">
+              <Link href="/services" className="min-w-56 rounded-md bg-[#f0b735] px-10 py-5 text-center text-lg font-extrabold uppercase tracking-[0.08em] text-black shadow-[0_0_22px_rgba(240,183,53,0.32)] transition hover:bg-[#ffd062]">View Packages</Link>
+              <Link href="/contact" className="min-w-56 rounded-md border border-[#f0b735]/45 bg-black/15 px-10 py-5 text-center text-lg font-semibold uppercase tracking-[0.24em] text-zinc-100 transition hover:border-[#f0b735] hover:bg-[#f0b735]/10">Book Now</Link>
             </div>
           </div>
         </div>
       </section>
 
-      <Section className="space-y-4 md:hidden">
+      <section className="relative left-1/2 right-1/2 -mx-4 min-h-[620px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-48 w-full rounded-xl object-cover" />
-        <h1 className="font-serif text-5xl font-semibold leading-[1.03]">Premium Mobile Car Wash and Detailing</h1>
-        <p className="text-zinc-300">{hero.subtitle}</p>
-        <div className="grid grid-cols-2 gap-3">
-          <Link href="/contact" className="rounded-2xl bg-gold px-4 py-3 text-center text-sm font-semibold text-zinc-950">Book Now</Link>
-          <Link href="/services" className="rounded-2xl border border-zinc-600 px-4 py-3 text-center font-semibold">View Services</Link>
+        <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-center" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
+        <div className="relative flex min-h-[620px] items-end px-6 pb-12 pt-24">
+          <div>
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.44em] text-zinc-100/90">Mobile Car Detailing</p>
+            <h1 className="mt-6 text-[clamp(2.65rem,13vw,4.45rem)] font-extrabold uppercase leading-[1.08] tracking-[0.03em] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
+              <span className="block">We Bring The</span>
+              <span className="block"><span className="text-[#f0b735]">Showroom</span> To You</span>
+            </h1>
+            <p className="mt-6 text-lg leading-relaxed tracking-[0.01em] text-zinc-200">
+              Premium car care at your home or office.<br />
+              Professional detailing. Pristine results.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <Link href="/services" className="rounded-md bg-[#f0b735] px-6 py-4 text-center text-sm font-extrabold uppercase tracking-[0.08em] text-black shadow-[0_0_22px_rgba(240,183,53,0.32)]">View Packages</Link>
+              <Link href="/contact" className="rounded-md border border-[#f0b735]/45 bg-black/20 px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.22em] text-zinc-100">Book Now</Link>
+            </div>
+          </div>
         </div>
-      </Section>
+      </section>
 
       <Section>
         <h2 className="text-2xl font-semibold">Why Choose OnyxDetails</h2>
