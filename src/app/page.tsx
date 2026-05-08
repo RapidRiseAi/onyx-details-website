@@ -11,7 +11,7 @@ export default function HomePage() {
   const subscriptionServices = services.filter((service) => service.category === 'subscription');
 
   return (
-    <div className="space-y-10">
+    <div className="-mt-10 space-y-10">
       <section className="relative left-1/2 right-1/2 -mx-4 hidden min-h-[620px] w-screen -translate-x-1/2 overflow-hidden md:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.image} alt={hero.title} className="h-[82vh] min-h-[620px] w-full object-cover object-center" />
