@@ -35,11 +35,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative left-1/2 right-1/2 -mx-4 -mt-10 min-h-[193px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
+      <section className="relative left-1/2 right-1/2 -mx-4 -mt-10 min-h-[154px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-top" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
-        <div className="relative flex min-h-[193px] items-end px-4 pb-4 pt-7">
+        <div className="relative flex min-h-[154px] items-end px-4 pb-4 pt-7">
           <div>
             <p className="text-[0.468rem] font-normal uppercase tracking-[0.24em] text-white">Mobile Car Detailing</p>
             <h1 className="mt-3 text-[clamp(1.26rem,5.76vw,1.896rem)] font-medium uppercase leading-[1.12] tracking-[0.016em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
@@ -51,8 +51,8 @@ export default function HomePage() {
               Professional detailing. Pristine results.
             </p>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
-              <Link href="/services" className="rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-4 py-2 text-center text-[0.66rem] font-medium uppercase tracking-[0.06em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)]">View Packages</Link>
-              <Link href="/contact" className="rounded-md border border-[#d4af37]/55 bg-black/20 px-4 py-2 text-center text-[0.66rem] font-medium uppercase tracking-[0.14em] text-zinc-100">Book Now</Link>
+              <Link href="/services" className="rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-[0.8rem] py-[0.4rem] text-center text-[0.528rem] font-medium uppercase tracking-[0.06em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)]">View Packages</Link>
+              <Link href="/contact" className="rounded-md border border-[#d4af37]/55 bg-black/20 px-[0.8rem] py-[0.4rem] text-center text-[0.528rem] font-medium uppercase tracking-[0.14em] text-zinc-100">Book Now</Link>
             </div>
           </div>
         </div>
