@@ -8,9 +8,9 @@ type Service = (typeof services)[number];
 export function ServiceCard({ service, showBullets = false }: { service: Service; showBullets?: boolean }) {
   return (
     <Card className="h-full p-3">
-      <div className="flex h-full gap-3">
+      <div className="flex h-full flex-col gap-3 md:flex-row">
         {service.image ? (
-          <div className="w-28 shrink-0 sm:w-36 md:w-40">
+          <div className="w-full shrink-0 md:w-40">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={service.image}

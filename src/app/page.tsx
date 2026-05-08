@@ -35,24 +35,24 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative left-1/2 right-1/2 -mx-4 min-h-[560px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
+      <section className="relative left-1/2 right-1/2 -mx-4 -mt-6 min-h-[460px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
-        <div className="relative flex min-h-[560px] items-end px-6 pb-12 pt-24">
+        <div className="relative flex min-h-[460px] items-end px-6 pb-8 pt-16">
           <div>
-            <p className="text-[0.68rem] font-normal uppercase tracking-[0.34em] text-white">Mobile Car Detailing</p>
-            <h1 className="mt-6 text-[clamp(1.85rem,8.5vw,2.8rem)] font-medium uppercase leading-[1.12] tracking-[0.025em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
+            <p className="text-[0.55rem] font-normal uppercase tracking-[0.3em] text-white">Mobile Car Detailing</p>
+            <h1 className="mt-4 text-[clamp(1.5rem,6.8vw,2.25rem)] font-medium uppercase leading-[1.12] tracking-[0.02em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
               <span className="block">We Bring The</span>
               <span className="block"><span className="bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#a97913] bg-clip-text text-transparent">Showroom</span> To You</span>
             </h1>
-            <p className="mt-6 text-lg font-light leading-relaxed tracking-[0.01em] text-white">
+            <p className="mt-4 text-[0.9rem] font-light leading-relaxed tracking-[0.01em] text-white">
               Premium car care at your home or office.<br />
               Professional detailing. Pristine results.
             </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <Link href="/services" className="rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-6 py-4 text-center text-sm font-medium uppercase tracking-[0.08em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)]">View Packages</Link>
-              <Link href="/contact" className="rounded-md border border-[#d4af37]/55 bg-black/20 px-6 py-4 text-center text-sm font-medium uppercase tracking-[0.22em] text-zinc-100">Book Now</Link>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <Link href="/services" className="rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-6 py-3 text-center text-xs font-medium uppercase tracking-[0.08em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)]">View Packages</Link>
+              <Link href="/contact" className="rounded-md border border-[#d4af37]/55 bg-black/20 px-6 py-3 text-center text-xs font-medium uppercase tracking-[0.2em] text-zinc-100">Book Now</Link>
             </div>
           </div>
         </div>
