@@ -16,10 +16,10 @@ export default function HomePage() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={hero.image} alt={hero.title} className="h-[clamp(560px,72vh,700px)] w-full object-cover object-center" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(148,163,184,0.28),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.78)_30%,rgba(0,0,0,0.34)_58%,rgba(0,0,0,0.72)_100%)]" />
-        <div className="absolute inset-0 mx-auto flex h-full w-full max-w-7xl items-center px-6">
-          <div className="max-w-[58rem] -translate-y-3">
-            <p className="text-sm font-normal uppercase tracking-[0.62em] text-white">Mobile Car Detailing</p>
-            <h1 className="mt-9 text-[clamp(3rem,4.55vw,4.95rem)] font-medium uppercase leading-[1.12] tracking-[0.075em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
+        <div className="absolute inset-0 mx-auto flex h-full w-full max-w-[96rem] items-center px-6">
+          <div className="max-w-[52rem] -translate-y-3">
+            <p className="text-sm font-normal uppercase tracking-[0.48em] text-white">Mobile Car Detailing</p>
+            <h1 className="mt-9 text-[clamp(2.5rem,3.85vw,4.2rem)] font-medium uppercase leading-[1.12] tracking-[0.04em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
               <span className="block">We Bring The</span>
               <span className="block"><span className="bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#a97913] bg-clip-text text-transparent">Showroom</span> To You</span>
             </h1>
@@ -41,8 +41,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
         <div className="relative flex min-h-[560px] items-end px-6 pb-12 pt-24">
           <div>
-            <p className="text-[0.68rem] font-normal uppercase tracking-[0.42em] text-white">Mobile Car Detailing</p>
-            <h1 className="mt-6 text-[clamp(2rem,9.8vw,3.2rem)] font-medium uppercase leading-[1.12] tracking-[0.045em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
+            <p className="text-[0.68rem] font-normal uppercase tracking-[0.34em] text-white">Mobile Car Detailing</p>
+            <h1 className="mt-6 text-[clamp(1.85rem,8.5vw,2.8rem)] font-medium uppercase leading-[1.12] tracking-[0.025em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
               <span className="block">We Bring The</span>
               <span className="block"><span className="bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#a97913] bg-clip-text text-transparent">Showroom</span> To You</span>
             </h1>
