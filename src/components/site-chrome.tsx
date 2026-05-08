@@ -13,7 +13,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 border-b border-zinc-800/80 bg-gradient-to-b from-zinc-950 via-zinc-950/95 to-zinc-950/90 backdrop-blur">
-        <div className="mx-auto hidden max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-8 px-4 py-4 md:grid">
+        <div className="mx-auto hidden max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-8 px-4 py-4 md:grid">
           <nav className="flex gap-6">
             {leftLinks.map((link) => (
               <Link key={link.href} href={link.href} className="text-base font-medium text-zinc-200 hover:text-gold">{link.label}</Link>
@@ -34,7 +34,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             </Link>
           </nav>
         </div>
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 md:hidden">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:hidden">
           <button
             type="button"
             aria-label="Open menu"
@@ -76,9 +76,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       ) : null}
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">{children}</main>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-10">{children}</main>
       <footer className="border-t border-zinc-800 bg-zinc-950">
-        <div className="mx-auto hidden max-w-6xl gap-6 px-4 py-10 md:grid md:grid-cols-3">
+        <div className="mx-auto hidden max-w-7xl gap-6 px-4 py-10 md:grid md:grid-cols-3">
           <div>
             <p className="font-semibold text-gold">ONYX DETAILS</p>
             <p className="mt-2 text-sm text-zinc-400">Premium mobile detailing with reliable quality and on-site convenience.</p>
@@ -100,7 +100,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
             </Link>
           </div>
         </div>
-        <div className="mx-auto max-w-6xl space-y-3 px-4 py-5 text-xs text-zinc-400 md:hidden">
+        <div className="mx-auto max-w-7xl space-y-3 px-4 py-5 text-xs text-zinc-400 md:hidden">
           <p className="font-semibold tracking-[0.18em] text-gold">ONYX DETAILS</p>
           <p className="max-w-xs text-zinc-400">Premium mobile detailing with reliable quality and on-site convenience.</p>
           <div className="grid gap-1 text-zinc-300">
