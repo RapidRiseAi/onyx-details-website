@@ -18,8 +18,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(148,163,184,0.28),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.78)_30%,rgba(0,0,0,0.34)_58%,rgba(0,0,0,0.72)_100%)]" />
         <div className="absolute inset-0 flex h-full items-center px-[clamp(3rem,5vw,6.25rem)]">
           <div className="max-w-[58rem] -translate-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.62em] text-zinc-100/90">Mobile Car Detailing</p>
-            <h1 className="mt-9 text-[clamp(4.25rem,6vw,6.5rem)] font-extrabold uppercase leading-[1.08] tracking-[0.055em] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
+            <p className="text-sm font-medium uppercase tracking-[0.58em] text-zinc-100/90">Mobile Car Detailing</p>
+            <h1 className="mt-9 text-[clamp(3.25rem,4.9vw,5.25rem)] font-bold uppercase leading-[1.08] tracking-[0.045em] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
               <span className="block">We Bring The</span>
               <span className="block"><span className="text-[#f0b735]">Showroom</span> To You</span>
             </h1>
@@ -28,7 +28,7 @@ export default function HomePage() {
               Professional detailing. Pristine results.
             </p>
             <div className="mt-12 flex flex-wrap gap-10">
-              <Link href="/services" className="min-w-56 rounded-md bg-[#f0b735] px-10 py-5 text-center text-lg font-extrabold uppercase tracking-[0.08em] text-black shadow-[0_0_22px_rgba(240,183,53,0.32)] transition hover:bg-[#ffd062]">View Packages</Link>
+              <Link href="/services" className="min-w-56 rounded-md bg-[#f0b735] px-10 py-5 text-center text-lg font-bold uppercase tracking-[0.08em] text-black shadow-[0_0_22px_rgba(240,183,53,0.32)] transition hover:bg-[#ffd062]">View Packages</Link>
               <Link href="/contact" className="min-w-56 rounded-md border border-[#f0b735]/45 bg-black/15 px-10 py-5 text-center text-lg font-semibold uppercase tracking-[0.24em] text-zinc-100 transition hover:border-[#f0b735] hover:bg-[#f0b735]/10">Book Now</Link>
             </div>
           </div>
@@ -41,8 +41,8 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
         <div className="relative flex min-h-[620px] items-end px-6 pb-12 pt-24">
           <div>
-            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.44em] text-zinc-100/90">Mobile Car Detailing</p>
-            <h1 className="mt-6 text-[clamp(2.65rem,13vw,4.45rem)] font-extrabold uppercase leading-[1.08] tracking-[0.03em] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
+            <p className="text-[0.68rem] font-medium uppercase tracking-[0.4em] text-zinc-100/90">Mobile Car Detailing</p>
+            <h1 className="mt-6 text-[clamp(2.15rem,10.5vw,3.45rem)] font-bold uppercase leading-[1.08] tracking-[0.025em] text-white drop-shadow-[0_3px_10px_rgba(0,0,0,0.5)]">
               <span className="block">We Bring The</span>
               <span className="block"><span className="text-[#f0b735]">Showroom</span> To You</span>
             </h1>
@@ -51,7 +51,7 @@ export default function HomePage() {
               Professional detailing. Pristine results.
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <Link href="/services" className="rounded-md bg-[#f0b735] px-6 py-4 text-center text-sm font-extrabold uppercase tracking-[0.08em] text-black shadow-[0_0_22px_rgba(240,183,53,0.32)]">View Packages</Link>
+              <Link href="/services" className="rounded-md bg-[#f0b735] px-6 py-4 text-center text-sm font-bold uppercase tracking-[0.08em] text-black shadow-[0_0_22px_rgba(240,183,53,0.32)]">View Packages</Link>
               <Link href="/contact" className="rounded-md border border-[#f0b735]/45 bg-black/20 px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.22em] text-zinc-100">Book Now</Link>
             </div>
           </div>
