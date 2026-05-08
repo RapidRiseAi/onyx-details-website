@@ -5,6 +5,10 @@ import { useSearchParams } from 'next/navigation';
 import { bookingAddOns, paintCorrectionOptions, services } from '@/content/siteContent';
 import { InfoPopover } from '@/components/ui/info-popover';
 
+
+const formatPriceRange = (min: number, max: number) => (min === max ? `R${min}` : `R${min} - R${max}`);
+const paintCorrectionDiscount = 99;
+
 const BOOKING_WEBHOOK_URL =
   'https://script.google.com/macros/s/AKfycbx--jvxjMu5lozfbKzaIMVc4KKbwZph52RRREg1IppF5j67EuV1k8rGH0JeKLVXM_rhOQ/exec';
 
@@ -33,8 +37,46 @@ export function BookingRequestForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
-  const includesPaintCorrection = selectedAddOns.includes('paint-correction');
   const selectedService = services.find((service) => service.title === serviceType);
+  const serviceIncludesInteriorDetail = Boolean(selectedService?.includesInteriorDetail);
+  const serviceIncludesExteriorDetail = Boolean(selectedService?.includesExteriorDetail);
+  const isPaintCorrectionService = Boolean(selectedService?.isPaintCorrection);
+  const showInteriorDetailAddOn = Boolean(selectedService) && !serviceIncludesInteriorDetail;
+  const availableAddOns = bookingAddOns.filter((addOn) => {
+    if (addOn.id === 'interior-detail') return showInteriorDetailAddOn;
+    if (addOn.id === 'paint-correction') return !isPaintCorrectionService;
+    return true;
+  });
+  const availableSelectedAddOns = selectedAddOns.filter((addOnId) => availableAddOns.some((addOn) => addOn.id === addOnId));
+  const includesPaintCorrection = availableSelectedAddOns.includes('paint-correction');
+  const paintCorrectionPriceAdjustment = serviceIncludesExteriorDetail ? paintCorrectionDiscount : 0;
+
+  const getAddOnPrice = (addOn: (typeof bookingAddOns)[number]) => {
+    if (addOn.id === 'interior-detail' && isPaintCorrectionService) {
+      return { min: addOn.paintCorrectionPriceMin ?? addOn.priceMin, max: addOn.paintCorrectionPriceMax ?? addOn.priceMax };
+    }
+
+    return { min: addOn.priceMin, max: addOn.priceMax };
+  };
+
+  const getAddOnLabel = (addOn: (typeof bookingAddOns)[number]) => {
+    if (addOn.id === 'interior-detail') {
+      const price = getAddOnPrice(addOn);
+      return `${addOn.label} (+${formatPriceRange(price.min, price.max)})`;
+    }
+
+    if (addOn.id === 'paint-correction' && paintCorrectionPriceAdjustment > 0) {
+      return `${addOn.label} (R99 exterior-detail discount applied below)`;
+    }
+
+    return addOn.label;
+  };
+
+  const getPaintCorrectionOptionLabel = (option: (typeof paintCorrectionOptions)[number]) => {
+    const min = option.priceMin - paintCorrectionPriceAdjustment;
+    const max = option.priceMax - paintCorrectionPriceAdjustment;
+    return `${option.title ?? option.label} (${formatPriceRange(min, max)} depending on vehicle size)`;
+  };
 
   const calculatedEstimate = useMemo(() => {
     let min = selectedService?.priceMin ?? 0;
@@ -44,25 +86,26 @@ export function BookingRequestForm() {
       ? selectedService.washCount
       : 1;
 
-    selectedAddOns.forEach((addOnId) => {
+    availableSelectedAddOns.forEach((addOnId) => {
       if (addOnId === 'paint-correction') return;
-      const addOn = bookingAddOns.find((item) => item.id === addOnId);
+      const addOn = availableAddOns.find((item) => item.id === addOnId);
       if (!addOn) return;
-      min += addOn.priceMin * addOnMultiplier;
-      max += addOn.priceMax * addOnMultiplier;
+      const price = getAddOnPrice(addOn);
+      min += price.min * addOnMultiplier;
+      max += price.max * addOnMultiplier;
     });
 
     if (includesPaintCorrection) {
       const paintOption = paintCorrectionOptions.find((option) => option.id === paintCorrectionStep);
       if (paintOption) {
-        min += paintOption.priceMin;
-        max += paintOption.priceMax;
+        min += paintOption.priceMin - paintCorrectionPriceAdjustment;
+        max += paintOption.priceMax - paintCorrectionPriceAdjustment;
       }
 
     }
 
     return { min, max };
-  }, [addOnApplication, includesPaintCorrection, paintCorrectionStep, selectedAddOns, selectedService]);
+  }, [addOnApplication, availableAddOns, availableSelectedAddOns, includesPaintCorrection, isPaintCorrectionService, paintCorrectionPriceAdjustment, paintCorrectionStep, selectedService]);
 
   const estimatedPriceLabel =
     calculatedEstimate.min === calculatedEstimate.max
@@ -93,20 +136,28 @@ export function BookingRequestForm() {
 
       const payload = {
         serviceType,
+        selectedMainServiceNotes: selectedService?.isPaintCorrection ? 'Paint correction service includes exterior detail only. Interior detail is optional.' : '',
         clientName,
         clientEmail: email,
         clientPhone: phone,
         vehicleType: vehicleType === 'Other' ? `Other: ${vehicleTypeOther}` : vehicleType,
         city,
         preferredDate,
-        addOns: selectedAddOns
-          .map((addOnId) => bookingAddOns.find((item) => item.id === addOnId)?.label)
+        addOns: availableSelectedAddOns
+          .map((addOnId) => {
+            const addOn = availableAddOns.find((item) => item.id === addOnId);
+            return addOn ? getAddOnLabel(addOn) : '';
+          })
           .filter((label): label is string => Boolean(label)),
         addOnApplication,
         paintCorrectionOptions: [paintCorrectionStep]
           .filter(Boolean)
-          .map((optionId) => paintCorrectionOptions.find((option) => option.id === optionId)?.label)
+          .map((optionId) => {
+            const paintOption = paintCorrectionOptions.find((option) => option.id === optionId);
+            return paintOption ? getPaintCorrectionOptionLabel(paintOption) : '';
+          })
           .filter((label): label is string => Boolean(label)),
+        paintCorrectionDiscountApplied: includesPaintCorrection && paintCorrectionPriceAdjustment > 0 ? 'R99 discount applied because the selected main service includes an exterior detail.' : '',
         estimatedPrice: estimatedPriceLabel,
         mainProblem,
         photos,
@@ -164,7 +215,17 @@ export function BookingRequestForm() {
           <select
             required
             value={serviceType}
-            onChange={(event) => setServiceType(event.target.value)}
+            onChange={(event) => {
+              const nextServiceType = event.target.value;
+              const nextService = services.find((service) => service.title === nextServiceType);
+              setServiceType(nextServiceType);
+              setSelectedAddOns((current) => current.filter((addOnId) => {
+                if (addOnId === 'interior-detail') return Boolean(nextService) && !nextService?.includesInteriorDetail;
+                if (addOnId === 'paint-correction') return !nextService?.isPaintCorrection;
+                return true;
+              }));
+              if (nextService?.isPaintCorrection) setPaintCorrectionStep('');
+            }}
             className="min-w-0 w-full max-w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-zinc-100"
           >
             <option value="">Select a service</option>
@@ -275,16 +336,22 @@ export function BookingRequestForm() {
 
         <fieldset className="grid min-w-0 gap-2 rounded-md border border-zinc-800 p-3">
           <legend className="px-1 text-sm">Optional add-ons</legend>
-          {bookingAddOns.map((addOn) => (
+          {availableAddOns.map((addOn) => (
             <div key={addOn.id} className="flex w-full min-w-0 items-start gap-2 text-sm text-zinc-200">
               <input
                 id={`addon-${addOn.id}`}
                 type="checkbox"
-                checked={selectedAddOns.includes(addOn.id)}
+                checked={availableSelectedAddOns.includes(addOn.id)}
                 onChange={() => toggleAddOn(addOn.id)}
               />
               <label htmlFor={`addon-${addOn.id}`} className="min-w-0 flex-1 break-words">
-                {addOn.label}
+                {getAddOnLabel(addOn)}
+                {addOn.id === 'interior-detail' && isPaintCorrectionService ? (
+                  <span className="mt-1 block text-xs text-zinc-400">Paint correction services include exterior detail only, so interior detail is available at the reduced R199 add-on price.</span>
+                ) : null}
+                {addOn.id === 'paint-correction' && paintCorrectionPriceAdjustment > 0 ? (
+                  <span className="mt-1 block text-xs text-zinc-400">R99 has been taken off because this service already includes an exterior detail.</span>
+                ) : null}
                 {addOn.id === 'ceramic-coating' ? (
                   <span className="mt-1 block text-xs text-zinc-400">Recommended with a paint correction to really see the full benefit.</span>
                 ) : null}
@@ -294,7 +361,7 @@ export function BookingRequestForm() {
           ))}
         </fieldset>
 
-        {selectedService && selectedService.washCount > 1 && selectedAddOns.length > 0 ? (
+        {selectedService && selectedService.washCount > 1 && availableSelectedAddOns.length > 0 ? (
           <fieldset className="grid gap-2 rounded-md border border-zinc-800 p-3">
             <legend className="px-1 text-sm">Add-on application</legend>
             <label className="flex items-center gap-2 text-sm text-zinc-200">
@@ -330,13 +397,16 @@ export function BookingRequestForm() {
                     checked={paintCorrectionStep === option.id}
                     onChange={() => setPaintCorrectionStep(option.id as 'step-1' | 'step-2')}
                   />
-                  <span className="break-words">{option.label}</span>
+                  <span className="break-words">{getPaintCorrectionOptionLabel(option)}</span>
                   {'description' in option && option.description ? (
                     <span className="block text-xs text-zinc-300">{option.description}</span>
                   ) : null}
                 </label>
               ))}
             <p className="text-xs text-zinc-300">Ceramic coating is recommended with at least the Gloss Revival Polish option.</p>
+            {paintCorrectionPriceAdjustment > 0 ? (
+              <p className="text-xs text-gold">A R99 discount has been applied because your main service includes an exterior detail.</p>
+            ) : null}
             <p className="text-xs text-zinc-300">Final paint correction pricing is confirmed on vehicle viewing.</p>
           </fieldset>
         ) : null}

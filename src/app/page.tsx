@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { InfoPopover } from '@/components/ui/info-popover';
+import { ServiceCard } from '@/components/ui/service-card';
 import { Section } from '@/components/ui/section';
-import { contact, gallery, hero, services, steps, testimonials, whyChoose } from '@/content/siteContent';
+import { contact, gallery, hero, services, steps, testimonials } from '@/content/siteContent';
 
 export default function HomePage() {
   const beforeAfterGallery = gallery.filter((item) => item.src.includes('Before-After'));
@@ -12,76 +11,67 @@ export default function HomePage() {
   const subscriptionServices = services.filter((service) => service.category === 'subscription');
 
   return (
-    <div className="space-y-10">
-      <section className="relative -mx-4 hidden w-screen left-1/2 right-1/2 -translate-x-1/2 overflow-hidden md:block">
+    <div className="-mt-10 space-y-10">
+      <section className="relative left-1/2 right-1/2 -mx-4 hidden w-screen -translate-x-1/2 overflow-hidden md:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-[82vh] min-h-[620px] w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/35" />
-        <div className="absolute inset-0 mx-auto flex h-full w-full max-w-6xl items-center px-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-gold">Premium mobile vehicle care</p>
-            <h1 className="mt-4 max-w-3xl font-serif text-7xl font-semibold leading-[1.03]">
-              Premium Mobile Car Wash and Detailing at Your Home, Farm, or Workplace
+        <img src={hero.image} alt={hero.title} className="h-[clamp(336px,43vh,420px)] w-full object-cover object-top" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(148,163,184,0.28),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.78)_30%,rgba(0,0,0,0.34)_58%,rgba(0,0,0,0.72)_100%)]" />
+        <div className="absolute inset-0 mx-auto flex h-full w-full max-w-[96rem] items-center px-6">
+          <div className="max-w-[52rem] -translate-y-3">
+            <p className="text-sm font-normal uppercase tracking-[0.48em] text-white">Mobile Car Detailing</p>
+            <h1 className="mt-9 text-[clamp(2.5rem,3.85vw,4.2rem)] font-medium uppercase leading-[1.12] tracking-[0.04em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
+              <span className="block">We Bring The</span>
+              <span className="block"><span className="bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#a97913] bg-clip-text text-transparent">Showroom</span> To You</span>
             </h1>
-            <p className="mt-4 max-w-2xl text-zinc-200">{hero.subtitle}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button className="rounded-full px-6 py-3">Book Now</Button>
-              <Link href="/services" className="rounded-full border border-gold/80 px-6 py-3 font-semibold text-zinc-100">View Services</Link>
-              <Link href={contact.whatsapp} className="rounded-full border border-zinc-500 px-6 py-3 font-semibold text-zinc-100">Ask on WhatsApp</Link>
+            <p className="mt-8 max-w-3xl text-2xl font-light leading-relaxed tracking-[0.02em] text-white">
+              Premium car care at your home or office.<br />
+              Professional detailing. Pristine results.
+            </p>
+            <div className="mt-12 flex flex-wrap gap-10">
+              <Link href="/services" className="min-w-56 rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-10 py-5 text-center text-lg font-medium uppercase tracking-[0.08em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)] transition hover:brightness-110">View Packages</Link>
+              <Link href="/contact" className="min-w-56 rounded-md border border-[#d4af37]/55 bg-black/15 px-10 py-5 text-center text-lg font-medium uppercase tracking-[0.24em] text-zinc-100 transition hover:border-[#d4af37] hover:bg-[#d4af37]/10">Book Now</Link>
             </div>
           </div>
         </div>
       </section>
 
-      <Section className="space-y-4 md:hidden">
+      <section className="relative left-1/2 right-1/2 -mx-4 -mt-10 min-h-[193px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-48 w-full rounded-xl object-cover" />
-        <h1 className="font-serif text-5xl font-semibold leading-[1.03]">Premium Mobile Car Wash and Detailing</h1>
-        <p className="text-zinc-300">{hero.subtitle}</p>
-        <div className="grid grid-cols-2 gap-3">
-          <Link href="/contact" className="rounded-2xl bg-gold px-4 py-3 text-center text-sm font-semibold text-zinc-950">Book Now</Link>
-          <Link href="/services" className="rounded-2xl border border-zinc-600 px-4 py-3 text-center font-semibold">View Services</Link>
+        <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-top" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
+        <div className="relative flex min-h-[193px] items-end px-4 pb-4 pt-7">
+          <div>
+            <p className="text-[0.39rem] font-normal uppercase tracking-[0.24em] text-white">Mobile Car Detailing</p>
+            <h1 className="mt-3 text-[clamp(1.05rem,4.8vw,1.58rem)] font-medium uppercase leading-[1.12] tracking-[0.016em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
+              <span className="block">We Bring The</span>
+              <span className="block"><span className="bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#a97913] bg-clip-text text-transparent">Showroom</span> To You</span>
+            </h1>
+            <p className="mt-3 text-[0.63rem] font-light leading-relaxed tracking-[0.01em] text-white">
+              Premium car care at your home or office.<br />
+              Professional detailing. Pristine results.
+            </p>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2">
+              <Link href="/services" className="rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-4 py-2 text-center text-[0.55rem] font-medium uppercase tracking-[0.06em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)]">View Packages</Link>
+              <Link href="/contact" className="rounded-md border border-[#d4af37]/55 bg-black/20 px-4 py-2 text-center text-[0.55rem] font-medium uppercase tracking-[0.14em] text-zinc-100">Book Now</Link>
+            </div>
+          </div>
         </div>
-      </Section>
+      </section>
 
-      <Section>
-        <h2 className="text-2xl font-semibold">Why Choose OnyxDetails</h2>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {whyChoose.map((item) => (
-            <Card key={item}>{item}</Card>
-          ))}
-        </div>
-      </Section>
 
       <Section>
         <h2 className="text-2xl font-semibold">Services</h2>
         <h3 className="mt-3 text-sm uppercase tracking-[0.18em] text-gold">Once-off services</h3>
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {oneTimeServices.map((service) => (
-            <Card key={service.id}>
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="min-w-0 flex-1 text-lg font-semibold leading-tight">{service.title}</h3>
-                <InfoPopover label={service.title} description={service.info ?? service.desc} />
-              </div>
-              <p className="text-gold">{service.price}</p>
-              <p className="mt-2 text-sm text-zinc-300">{service.desc}</p>
-              <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="mt-4 block rounded-lg bg-gold px-4 py-2 text-center text-sm font-semibold text-zinc-950">Book This Service</Link>
-            </Card>
+            <ServiceCard key={service.id} service={service} />
           ))}
         </MobileSnapCarousel>
 
         <h3 className="mt-6 text-sm uppercase tracking-[0.18em] text-gold">Subscription services</h3>
         <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
           {subscriptionServices.map((service) => (
-            <Card key={service.id}>
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="min-w-0 flex-1 text-lg font-semibold leading-tight">{service.title}</h3>
-                <InfoPopover label={service.title} description={service.info ?? service.desc} />
-              </div>
-              <p className="text-gold">{service.price}</p>
-              <p className="mt-2 text-sm text-zinc-300">{service.desc}</p>
-              <Link href={`/contact?service=${encodeURIComponent(service.title)}`} className="mt-4 block rounded-lg bg-gold px-4 py-2 text-center text-sm font-semibold text-zinc-950">Book This Service</Link>
-            </Card>
+            <ServiceCard key={service.id} service={service} />
           ))}
         </MobileSnapCarousel>
       </Section>
