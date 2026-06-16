@@ -83,7 +83,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="What we offer"
             title="Detailing Packages"
-            subtitle="Once-off washes, full details, paint correction, and recurring maintenance plans — all delivered at your location."
+            subtitle="Once-off washes, full details, paint correction, and recurring maintenance plans, all delivered at your location."
           />
         </Reveal>
         <Reveal delay={80}>
@@ -206,7 +206,8 @@ export default function HomePage() {
                   ))}
                 </div>
                 <p className="mt-5 font-display text-xl leading-relaxed text-zinc-100 md:text-2xl">“{item.quote}”</p>
-                <p className="mt-5 text-sm uppercase tracking-[0.18em] text-gold">— {item.name}</p>
+                <p className="mt-6 text-sm font-semibold uppercase tracking-[0.18em] text-gold">{item.name}</p>
+                <p className="mt-1 text-xs uppercase tracking-[0.2em] text-zinc-500">Verified client</p>
               </Card>
             </Reveal>
           ))}

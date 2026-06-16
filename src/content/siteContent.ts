@@ -27,7 +27,7 @@ export const hero = {
 // Trust band shown on the homepage
 export const stats = [
   { value: '5+', label: 'Towns served across Mpumalanga' },
-  { value: '100%', label: 'Mobile — we come to you' },
+  { value: '100%', label: 'Mobile service, we come to you' },
   { value: '10+', label: 'Detailing & add-on services' },
   { value: '7-Day', label: 'Recurring care plans available' }
 ];
@@ -103,7 +103,7 @@ export const services = [
     title: 'Gloss Revival Paint Correction',
     image: '/assets/images/services/gloss-revival.webp',
     imageAlt: 'Gloss revival paint correction service',
-    price: 'R1699 - R1999',
+    price: 'R1699 to R1999',
     priceMin: 1699,
     priceMax: 1999,
     washCount: 1,
@@ -120,7 +120,7 @@ export const services = [
     title: 'Deep Clarity Paint Correction',
     image: '/assets/images/services/deep-clarity.webp',
     imageAlt: 'Deep clarity paint correction service',
-    price: 'R2299 - R2499',
+    price: 'R2299 to R2499',
     priceMin: 2299,
     priceMax: 2499,
     washCount: 1,
@@ -201,7 +201,7 @@ export const bookingAddOns = [
   { id: 'interior-detail', label: 'Interior Detail Add-on', description: 'Adds an interior detail to a service that does not already include interior detailing. Paint correction services receive this add-on at R199.', priceMin: 219, priceMax: 219, paintCorrectionPriceMin: 199, paintCorrectionPriceMax: 199 },
   { id: 'paint-correction', label: 'Paint Correction Add-on (pricing below)', description: 'Machine polishing add-on that reduces swirl marks, oxidation, and light paint imperfections. Step options are selected below. If your main service includes an exterior detail, paint correction add-on pricing is discounted by R99.', priceMin: 0, priceMax: 0 },
   { id: 'ceramic-coating', label: 'Ceramic Coating (+R699)', description: 'Protective ceramic layer that helps repel water, contamination, and UV exposure while enhancing gloss.', priceMin: 699, priceMax: 699 },
-  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)', description: 'Restores cloudy or yellowed headlights to improve clarity, appearance, and night-time light output.', priceMin: 349, priceMax: 449 },
+  { id: 'headlight-restoration', label: 'Headlight Restoration (R349 to R449)', description: 'Restores cloudy or yellowed headlights to improve clarity, appearance, and night-time light output.', priceMin: 349, priceMax: 449 },
   { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)', description: 'Hydrophobic coating for the front windshield that helps water bead and roll off more easily.', priceMin: 70, priceMax: 70 },
   { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)', description: 'Extra time and tools to remove embedded pet hair from seats, carpets, and boot areas.', priceMin: 150, priceMax: 150 },
   { id: 'dash-protection', label: 'Dash Protection Layer (+R49)', description: 'Protective interior dressing applied to dashboard plastics to reduce fading and dust adhesion.', priceMin: 49, priceMax: 49 },
@@ -214,7 +214,7 @@ export const paintCorrectionOptions = [
   {
     id: 'step-1',
     title: 'Gloss Revival Polish',
-    label: 'Gloss Revival Polish (R1699-R1999 depending on vehicle size)',
+    label: 'Gloss Revival Polish (R1699 to R1999 depending on vehicle size)',
     description:
       'Best for vehicles with light swirl marks, dull paint, water spots, and minor fading. This service uses one polishing stage to restore shine, improve clarity, and make the paint look cleaner and glossier without going into heavy defect removal. Ideal for newer or well-maintained vehicles.',
     priceMin: 1699,
@@ -223,7 +223,7 @@ export const paintCorrectionOptions = [
   {
     id: 'step-2',
     title: 'Deep Clarity Correction',
-    label: 'Deep Clarity Correction (R2299-R2499 depending on vehicle size)',
+    label: 'Deep Clarity Correction (R2299 to R2499 depending on vehicle size)',
     description:
       'Best for vehicles with heavier swirl marks, oxidation, deeper scratches, holograms, and dull paint. This service uses a cutting stage to remove more visible defects, followed by a refining polish to bring back deep gloss and a smoother finish. Ideal for older, neglected, or darker coloured vehicles.',
     priceMin: 2299,
@@ -258,7 +258,7 @@ export const steps = [
 export const aboutValues = [
   {
     title: 'Showroom-grade finish',
-    text: 'Every visit is treated like a presentation detail — consistent, careful, and finished to a standard you can see.'
+    text: 'Every visit is treated like a presentation detail: consistent, careful, and finished to a standard you can see.'
   },
   {
     title: 'Total convenience',

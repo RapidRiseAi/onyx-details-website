@@ -9,14 +9,14 @@ import { Reveal } from '@/components/ui/reveal';
 
 export const metadata: Metadata = {
   title: 'Services & Pricing',
-  description: 'Once-off washes, full details, paint correction services, and recurring maintenance plans — with optional add-ons.'
+  description: 'Once-off washes, full details, paint correction services, and recurring maintenance plans, plus optional add-ons.'
 };
 
 const addOnPriceLabel = (addOn: (typeof bookingAddOns)[number]) => {
   if (addOn.id === 'interior-detail') return 'R219, or R199 with a paint correction service';
   if (addOn.id === 'paint-correction') return 'From R1699, or R99 less when the main service includes exterior detail';
   if (addOn.priceMin === addOn.priceMax) return `R${addOn.priceMin}`;
-  return `R${addOn.priceMin} - R${addOn.priceMax}`;
+  return `R${addOn.priceMin} to R${addOn.priceMax}`;
 };
 
 export default function ServicesPage() {
@@ -72,24 +72,24 @@ export default function ServicesPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {bookingAddOns.map((addOn, index) => (
             <Reveal key={addOn.id} delay={(index % 3) * 70} as="article">
-              <Card className="group relative h-full p-5">
-                <div className="flex items-start justify-between gap-2">
+              <Card className="flex h-full flex-col p-5">
+                <div className="flex items-start justify-between gap-3">
                   <h3 className="min-w-0 flex-1 font-display font-semibold leading-tight text-white">{addOn.label}</h3>
                   <InfoPopover label={addOn.label} description={addOn.description ?? addOn.label} />
                 </div>
-                <p className="mt-1.5 text-sm font-semibold text-gold-gradient">{addOnPriceLabel(addOn)}</p>
+                <p className="mt-2 w-fit rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-sm font-semibold text-gold">{addOnPriceLabel(addOn)}</p>
                 {addOn.id === 'paint-correction' ? (
-                  <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-zinc-400">
+                  <ul className="mt-3 space-y-1.5 text-xs text-zinc-400">
                     {paintCorrectionOptions.map((option) => (
-                      <li key={option.id}>{option.label}</li>
+                      <li key={option.id} className="flex items-start gap-2">
+                        <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-gold" />
+                        <span>{option.label}</span>
+                      </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{addOn.description}</p>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-400">{addOn.description}</p>
                 )}
-                <p className="pointer-events-none absolute inset-x-4 bottom-4 rounded-md border border-gold/40 bg-ink-800 px-3 py-2 text-xs text-zinc-100 opacity-0 shadow-lg transition group-hover:opacity-100">
-                  You can add this once you have selected a main product.
-                </p>
               </Card>
             </Reveal>
           ))}

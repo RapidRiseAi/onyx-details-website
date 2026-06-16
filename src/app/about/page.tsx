@@ -26,7 +26,7 @@ export default function AboutPage() {
             Onyx Details delivers premium mobile detailing at homes, farms, and workplaces. Our focus is simple: consistent quality, professional communication, and reliable service that saves our clients time.
           </p>
           <p className="mt-4 text-base leading-relaxed text-zinc-400">
-            We built our process to make regular detailing practical, not stressful — from booking through to the finished result.
+            We built our process to make regular detailing practical, not stressful, from booking through to the finished result.
           </p>
           <div className="mt-7 flex flex-wrap gap-4">
             <Link href="/services" className="btn-gold">View Packages <ArrowRight size={16} /></Link>

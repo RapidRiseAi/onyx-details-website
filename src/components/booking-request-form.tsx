@@ -6,7 +6,7 @@ import { bookingAddOns, paintCorrectionOptions, services } from '@/content/siteC
 import { InfoPopover } from '@/components/ui/info-popover';
 
 
-const formatPriceRange = (min: number, max: number) => (min === max ? `R${min}` : `R${min} - R${max}`);
+const formatPriceRange = (min: number, max: number) => (min === max ? `R${min}` : `R${min} to R${max}`);
 const paintCorrectionDiscount = 99;
 
 const BOOKING_WEBHOOK_URL =
@@ -169,7 +169,7 @@ export function BookingRequestForm() {
         mainProblem,
         photos,
         notes,
-        consentGiven: consent ? 'Yes — client agreed to data processing for this booking' : 'No'
+        consentGiven: consent ? 'Yes, client agreed to data processing for this booking' : 'No'
       };
 
       const response = await fetch(BOOKING_WEBHOOK_URL, {

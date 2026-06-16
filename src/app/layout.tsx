@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL('https://onyxdetails.co.za'),
   title: {
-    default: 'Onyx Details — Premium Mobile Car Detailing',
+    default: 'Onyx Details | Premium Mobile Car Detailing',
     template: '%s | Onyx Details'
   },
   description:
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     apple: branding.logo
   },
   openGraph: {
-    title: 'Onyx Details — Premium Mobile Car Detailing',
+    title: 'Onyx Details | Premium Mobile Car Detailing',
     description: 'We bring the showroom to you. Premium mobile detailing across Mpumalanga.',
     type: 'website',
     locale: 'en_ZA'

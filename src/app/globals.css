@@ -32,10 +32,11 @@ a {
 
   /* Premium gradient-bordered, glowing card */
   .premium-card {
-    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] shadow-card backdrop-blur-sm transition duration-300;
+    @apply relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] shadow-card backdrop-blur-sm transition duration-300;
   }
   .premium-card:hover {
     @apply border-gold/40 shadow-glow;
+    transform: translateY(-3px);
   }
 
   /* Thin gold rule / divider */
@@ -50,12 +51,48 @@ a {
 
   /* Primary gold CTA */
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-gold-gradient px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-black shadow-glow-sm transition hover:brightness-110;
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-gold-gradient px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-black shadow-glow-sm transition hover:brightness-110;
   }
 
   /* Secondary outline CTA */
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2 rounded-lg border border-gold/45 bg-white/[0.03] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100 transition hover:border-gold hover:bg-gold/10;
+  }
+}
+
+/* Sheen sweep across the primary button on hover */
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-gold:hover::after {
+  transform: translateX(130%);
+}
+
+/* Page transition: replays on every route change via app/template.tsx */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-transition {
+  animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-transition,
+  .btn-gold::after {
+    animation: none;
+    transition: none;
   }
 }
 
