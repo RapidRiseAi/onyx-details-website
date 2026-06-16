@@ -1,20 +1,26 @@
 import Link from 'next/link';
+import { ArrowRight, CalendarCheck, Car, ListChecks, Quote, Sparkles, Star } from 'lucide-react';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { Card } from '@/components/ui/card';
 import { ServiceCard } from '@/components/ui/service-card';
 import { Section } from '@/components/ui/section';
-import { contact, gallery, hero, services, steps, testimonials } from '@/content/siteContent';
+import { SectionHeading } from '@/components/ui/section-heading';
+import { Reveal } from '@/components/ui/reveal';
+import { contact, gallery, hero, services, stats, steps, testimonials } from '@/content/siteContent';
+
+const stepIcons = [ListChecks, CalendarCheck, Car, Sparkles];
 
 export default function HomePage() {
-  const beforeAfterGallery = gallery.filter((item) => item.src.includes('Before-After'));
+  const beforeAfterGallery = gallery.filter((item) => item.category === 'before-after');
   const oneTimeServices = services.filter((service) => service.category === 'one-time');
   const subscriptionServices = services.filter((service) => service.category === 'subscription');
 
   return (
-    <div className="-mt-10 space-y-10">
-      <section className="relative left-1/2 right-1/2 -mx-4 hidden w-screen -translate-x-1/2 overflow-hidden md:block">
+    <div className="-mt-10 space-y-16 md:space-y-24">
+      {/* HERO — desktop (unchanged design, now self-hosted + priority loaded) */}
+      <section className="relative left-1/2 right-1/2 -mx-4 hidden w-screen -translate-x-1/2 overflow-hidden md:-mx-6 md:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="h-[clamp(560px,72vh,700px)] w-full object-cover object-center" />
+        <img src={hero.image} alt={hero.title} width={1920} height={792} fetchPriority="high" decoding="async" className="h-[clamp(560px,72vh,700px)] w-full object-cover object-center" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_48%_45%,rgba(148,163,184,0.28),transparent_28%),linear-gradient(90deg,rgba(0,0,0,0.98)_0%,rgba(0,0,0,0.78)_30%,rgba(0,0,0,0.34)_58%,rgba(0,0,0,0.72)_100%)]" />
         <div className="absolute inset-0 mx-auto flex h-full w-full max-w-[96rem] items-center px-6">
           <div className="max-w-[52rem] -translate-y-3">
@@ -35,9 +41,10 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* HERO — mobile (unchanged design, now self-hosted + priority loaded) */}
       <section className="relative left-1/2 right-1/2 -mx-4 -mt-10 h-[154px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.image} alt={hero.title} className="absolute inset-0 h-full w-full object-cover object-top" />
+        <img src={hero.imageMobile} alt={hero.title} width={960} height={396} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
         <div className="relative flex h-[154px] items-end px-4 pb-2 pt-3">
           <div>
@@ -58,82 +65,173 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* TRUST / STATS BAND */}
+      <Reveal>
+        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] md:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="bg-ink-800/60 px-5 py-7 text-center">
+              <p className="font-display text-3xl font-semibold text-gold-gradient md:text-4xl">{stat.value}</p>
+              <p className="mt-2 text-xs leading-relaxed text-zinc-400 md:text-sm">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
 
+      {/* SERVICES */}
       <Section>
-        <h2 className="text-2xl font-semibold">Services</h2>
-        <h3 className="mt-3 text-sm uppercase tracking-[0.18em] text-gold">Once-off services</h3>
-        <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
-          {oneTimeServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </MobileSnapCarousel>
-
-        <h3 className="mt-6 text-sm uppercase tracking-[0.18em] text-gold">Subscription services</h3>
-        <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
-          {subscriptionServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </MobileSnapCarousel>
-      </Section>
-
-      <Section>
-        <h2 className="text-2xl font-semibold">Before &amp; After Results</h2>
-        <MobileSnapCarousel desktopMode="carousel" itemClassName="w-[92%] md:w-[32%]" showPagination={false}>
-          {beforeAfterGallery.map((item) => (
-            <Card key={item.src} className="space-y-2 p-2">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={item.src} alt={item.alt} className="h-56 w-full rounded-lg object-cover" />
-              <p className="px-2 pb-2 text-sm text-zinc-300">{item.title}</p>
-            </Card>
-          ))}
-        </MobileSnapCarousel>
-        <Link href="/gallery" className="inline-block rounded-lg border border-zinc-700 px-4 py-2 text-sm">View full gallery</Link>
-      </Section>
-
-      <Section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
-        <div className="grid items-center gap-6 md:grid-cols-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Built-Around-Convenience.png"
-            alt="Built around convenience"
-            className="h-64 w-full rounded-xl object-cover"
+        <Reveal>
+          <SectionHeading
+            eyebrow="What we offer"
+            title="Detailing Packages"
+            subtitle="Once-off washes, full details, paint correction, and recurring maintenance plans — all delivered at your location."
           />
-          <div className="space-y-3">
-            <h2 className="text-2xl font-semibold">Built Around Convenience, Quality, and Consistency</h2>
-            <p className="text-zinc-300">
-              OnyxDetails exists to make vehicle care easier without compromising on quality. We bring the setup, process, and reliability to your location.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs">
-              {['Home visits', 'Farm/worksite ready', 'Recurring options'].map((item) => (
-                <span key={item} className="rounded-full border border-zinc-700 px-3 py-1 text-zinc-300">{item}</span>
-              ))}
+        </Reveal>
+        <Reveal delay={80}>
+          <h3 className="mt-8 eyebrow !text-zinc-400">Once-off services</h3>
+          <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
+            {oneTimeServices.map((service) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </MobileSnapCarousel>
+        </Reveal>
+        <Reveal delay={120}>
+          <h3 className="mt-10 eyebrow !text-zinc-400">Subscription services</h3>
+          <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
+            {subscriptionServices.map((service) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </MobileSnapCarousel>
+        </Reveal>
+        <Reveal delay={140} className="pt-2">
+          <Link href="/services" className="btn-outline">View all packages <ArrowRight size={15} /></Link>
+        </Reveal>
+      </Section>
+
+      {/* BEFORE & AFTER */}
+      <Section>
+        <Reveal>
+          <SectionHeading eyebrow="Proof in the paint" title="Before & After Results" />
+        </Reveal>
+        <Reveal delay={80}>
+          <MobileSnapCarousel desktopMode="carousel" itemClassName="w-[92%] md:w-[32%]" showPagination={false}>
+            {beforeAfterGallery.map((item) => (
+              <Card key={item.src} className="group overflow-hidden p-0">
+                <div className="relative overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={item.src} alt={item.alt} loading="lazy" className="h-60 w-full object-cover transition duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
+                <p className="px-4 py-3 text-sm text-zinc-300">{item.title}</p>
+              </Card>
+            ))}
+          </MobileSnapCarousel>
+        </Reveal>
+        <Reveal delay={120}>
+          <Link href="/gallery" className="btn-outline">View full gallery <ArrowRight size={15} /></Link>
+        </Reveal>
+      </Section>
+
+      {/* CONVENIENCE */}
+      <Reveal>
+        <Section className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 md:p-10">
+          <div className="grid items-center gap-8 md:grid-cols-2">
+            <div className="relative overflow-hidden rounded-2xl ring-1 ring-white/10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/images/about/convenience.webp"
+                alt="Built around convenience"
+                loading="lazy"
+                className="h-72 w-full object-cover md:h-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent" />
+            </div>
+            <div>
+              <p className="eyebrow">The Onyx difference</p>
+              <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-white md:text-4xl">
+                Built Around Convenience, Quality &amp; Consistency
+              </h2>
+              <div className="gold-divider mt-4" />
+              <p className="mt-5 text-base leading-relaxed text-zinc-400">
+                Onyx Details exists to make vehicle care easier without compromising on quality. We bring the setup, process, and reliability to your location.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-2.5 text-xs">
+                {['Home visits', 'Farm / worksite ready', 'Recurring options'].map((item) => (
+                  <span key={item} className="rounded-full border border-gold/30 bg-gold/5 px-4 py-2 text-zinc-200">{item}</span>
+                ))}
+              </div>
             </div>
           </div>
+        </Section>
+      </Reveal>
+
+      {/* HOW IT WORKS */}
+      <Section>
+        <Reveal>
+          <SectionHeading eyebrow="Simple process" title="How It Works" align="center" />
+        </Reveal>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step, index) => {
+            const Icon = stepIcons[index] ?? Sparkles;
+            return (
+              <Reveal key={step.title} delay={index * 90}>
+                <Card className="h-full p-6">
+                  <div className="flex items-center justify-between">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-gold/30 bg-gold/10 text-gold">
+                      <Icon size={20} />
+                    </span>
+                    <span className="font-display text-4xl font-semibold text-white/10">{String(index + 1).padStart(2, '0')}</span>
+                  </div>
+                  <h3 className="mt-5 font-display text-lg font-semibold text-white">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-400">{step.text}</p>
+                </Card>
+              </Reveal>
+            );
+          })}
         </div>
       </Section>
 
+      {/* TESTIMONIALS */}
       <Section>
-        <h2 className="text-2xl font-semibold">How It Works</h2>
-        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step, index) => (
-            <Card key={step.title}>
-              <p className="text-xs uppercase tracking-wide text-gold">Step {index + 1}</p>
-              <h3 className="mt-1 font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm text-zinc-300">{step.text}</p>
-            </Card>
+        <Reveal>
+          <SectionHeading eyebrow="What clients say" title="Client Feedback" align="center" />
+        </Reveal>
+        <div className="mx-auto max-w-3xl">
+          {testimonials.map((item) => (
+            <Reveal key={item.name}>
+              <Card className="relative p-8 text-center md:p-10">
+                <Quote className="mx-auto text-gold/40" size={36} />
+                <div className="mt-4 flex justify-center gap-1 text-gold">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} size={16} fill="currentColor" />
+                  ))}
+                </div>
+                <p className="mt-5 font-display text-xl leading-relaxed text-zinc-100 md:text-2xl">“{item.quote}”</p>
+                <p className="mt-5 text-sm uppercase tracking-[0.18em] text-gold">— {item.name}</p>
+              </Card>
+            </Reveal>
           ))}
         </div>
       </Section>
 
-      <Section>
-        <h2 className="text-2xl font-semibold">Client Feedback</h2>
-        {testimonials.map((item) => (
-          <Card key={item.name}>
-            <p className="text-zinc-200">“{item.quote}”</p>
-            <p className="mt-3 text-sm text-zinc-400">— {item.name}</p>
-          </Card>
-        ))}
-      </Section>
+      {/* FINAL CTA */}
+      <Reveal>
+        <section className="relative overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-gold/[0.12] via-ink-800 to-ink-800 px-6 py-14 text-center md:py-20">
+          <div className="absolute inset-0 bg-[radial-gradient(40rem_20rem_at_50%_-20%,rgba(212,175,55,0.18),transparent_70%)]" />
+          <div className="relative">
+            <p className="eyebrow">Ready when you are</p>
+            <h2 className="mx-auto mt-3 max-w-2xl font-display text-3xl font-semibold leading-tight text-white md:text-4xl">
+              Bring the showroom finish to your driveway
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base text-zinc-300">
+              Book in minutes. We arrive fully equipped, on time, and leave your vehicle pristine.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              <Link href="/contact" className="btn-gold">Book Now <ArrowRight size={16} /></Link>
+              <Link href={contact.whatsapp} className="btn-outline">Ask on WhatsApp</Link>
+            </div>
+          </div>
+        </section>
+      </Reveal>
     </div>
   );
 }

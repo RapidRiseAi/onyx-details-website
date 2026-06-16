@@ -14,21 +14,30 @@ export const contact = {
 };
 
 export const branding = {
-  logo: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Onyx-Details-Logo.png'
+  logo: '/assets/logos/onyx-logo.webp'
 };
 
 export const hero = {
   title: 'We Bring The Showroom To You',
   subtitle: 'Premium car care at your home or office. Professional detailing. Pristine results.',
-  image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Home-Page-Hero.png'
+  image: '/assets/images/hero/hero.webp',
+  imageMobile: '/assets/images/hero/hero-mobile.webp'
 };
+
+// Trust band shown on the homepage
+export const stats = [
+  { value: '5+', label: 'Towns served across Mpumalanga' },
+  { value: '100%', label: 'Mobile — we come to you' },
+  { value: '10+', label: 'Detailing & add-on services' },
+  { value: '7-Day', label: 'Recurring care plans available' }
+];
 
 export const services = [
   {
     id: 'basic-wash-single',
     category: 'one-time',
     title: 'Basic Wash (Interior & Exterior)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20combo%20basic%20wash%20.png',
+    image: '/assets/images/services/basic-wash.webp',
     imageAlt: 'Basic interior and exterior wash service',
     price: 'R219',
     priceMin: 219,
@@ -44,7 +53,7 @@ export const services = [
     id: 'detail-single',
     category: 'one-time',
     title: 'Detail Interior & Exterior',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20detail%20.png',
+    image: '/assets/images/services/detail.webp',
     imageAlt: 'Exterior and interior detail service',
     price: 'R399',
     priceMin: 399,
@@ -60,7 +69,7 @@ export const services = [
     id: 'interior-single',
     category: 'one-time',
     title: 'Interior Detail Only',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Enterior%20detail.png',
+    image: '/assets/images/services/interior.webp',
     imageAlt: 'Interior detail service',
     price: 'R219',
     priceMin: 219,
@@ -76,7 +85,7 @@ export const services = [
     id: 'exterior-single',
     category: 'one-time',
     title: 'Exterior Detail Only',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Exterior%20detail.png',
+    image: '/assets/images/services/exterior.webp',
     imageAlt: 'Exterior detail service',
     price: 'R219',
     priceMin: 219,
@@ -92,7 +101,7 @@ export const services = [
     id: 'paint-correction-gloss-revival',
     category: 'one-time',
     title: 'Gloss Revival Paint Correction',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Gloss%20revival%20polish.png',
+    image: '/assets/images/services/gloss-revival.webp',
     imageAlt: 'Gloss revival paint correction service',
     price: 'R1699 - R1999',
     priceMin: 1699,
@@ -109,7 +118,7 @@ export const services = [
     id: 'paint-correction-deep-clarity',
     category: 'one-time',
     title: 'Deep Clarity Paint Correction',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Deep%20clarity%20paint%20correction.png',
+    image: '/assets/images/services/deep-clarity.webp',
     imageAlt: 'Deep clarity paint correction service',
     price: 'R2299 - R2499',
     priceMin: 2299,
@@ -126,7 +135,7 @@ export const services = [
     id: 'basic-weekly',
     category: 'subscription',
     title: 'Basic Wash (Weekly)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20combo%20basic%20wash%20.png',
+    image: '/assets/images/services/basic-wash.webp',
     imageAlt: 'Basic recurring wash service',
     price: 'R799 / month',
     priceMin: 799,
@@ -142,7 +151,7 @@ export const services = [
     id: 'basic-biweekly',
     category: 'subscription',
     title: 'Basic Wash (Bi-Weekly)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20combo%20basic%20wash%20.png',
+    image: '/assets/images/services/basic-wash.webp',
     imageAlt: 'Basic recurring wash service',
     price: 'R379 / month',
     priceMin: 379,
@@ -158,7 +167,7 @@ export const services = [
     id: 'detail-biweekly',
     category: 'subscription',
     title: 'Detail Interior & Exterior (Bi-Weekly)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20detail%20.png',
+    image: '/assets/images/services/detail.webp',
     imageAlt: 'Recurring interior and exterior detail service',
     price: 'R699 / month',
     priceMin: 699,
@@ -174,7 +183,7 @@ export const services = [
     id: 'special-pack',
     category: 'subscription',
     title: 'Special Pack (Week 1 Detail + Weeks 2-4 Basic Wash)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20detail%20.png',
+    image: '/assets/images/services/detail.webp',
     imageAlt: 'Monthly detail and wash special pack',
     price: 'R1049 / month',
     priceMin: 1049,
@@ -223,11 +232,11 @@ export const paintCorrectionOptions = [
 ];
 
 export const gallery = [
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After1.png', alt: 'Before and after vehicle detail one', title: 'Before / After Transformation 1' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After2.png', alt: 'Before and after vehicle detail two', title: 'Before / After Transformation 2' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After3.png', alt: 'Before and after vehicle detail three', title: 'Before / After Transformation 3' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After4.png', alt: 'Before and after vehicle detail four', title: 'Before / After Transformation 4' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Lifestyle2.png', alt: 'Premium detailing lifestyle shot', title: 'Premium Mobile Care' }
+  { src: '/assets/images/gallery/before-after/ba-1.webp', category: 'before-after', alt: 'Before and after vehicle detail one', title: 'Before / After Transformation 1' },
+  { src: '/assets/images/gallery/before-after/ba-2.webp', category: 'before-after', alt: 'Before and after vehicle detail two', title: 'Before / After Transformation 2' },
+  { src: '/assets/images/gallery/before-after/ba-3.webp', category: 'before-after', alt: 'Before and after vehicle detail three', title: 'Before / After Transformation 3' },
+  { src: '/assets/images/gallery/before-after/ba-4.webp', category: 'before-after', alt: 'Before and after vehicle detail four', title: 'Before / After Transformation 4' },
+  { src: '/assets/images/gallery/lifestyle/lifestyle.webp', category: 'lifestyle', alt: 'Premium detailing lifestyle shot', title: 'Premium Mobile Care' }
 ];
 
 export const whyChoose = [
@@ -244,6 +253,29 @@ export const steps = [
   { title: 'We detail on-site', text: 'Our team arrives equipped and completes the service at your location.' },
   { title: 'Enjoy the result', text: 'You get a clean, polished vehicle without leaving home or work.' }
 ];
+
+// About page content
+export const aboutValues = [
+  {
+    title: 'Showroom-grade finish',
+    text: 'Every visit is treated like a presentation detail — consistent, careful, and finished to a standard you can see.'
+  },
+  {
+    title: 'Total convenience',
+    text: 'We arrive fully equipped at your home, farm, or workplace. No queues, no driving across town, no wasted weekends.'
+  },
+  {
+    title: 'Reliable & respectful',
+    text: 'Clear communication, on-time arrivals, and respect for your space and vehicle on every single booking.'
+  }
+];
+
+export const aboutImages = {
+  promise: '/assets/images/about/promise.webp',
+  team1: '/assets/images/gallery/team/team-1.webp',
+  team2: '/assets/images/gallery/team/team-2.webp',
+  convenience: '/assets/images/about/convenience.webp'
+};
 
 export const testimonials = [
   {

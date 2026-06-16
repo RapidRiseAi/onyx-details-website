@@ -1,103 +1,50 @@
-# OnyxDetails Website (Astro)
+# Onyx Details Website
 
-Premium dark-theme mobile detailing website for **OnyxDetails**.
+Premium dark-theme mobile car-detailing website for **Onyx Details** (Mpumalanga, South Africa).
+
+Built with **Next.js 15** (App Router) + **Tailwind CSS**, exported as a static site and deployed on **Cloudflare Pages**.
 
 ## Setup
 
-1. Install dependencies:
-   ```bash
-   bun install
-   ```
-   (or `npm install` if preferred)
-2. Run locally:
-   ```bash
-   bun run dev
-   ```
-3. Build for production:
-   ```bash
-   bun run build
-   ```
-4. Preview production build:
-   ```bash
-   bun run preview
-   ```
-
-## Cloudflare Pages deployment (recommended)
-
-Use **Cloudflare Pages** for the default deployment flow.
-
-- Framework preset: **Astro**
-- Build command: `bun run build` (or `npm run build`)
-- Build output directory: `dist`
-- **Deploy command: leave empty** (do not use `npx wrangler deploy`)
-
-### If your pipeline uses Wrangler (`wrangler deploy` or `wrangler versions upload`)
-
-This repo includes `wrangler.jsonc` configured for static asset uploads from `dist` and a pre-deploy build command.
-
-- `assets.directory` is set to `./dist`
-- `build.command` is set to `bun run build`
-
-This allows both of these commands to work in CI:
-
 ```bash
-npx wrangler deploy
-npx wrangler versions upload
+npm install
+npm run dev      # local dev at http://localhost:3000
+npm run build    # static export to ./out
 ```
 
-### Why this matters
+## Deployment (Cloudflare Pages)
 
-If `wrangler deploy` is used in a non-interactive CI run, Wrangler may attempt to auto-install and configure `@astrojs/cloudflare`, which can create adapter/version mismatches and fail with errors such as:
+- Build command: `npm run build`
+- Build output directory: `out`
+- `next.config.mjs` uses `output: 'export'` (fully static — no server runtime).
+- `public/_headers` applies security headers (CSP, HSTS, X-Frame-Options, etc.) and long-cache rules for static assets on Cloudflare Pages.
 
-- `Package subpath './app/manifest' is not defined by "exports"`
+## Editing content
 
-This site is built to deploy as a static Astro Pages build, so adapter auto-configuration is unnecessary.
+Almost all copy, pricing, services, gallery, and contact details live in one file:
 
+- **`src/content/siteContent.ts`** — nav, contact info, hero, stats, services + add-ons, gallery, About content, steps, testimonials.
 
-## Compatibility note
+## Images (important — performance)
 
-- Astro is pinned to the v6 line in `package.json` to stay compatible with current Cloudflare/Wrangler Astro integration behavior in CI environments.
-- If you keep a `wrangler deploy` workflow, this reduces adapter-version mismatch risk versus older Astro major versions.
+Images are **self-hosted and optimised** (WebP) in `public/assets/images/**`, *not* hot-linked from GitHub.
 
-## Editable content
+- Source PNGs live in the repo root.
+- To (re)generate optimised WebP, run the conversion with `sharp` (see `scripts`/commit history) and place outputs under `public/assets/images/...`, then reference them from `siteContent.ts`.
+- The hero is preloaded with `fetchPriority="high"` in `src/app/layout.tsx` (responsive desktop/mobile sources).
 
-- Contact details: `src/data/contact.ts`
-- Services and pricing: `src/data/services.ts`
-- Testimonial content: `src/data/testimonials.ts`
-- Gallery entries: `src/data/gallery.ts`
-- SEO metadata: `src/data/seo.ts`
-- Policy text: `src/data/policies.ts`
+Guideline: keep the hero ≤ ~250 KB and below-the-fold images `loading="lazy"`.
 
-## Forms and Apps Script endpoints
+## Booking form
 
-Set both form endpoint URLs in:
+- Component: `src/components/booking-request-form.tsx`
+- Submits JSON to a Google Apps Script Web App (`BOOKING_WEBHOOK_URL`).
+- Includes a POPIA consent checkbox linking to `/privacy-policy`.
+- Backend script: `GOOGLE_APPS_SCRIPT_BOOKING.gs` (Sheet insert, Drive photo upload, email notifications).
 
-- `src/data/endpoints.ts`
-  - `bookingEndpoint`
-  - `contactEndpoint`
+> ⚠️ See **`SECURITY_AND_BACKEND_NOTES.md`** for outstanding backend hardening (anti-abuse / open-relay mitigation) that must be applied on the Apps Script side.
 
-Both forms submit JSON payloads to Google Apps Script Web App URLs.
+## SEO
 
-## Booking modal behavior
-
-- Reusable modal is implemented in `src/components/BookingModal.astro`.
-- Trigger with any element containing `data-open-booking`.
-- Service card buttons pass service details via:
-  - `data-service-id`
-  - `data-service-name`
-- Script handling and submission logic: `src/scripts/booking.ts`
-
-## Images and logo
-
-- Place final transparent logo at:
-  - `public/assets/logos/onyxdetails-logo.svg` (or update `src/data/site.ts` to your preferred file)
-- Swap placeholder images in:
-  - `public/assets/images/hero`
-  - `public/assets/images/services`
-  - `public/assets/images/gallery/*`
-  - `public/assets/images/placeholders`
-
-## Google Apps Script booking webhook
-
-Use `GOOGLE_APPS_SCRIPT_BOOKING.gs` as the full copy/paste script for the booking webhook.
-It includes sheet setup, booking insert (newest row at top), archive flow, and email notifications.
+- `src/app/robots.ts` and `src/app/sitemap.ts` generate `/robots.txt` and `/sitemap.xml`.
+- Metadata is defined per-page via the Next `metadata` export.
