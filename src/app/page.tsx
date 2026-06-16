@@ -88,7 +88,7 @@ export default function HomePage() {
         </Reveal>
         <Reveal delay={80}>
           <h3 className="mt-8 eyebrow !text-zinc-400">Once-off services</h3>
-          <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
+          <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-3">
             {oneTimeServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
@@ -96,7 +96,7 @@ export default function HomePage() {
         </Reveal>
         <Reveal delay={120}>
           <h3 className="mt-10 eyebrow !text-zinc-400">Subscription services</h3>
-          <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-2">
+          <MobileSnapCarousel itemClassName="w-[92%] md:w-auto" desktopClassName="md:grid-cols-2 lg:grid-cols-3">
             {subscriptionServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}

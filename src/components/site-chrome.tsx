@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Menu, X, Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, MessageCircle, CalendarCheck } from 'lucide-react';
 import { branding, contact, navLinks } from '@/content/siteContent';
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -35,12 +35,13 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     }`;
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col pb-16 md:pb-0">
       <header
         className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
           scrolled ? 'border-gold/15 bg-ink/90 backdrop-blur-md' : 'border-white/5 bg-ink/70 backdrop-blur'
         }`}
       >
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
         <div className="mx-auto hidden max-w-[96rem] grid-cols-[1fr_auto_1fr] items-center gap-8 px-6 py-4 md:grid">
           <nav className="flex gap-7">
             {leftLinks.map((link) => (
@@ -152,13 +153,27 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
 
+      {/* Desktop: floating WhatsApp pill */}
       <Link
         href={contact.whatsapp}
         aria-label="Chat on WhatsApp"
-        className="fixed bottom-5 right-4 z-50 flex items-center gap-2 rounded-full bg-gold-gradient px-4 py-3 text-xs font-semibold text-black shadow-glow transition hover:brightness-110 md:bottom-6 md:right-6"
+        className="fixed bottom-6 right-6 z-50 hidden items-center gap-2 rounded-full bg-gold-gradient px-4 py-3 text-xs font-semibold text-black shadow-glow transition hover:brightness-110 md:flex"
       >
         <MessageCircle size={16} /> WhatsApp
       </Link>
+
+      {/* Mobile: sticky action bar for fast, easy navigation */}
+      <nav className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-gold/15 bg-ink-800/95 backdrop-blur-md md:hidden">
+        <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium text-zinc-200">
+          <Phone size={18} className="text-gold" /> Call
+        </a>
+        <a href={contact.whatsapp} className="flex flex-col items-center gap-1 border-x border-white/10 py-2.5 text-[11px] font-medium text-zinc-200">
+          <MessageCircle size={18} className="text-gold" /> WhatsApp
+        </a>
+        <Link href="/contact" className="flex flex-col items-center gap-1 bg-gold-gradient py-2.5 text-[11px] font-semibold text-black">
+          <CalendarCheck size={18} /> Book
+        </Link>
+      </nav>
     </div>
   );
 }
