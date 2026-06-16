@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "onyxdetails-website",
+  "name": "onyx-details-website",
   "compatibility_date": "2026-03-19",
   "build": {
     "command": "bun run build"
