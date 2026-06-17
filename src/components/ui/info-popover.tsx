@@ -85,7 +85,8 @@ export function InfoPopover({ label, description }: InfoPopoverProps) {
         i
       </button>
       <div
-        className={`absolute right-0 top-7 z-50 w-[min(14rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2.5rem)] rounded-md border border-zinc-700 bg-zinc-950 p-2 text-xs leading-relaxed text-zinc-200 shadow-xl md:w-64 md:max-w-none ${isOpen ? 'block' : 'hidden'}`}
+        role="tooltip"
+        className={`absolute right-0 top-8 z-[70] w-[min(15rem,calc(100vw-2.5rem))] max-w-[calc(100vw-2.5rem)] rounded-lg border border-gold/30 bg-ink-800 p-3 text-xs leading-relaxed text-zinc-200 shadow-2xl ring-1 ring-black/40 md:w-72 md:max-w-none ${isOpen ? 'block' : 'hidden'}`}
       >
         {description}
       </div>

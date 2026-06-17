@@ -14,21 +14,31 @@ export const contact = {
 };
 
 export const branding = {
-  logo: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Onyx-Details-Logo.png'
+  logo: '/assets/logos/onyx-logo.webp'
 };
 
 export const hero = {
   title: 'We Bring The Showroom To You',
   subtitle: 'Premium car care at your home or office. Professional detailing. Pristine results.',
-  image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Home-Page-Hero.png'
+  image: '/assets/images/hero/hero.webp',
+  imageMobile: '/assets/images/hero/hero-mobile.webp'
 };
+
+// Trust band shown on the homepage.
+// `label` is used by the desktop band; `title` + `sub` are used by the mobile stacked rows.
+export const stats = [
+  { value: '5+', label: 'Towns served across Mpumalanga', title: 'Towns served', sub: 'across Mpumalanga' },
+  { value: '100%', label: 'Mobile service, we come to you', title: 'Mobile service', sub: 'we come to you' },
+  { value: '10+', label: 'Detailing & add-on services', title: 'Detailing & add-on', sub: 'services' },
+  { value: '7-Day', label: 'Recurring care plans available', title: 'Recurring care plans', sub: 'available' }
+];
 
 export const services = [
   {
     id: 'basic-wash-single',
     category: 'one-time',
     title: 'Basic Wash (Interior & Exterior)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20combo%20basic%20wash%20.png',
+    image: '/assets/images/services/basic-wash.webp',
     imageAlt: 'Basic interior and exterior wash service',
     price: 'R219',
     priceMin: 219,
@@ -44,7 +54,7 @@ export const services = [
     id: 'detail-single',
     category: 'one-time',
     title: 'Detail Interior & Exterior',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20detail%20.png',
+    image: '/assets/images/services/detail.webp',
     imageAlt: 'Exterior and interior detail service',
     price: 'R399',
     priceMin: 399,
@@ -60,7 +70,7 @@ export const services = [
     id: 'interior-single',
     category: 'one-time',
     title: 'Interior Detail Only',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Enterior%20detail.png',
+    image: '/assets/images/services/interior.webp',
     imageAlt: 'Interior detail service',
     price: 'R219',
     priceMin: 219,
@@ -76,7 +86,7 @@ export const services = [
     id: 'exterior-single',
     category: 'one-time',
     title: 'Exterior Detail Only',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Exterior%20detail.png',
+    image: '/assets/images/services/exterior.webp',
     imageAlt: 'Exterior detail service',
     price: 'R219',
     priceMin: 219,
@@ -92,9 +102,9 @@ export const services = [
     id: 'paint-correction-gloss-revival',
     category: 'one-time',
     title: 'Gloss Revival Paint Correction',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Gloss%20revival%20polish.png',
+    image: '/assets/images/services/gloss-revival.webp',
     imageAlt: 'Gloss revival paint correction service',
-    price: 'R1699 - R1999',
+    price: 'R1699 to R1999',
     priceMin: 1699,
     priceMax: 1999,
     washCount: 1,
@@ -109,9 +119,9 @@ export const services = [
     id: 'paint-correction-deep-clarity',
     category: 'one-time',
     title: 'Deep Clarity Paint Correction',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Deep%20clarity%20paint%20correction.png',
+    image: '/assets/images/services/deep-clarity.webp',
     imageAlt: 'Deep clarity paint correction service',
-    price: 'R2299 - R2499',
+    price: 'R2299 to R2499',
     priceMin: 2299,
     priceMax: 2499,
     washCount: 1,
@@ -126,7 +136,7 @@ export const services = [
     id: 'basic-weekly',
     category: 'subscription',
     title: 'Basic Wash (Weekly)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20combo%20basic%20wash%20.png',
+    image: '/assets/images/services/basic-wash.webp',
     imageAlt: 'Basic recurring wash service',
     price: 'R799 / month',
     priceMin: 799,
@@ -142,7 +152,7 @@ export const services = [
     id: 'basic-biweekly',
     category: 'subscription',
     title: 'Basic Wash (Bi-Weekly)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20combo%20basic%20wash%20.png',
+    image: '/assets/images/services/basic-wash.webp',
     imageAlt: 'Basic recurring wash service',
     price: 'R379 / month',
     priceMin: 379,
@@ -158,7 +168,7 @@ export const services = [
     id: 'detail-biweekly',
     category: 'subscription',
     title: 'Detail Interior & Exterior (Bi-Weekly)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20detail%20.png',
+    image: '/assets/images/services/detail.webp',
     imageAlt: 'Recurring interior and exterior detail service',
     price: 'R699 / month',
     priceMin: 699,
@@ -174,7 +184,7 @@ export const services = [
     id: 'special-pack',
     category: 'subscription',
     title: 'Special Pack (Week 1 Detail + Weeks 2-4 Basic Wash)',
-    image: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/exterior%20and%20enterior%20detail%20.png',
+    image: '/assets/images/services/detail.webp',
     imageAlt: 'Monthly detail and wash special pack',
     price: 'R1049 / month',
     priceMin: 1049,
@@ -192,7 +202,7 @@ export const bookingAddOns = [
   { id: 'interior-detail', label: 'Interior Detail Add-on', description: 'Adds an interior detail to a service that does not already include interior detailing. Paint correction services receive this add-on at R199.', priceMin: 219, priceMax: 219, paintCorrectionPriceMin: 199, paintCorrectionPriceMax: 199 },
   { id: 'paint-correction', label: 'Paint Correction Add-on (pricing below)', description: 'Machine polishing add-on that reduces swirl marks, oxidation, and light paint imperfections. Step options are selected below. If your main service includes an exterior detail, paint correction add-on pricing is discounted by R99.', priceMin: 0, priceMax: 0 },
   { id: 'ceramic-coating', label: 'Ceramic Coating (+R699)', description: 'Protective ceramic layer that helps repel water, contamination, and UV exposure while enhancing gloss.', priceMin: 699, priceMax: 699 },
-  { id: 'headlight-restoration', label: 'Headlight Restoration (R349-R449)', description: 'Restores cloudy or yellowed headlights to improve clarity, appearance, and night-time light output.', priceMin: 349, priceMax: 449 },
+  { id: 'headlight-restoration', label: 'Headlight Restoration (R349 to R449)', description: 'Restores cloudy or yellowed headlights to improve clarity, appearance, and night-time light output.', priceMin: 349, priceMax: 449 },
   { id: 'windshield-ceramic', label: 'Windshield Ceramic Coating (+R70)', description: 'Hydrophobic coating for the front windshield that helps water bead and roll off more easily.', priceMin: 70, priceMax: 70 },
   { id: 'pet-hair-removal', label: 'Pet Hair Removal (+R150)', description: 'Extra time and tools to remove embedded pet hair from seats, carpets, and boot areas.', priceMin: 150, priceMax: 150 },
   { id: 'dash-protection', label: 'Dash Protection Layer (+R49)', description: 'Protective interior dressing applied to dashboard plastics to reduce fading and dust adhesion.', priceMin: 49, priceMax: 49 },
@@ -205,7 +215,7 @@ export const paintCorrectionOptions = [
   {
     id: 'step-1',
     title: 'Gloss Revival Polish',
-    label: 'Gloss Revival Polish (R1699-R1999 depending on vehicle size)',
+    label: 'Gloss Revival Polish (R1699 to R1999 depending on vehicle size)',
     description:
       'Best for vehicles with light swirl marks, dull paint, water spots, and minor fading. This service uses one polishing stage to restore shine, improve clarity, and make the paint look cleaner and glossier without going into heavy defect removal. Ideal for newer or well-maintained vehicles.',
     priceMin: 1699,
@@ -214,7 +224,7 @@ export const paintCorrectionOptions = [
   {
     id: 'step-2',
     title: 'Deep Clarity Correction',
-    label: 'Deep Clarity Correction (R2299-R2499 depending on vehicle size)',
+    label: 'Deep Clarity Correction (R2299 to R2499 depending on vehicle size)',
     description:
       'Best for vehicles with heavier swirl marks, oxidation, deeper scratches, holograms, and dull paint. This service uses a cutting stage to remove more visible defects, followed by a refining polish to bring back deep gloss and a smoother finish. Ideal for older, neglected, or darker coloured vehicles.',
     priceMin: 2299,
@@ -223,11 +233,11 @@ export const paintCorrectionOptions = [
 ];
 
 export const gallery = [
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After1.png', alt: 'Before and after vehicle detail one', title: 'Before / After Transformation 1' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After2.png', alt: 'Before and after vehicle detail two', title: 'Before / After Transformation 2' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After3.png', alt: 'Before and after vehicle detail three', title: 'Before / After Transformation 3' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Before-After4.png', alt: 'Before and after vehicle detail four', title: 'Before / After Transformation 4' },
-  { src: 'https://raw.githubusercontent.com/RapidRiseAi/onyx-details-website/main/Lifestyle2.png', alt: 'Premium detailing lifestyle shot', title: 'Premium Mobile Care' }
+  { src: '/assets/images/gallery/before-after/ba-1.webp', category: 'before-after', alt: 'Before and after vehicle detail one', title: 'Before / After Transformation 1' },
+  { src: '/assets/images/gallery/before-after/ba-2.webp', category: 'before-after', alt: 'Before and after vehicle detail two', title: 'Before / After Transformation 2' },
+  { src: '/assets/images/gallery/before-after/ba-3.webp', category: 'before-after', alt: 'Before and after vehicle detail three', title: 'Before / After Transformation 3' },
+  { src: '/assets/images/gallery/before-after/ba-4.webp', category: 'before-after', alt: 'Before and after vehicle detail four', title: 'Before / After Transformation 4' },
+  { src: '/assets/images/gallery/lifestyle/lifestyle.webp', category: 'lifestyle', alt: 'Premium detailing lifestyle shot', title: 'Premium Mobile Care' }
 ];
 
 export const whyChoose = [
@@ -244,6 +254,29 @@ export const steps = [
   { title: 'We detail on-site', text: 'Our team arrives equipped and completes the service at your location.' },
   { title: 'Enjoy the result', text: 'You get a clean, polished vehicle without leaving home or work.' }
 ];
+
+// About page content
+export const aboutValues = [
+  {
+    title: 'Showroom-grade finish',
+    text: 'Every visit is treated like a presentation detail: consistent, careful, and finished to a standard you can see.'
+  },
+  {
+    title: 'Total convenience',
+    text: 'We arrive fully equipped at your home, farm, or workplace. No queues, no driving across town, no wasted weekends.'
+  },
+  {
+    title: 'Reliable & respectful',
+    text: 'Clear communication, on-time arrivals, and respect for your space and vehicle on every single booking.'
+  }
+];
+
+export const aboutImages = {
+  promise: '/assets/images/about/promise.webp',
+  team1: '/assets/images/about/about-1.webp',
+  team2: '/assets/images/about/about-2.webp',
+  convenience: '/assets/images/about/convenience.webp'
+};
 
 export const testimonials = [
   {

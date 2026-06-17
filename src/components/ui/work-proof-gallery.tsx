@@ -42,7 +42,7 @@ export function WorkProofGallery({ items }: { items: ImageItem[] }) {
         {items.map((_, index) => (
           <button
             key={index}
-            className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-6 bg-blue-500' : 'w-2 bg-zinc-600'}`}
+            className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-6 bg-gold' : 'w-2 bg-zinc-600'}`}
             onClick={() => setActiveIndex(index)}
           />
         ))}

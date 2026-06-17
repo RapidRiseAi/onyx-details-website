@@ -2,5 +2,130 @@
 @tailwind components;
 @tailwind utilities;
 
-body { @apply bg-[#050505] text-zinc-100 antialiased; background: #050505; }
-a { @apply text-zinc-100; }
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-zinc-100 antialiased font-sans;
+  background-color: #050505;
+  /* Subtle premium depth behind the dark background */
+  background-image:
+    radial-gradient(60rem 40rem at 78% -10%, rgba(212, 175, 55, 0.07), transparent 60%),
+    radial-gradient(50rem 40rem at -10% 8%, rgba(148, 163, 184, 0.05), transparent 55%);
+  background-attachment: fixed;
+}
+
+a {
+  @apply text-zinc-100;
+}
+
+@layer components {
+  /* Gold gradient text used for accent words */
+  .text-gold-gradient {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
+
+  /* Premium gradient-bordered, glowing card */
+  .premium-card {
+    @apply relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] shadow-card backdrop-blur-sm transition duration-300;
+  }
+  .premium-card:hover {
+    @apply border-gold/40 shadow-glow;
+    transform: translateY(-3px);
+  }
+
+  /* Thin gold rule / divider */
+  .gold-divider {
+    @apply h-px w-16 bg-gradient-to-r from-gold via-gold/60 to-transparent;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.32em] text-gold;
+  }
+
+  /* Primary gold CTA */
+  .btn-gold {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-gold-gradient px-6 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-black shadow-glow-sm transition hover:brightness-110;
+  }
+
+  /* Secondary outline CTA */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-gold/45 bg-white/[0.03] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100 transition hover:border-gold hover:bg-gold/10;
+  }
+}
+
+/* Sheen sweep across the primary button on hover */
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
+  transform: translateX(-130%);
+  transition: transform 0.7s ease;
+  pointer-events: none;
+}
+.btn-gold:hover::after {
+  transform: translateX(130%);
+}
+
+/* Page transition: replays on every route change via app/template.tsx */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-transition {
+  animation: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-transition,
+  .btn-gold::after {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Booking form fields — consistent premium focus state */
+.booking-form input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.booking-form select,
+.booking-form textarea {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.booking-form input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none;
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.18);
+}
+
+@layer utilities {
+  /* Scroll reveal — starts hidden, animates in when .is-visible is added */
+  .reveal {
+    opacity: 0;
+  }
+  .reveal.is-visible {
+    @apply animate-reveal-up;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal.is-visible {
+      opacity: 1;
+      animation: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

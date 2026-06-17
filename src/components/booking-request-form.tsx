@@ -6,7 +6,7 @@ import { bookingAddOns, paintCorrectionOptions, services } from '@/content/siteC
 import { InfoPopover } from '@/components/ui/info-popover';
 
 
-const formatPriceRange = (min: number, max: number) => (min === max ? `R${min}` : `R${min} - R${max}`);
+const formatPriceRange = (min: number, max: number) => (min === max ? `R${min}` : `R${min} to R${max}`);
 const paintCorrectionDiscount = 99;
 
 const BOOKING_WEBHOOK_URL =
@@ -33,6 +33,7 @@ export function BookingRequestForm() {
   const [mainProblem, setMainProblem] = useState('');
   const [uploadedPhotos, setUploadedPhotos] = useState<File[]>([]);
   const [notes, setNotes] = useState('');
+  const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -115,6 +116,12 @@ export function BookingRequestForm() {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitError('');
+
+    if (!consent) {
+      setSubmitError('Please agree to the processing of your details before submitting.');
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -161,7 +168,8 @@ export function BookingRequestForm() {
         estimatedPrice: estimatedPriceLabel,
         mainProblem,
         photos,
-        notes
+        notes,
+        consentGiven: consent ? 'Yes, client agreed to data processing for this booking' : 'No'
       };
 
       const response = await fetch(BOOKING_WEBHOOK_URL, {
@@ -203,9 +211,9 @@ export function BookingRequestForm() {
   };
 
   return (
-    <div className="w-full max-w-full space-y-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
-      <h2 className="text-lg font-semibold">Book a Service Request</h2>
-      <p className="text-sm text-zinc-300">
+    <div className="booking-form w-full max-w-full space-y-3 premium-card p-5 md:p-6">
+      <h2 className="font-display text-xl font-semibold text-white">Book a Service Request</h2>
+      <p className="text-sm text-zinc-400">
         Tell us what service you need and your preferred timing. Once submitted, Kaden will contact you with further arrangements.
       </p>
 
@@ -445,10 +453,24 @@ export function BookingRequestForm() {
           />
         </label>
 
+        <label className="flex items-start gap-2.5 rounded-md border border-zinc-800 bg-ink-800/60 p-3 text-xs leading-relaxed text-zinc-400">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(event) => setConsent(event.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 accent-gold"
+            required
+          />
+          <span>
+            I agree that Onyx Details may collect and process the details I provide (including any photos) for the purpose of preparing and arranging this booking, in line with the{' '}
+            <a href="/privacy-policy" className="text-gold underline underline-offset-2">Privacy Policy</a>.
+          </span>
+        </label>
+
         <button
           type="submit"
-          disabled={submitting}
-          className="mt-1 w-full max-w-full rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-zinc-950 disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
+          disabled={submitting || !consent}
+          className="btn-gold mt-1 w-full max-w-full disabled:cursor-not-allowed disabled:opacity-50 md:w-auto"
         >
           {submitting ? 'Submitting...' : 'Submit Request'}
         </button>
