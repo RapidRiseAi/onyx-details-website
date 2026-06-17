@@ -69,10 +69,10 @@ export default function HomePage() {
               Premium car care at your home or office. Professional detailing. Pristine results.
             </p>
             <div className="mt-auto grid grid-cols-2 gap-3 pt-9">
-              <Link href="/services" className="rounded-xl bg-gold-gradient px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-black shadow-glow-sm">
+              <Link href="/services" className="flex items-center justify-center rounded-xl bg-gold-gradient px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.08em] leading-tight text-black shadow-glow-sm">
                 View Packages
               </Link>
-              <Link href="/contact" className="rounded-xl border border-gold/55 bg-black/25 px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-zinc-100 backdrop-blur-sm">
+              <Link href="/contact" className="flex items-center justify-center rounded-xl border border-gold/55 bg-black/25 px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.08em] leading-tight text-zinc-100 backdrop-blur-sm">
                 Book Now
               </Link>
             </div>
@@ -105,7 +105,7 @@ export default function HomePage() {
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/5 text-gold">
                   <Icon size={20} />
                 </span>
-                <span className="w-[4.25rem] shrink-0 whitespace-nowrap font-display text-[1.6rem] font-semibold leading-none text-gold-gradient">{stat.value}</span>
+                <span className="w-[4.25rem] shrink-0 whitespace-nowrap py-0.5 font-display text-[1.55rem] font-semibold leading-[1.18] text-gold-gradient">{stat.value}</span>
                 <span className="min-w-0 border-l border-white/10 pl-4">
                   <span className="block text-[0.8rem] font-semibold uppercase leading-tight tracking-[0.06em] text-white">{stat.title}</span>
                   <span className="mt-1 block text-xs text-zinc-400">{stat.sub}</span>
