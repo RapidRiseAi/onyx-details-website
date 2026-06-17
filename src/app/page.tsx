@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, CalendarCheck, Car, ListChecks, Quote, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, CalendarCheck, CalendarDays, Car, ListChecks, MapPin, Quote, Smartphone, Sparkles, Star } from 'lucide-react';
 import { MobileSnapCarousel } from '@/components/ui/mobile-snap-carousel';
 import { Card } from '@/components/ui/card';
 import { ServiceCard } from '@/components/ui/service-card';
@@ -9,6 +9,7 @@ import { Reveal } from '@/components/ui/reveal';
 import { contact, gallery, hero, services, stats, steps, testimonials } from '@/content/siteContent';
 
 const stepIcons = [ListChecks, CalendarCheck, Car, Sparkles];
+const statIcons = [MapPin, Smartphone, Sparkles, CalendarDays];
 
 export default function HomePage() {
   const beforeAfterGallery = gallery.filter((item) => item.category === 'before-after');
@@ -41,39 +42,77 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HERO — mobile (unchanged design, now self-hosted + priority loaded) */}
-      <section className="relative left-1/2 right-1/2 -mx-4 -mt-10 h-[154px] w-screen -translate-x-1/2 overflow-hidden md:hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.imageMobile} alt={hero.title} width={960} height={396} fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_62%_34%,rgba(148,163,184,0.24),transparent_30%),linear-gradient(180deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.58)_42%,rgba(0,0,0,0.94)_100%)]" />
-        <div className="relative flex h-[154px] items-end px-4 pb-2 pt-3">
-          <div>
-            <p className="text-[0.468rem] font-normal uppercase tracking-[0.24em] text-white">Mobile Car Detailing</p>
-            <h1 className="mt-1.5 text-[clamp(1.26rem,5.76vw,1.896rem)] font-medium uppercase leading-[1.12] tracking-[0.016em] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
+      {/* HERO — mobile only: premium editorial card (desktop hero above is untouched) */}
+      <section className="-mt-6 md:hidden">
+        <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-card">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={hero.imageMobile}
+            alt={hero.title}
+            width={960}
+            height={396}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-[72%_center]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/82 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/40" />
+          <div className="relative flex min-h-[31rem] flex-col px-6 pb-7 pt-8">
+            <p className="text-[0.7rem] font-medium uppercase tracking-[0.34em] text-gold">Premium Car Care</p>
+            <div className="mt-3 h-px w-12 bg-gradient-to-r from-gold to-transparent" />
+            <h1 className="mt-6 font-display text-[2.5rem] font-semibold uppercase leading-[1.04] text-white drop-shadow-[0_3px_12px_rgba(0,0,0,0.55)]">
               <span className="block">We Bring The</span>
-              <span className="block"><span className="bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#a97913] bg-clip-text text-transparent">Showroom</span> To You</span>
+              <span className="block text-gold-gradient">Showroom</span>
+              <span className="block">To You</span>
             </h1>
-            <p className="mt-1.5 text-[0.756rem] font-light leading-relaxed tracking-[0.01em] text-white">
-              Premium car care at your home or office.<br />
-              Professional detailing. Pristine results.
+            <p className="mt-6 max-w-[16rem] text-sm leading-relaxed text-zinc-200">
+              Premium car care at your home or office. Professional detailing. Pristine results.
             </p>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <Link href="/services" className="w-4/5 justify-self-center rounded-md bg-gradient-to-b from-[#ffe8a3] via-[#d4af37] to-[#b8871c] px-[0.8rem] py-[0.4rem] text-center text-[0.528rem] font-medium uppercase tracking-[0.06em] text-black shadow-[0_0_24px_rgba(212,175,55,0.36)]">View Packages</Link>
-              <Link href="/contact" className="w-4/5 justify-self-center rounded-md border border-[#d4af37]/55 bg-black/20 px-[0.8rem] py-[0.4rem] text-center text-[0.528rem] font-medium uppercase tracking-[0.14em] text-zinc-100">Book Now</Link>
+            <div className="mt-auto grid grid-cols-2 gap-3 pt-9">
+              <Link href="/services" className="rounded-xl bg-gold-gradient px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-black shadow-glow-sm">
+                View Packages
+              </Link>
+              <Link href="/contact" className="rounded-xl border border-gold/55 bg-black/25 px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.08em] text-zinc-100 backdrop-blur-sm">
+                Book Now
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TRUST / STATS BAND */}
-      <Reveal>
-        <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] md:grid-cols-4">
+      {/* TRUST / STATS BAND — desktop (unchanged) */}
+      <Reveal className="hidden md:block">
+        <div className="grid grid-cols-4 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
           {stats.map((stat) => (
             <div key={stat.label} className="bg-ink-800/60 px-5 py-7 text-center">
-              <p className="font-display text-3xl font-semibold text-gold-gradient md:text-4xl">{stat.value}</p>
-              <p className="mt-2 text-xs leading-relaxed text-zinc-400 md:text-sm">{stat.label}</p>
+              <p className="font-display text-4xl font-semibold text-gold-gradient">{stat.value}</p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-400">{stat.label}</p>
             </div>
           ))}
+        </div>
+      </Reveal>
+
+      {/* TRUST / STATS — mobile only: stacked premium rows matching the mockup */}
+      <Reveal className="md:hidden">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+          {stats.map((stat, index) => {
+            const Icon = statIcons[index] ?? Sparkles;
+            return (
+              <div
+                key={stat.title}
+                className={`flex items-center gap-4 px-5 py-5 ${index > 0 ? 'border-t border-white/10' : ''}`}
+              >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-gold/30 bg-gold/5 text-gold">
+                  <Icon size={20} />
+                </span>
+                <span className="w-[4.25rem] shrink-0 whitespace-nowrap font-display text-[1.6rem] font-semibold leading-none text-gold-gradient">{stat.value}</span>
+                <span className="min-w-0 border-l border-white/10 pl-4">
+                  <span className="block text-[0.8rem] font-semibold uppercase leading-tight tracking-[0.06em] text-white">{stat.title}</span>
+                  <span className="mt-1 block text-xs text-zinc-400">{stat.sub}</span>
+                </span>
+              </div>
+            );
+          })}
         </div>
       </Reveal>
 

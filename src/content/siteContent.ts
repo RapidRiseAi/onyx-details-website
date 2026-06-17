@@ -24,12 +24,13 @@ export const hero = {
   imageMobile: '/assets/images/hero/hero-mobile.webp'
 };
 
-// Trust band shown on the homepage
+// Trust band shown on the homepage.
+// `label` is used by the desktop band; `title` + `sub` are used by the mobile stacked rows.
 export const stats = [
-  { value: '5+', label: 'Towns served across Mpumalanga' },
-  { value: '100%', label: 'Mobile service, we come to you' },
-  { value: '10+', label: 'Detailing & add-on services' },
-  { value: '7-Day', label: 'Recurring care plans available' }
+  { value: '5+', label: 'Towns served across Mpumalanga', title: 'Towns served', sub: 'across Mpumalanga' },
+  { value: '100%', label: 'Mobile service, we come to you', title: 'Mobile service', sub: 'we come to you' },
+  { value: '10+', label: 'Detailing & add-on services', title: 'Detailing & add-on', sub: 'services' },
+  { value: '7-Day', label: 'Recurring care plans available', title: 'Recurring care plans', sub: 'available' }
 ];
 
 export const services = [
@@ -272,8 +273,8 @@ export const aboutValues = [
 
 export const aboutImages = {
   promise: '/assets/images/about/promise.webp',
-  team1: '/assets/images/gallery/team/team-1.webp',
-  team2: '/assets/images/gallery/team/team-2.webp',
+  team1: '/assets/images/about/about-1.webp',
+  team2: '/assets/images/about/about-2.webp',
   convenience: '/assets/images/about/convenience.webp'
 };
 

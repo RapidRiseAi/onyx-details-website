@@ -66,11 +66,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="overflow-hidden rounded-2xl ring-1 ring-white/10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={aboutImages.team1} alt="Onyx Details team at work" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+              <img src={aboutImages.team1} alt="Onyx Details premium detailing showcase" loading="lazy" className="aspect-[4/5] w-full object-cover" />
             </div>
             <div className="mt-8 overflow-hidden rounded-2xl ring-1 ring-white/10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={aboutImages.team2} alt="Onyx Details detailing in progress" loading="lazy" className="aspect-[3/4] w-full object-cover" />
+              <img src={aboutImages.team2} alt="Onyx Details premium detailing result" loading="lazy" className="aspect-[4/5] w-full object-cover" />
             </div>
           </div>
         </Reveal>
